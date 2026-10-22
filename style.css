@@ -1,0 +1,47 @@
+.text {color: #000000;}
+body {
+    background: #3C3C3C;
+    text-indent: 20 px;
+    font-family: Century Gothic;
+    color: #FFFFFF;
+    font-weight: bold;
+}
+
+h1 {
+    text-indent: 0 px;
+}
+a {
+    color: #BBBBBB;
+}
+.small{
+    font-style: italic;
+    text-size: 75%;
+    text-align: center;
+    text-indent: 0 px;
+    color: #BBBBBB;
+}
+
+.picture {
+    margin: 10px;
+    float: right;
+    width: 400;
+    height: 400;
+.picture p1 {
+    font-size: 0%;
+    font-size: 80%;
+    text-align: center;
+    font-style: italic;
+}
+}
+.pic {
+    border: 2px solid #FFFFFF;
+}
+.vid {
+    border: 2px solid #FFFFFF;
+    margin: 10px;       
+    text-indent: 0 px;
+}
+
+.hidden {
+    display:none;
+}
