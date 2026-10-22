@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark"><title>Тепло дома — интерактивная лаборатория</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+ <a class="brand" href="#" aria-label="Тепло дома"><span class="brand-icon">⌂</span><span>Тепло дома<small>ИНТЕРАКТИВНАЯ ЛАБОРАТОРИЯ</small></span></a>
+ <div class="project-tag"><span class="dot"></span> Maths for Eng <span class="divider">/</span> Week 3</div>
+ <button class="quiet" id="aboutOpen">Как устроена модель <span>↗</span></button>
+</header>
+<main>
+ <section class="workspace">
+  <div class="intro"><div><p class="eyebrow">ТЕПЛОПЕРЕДАЧА В ДЕЙСТВИИ</p><h1>Почувствуйте, как движется тепло.</h1><p class="subtitle" id="modeHint">Поставьте нагреватель в любой комнате и наблюдайте за температурой.</p></div><span class="status" id="status"><i></i>Ожидание</span></div>
+  <div class="mode-tabs" role="group" aria-label="Режим эксперимента"><button id="heaterMode" class="active">◎ Точечный нагрев</button><button id="dayMode">☀ В течение дня</button></div>
+  <div class="metrics"><div><span>СНАРУЖИ · Tₐ</span><strong id="outdoor">−5.0<small>°C</small></strong></div><div><span>В ДОМЕ · СРЕДНЕЕ</span><strong id="average">20.0<small>°C</small></strong></div><div><span>ИСТОЧНИК ТЕПЛА</span><strong id="powerMetric">—<small>кВт</small></strong></div><div><span>МОДЕЛЬНОЕ ВРЕМЯ</span><strong id="clock">00:00<small>день 1</small></strong></div></div>
+  <section class="scene-card" aria-label="Тепловая карта дома">
+   <div class="scene-top"><span id="sceneTitle">Разрез дома / температурное поле</span><div><label class="check"><input type="checkbox" id="showLabels" checked>Температуры</label><label class="check"><input type="checkbox" id="showGrid">Сетка</label><button class="icon-button" id="snapshot" title="Сохранить изображение" aria-label="Сохранить изображение">↓</button></div></div>
+   <div class="canvas-wrap"><canvas id="house" aria-label="Дом: зоны 3 и 4 сверху, зоны 1 и 2 снизу. Нажмите в комнате для установки нагревателя." tabindex="0"></canvas><div id="probe" class="probe" hidden></div><div class="scene-guide" id="sceneGuide"><span>＋</span> Нажмите внутри комнаты, чтобы добавить тепло</div></div>
+   <div class="legend"><span id="scaleLow">−25 °C</span><div class="gradient"></div><span id="scaleHigh">60 °C</span><label class="check"><input type="checkbox" id="autoScale" checked>Автошкала</label></div>
+   <div class="transport"><button class="play" id="play">▶ <span>Запустить</span></button><button class="quiet" id="reset" title="Вернуть начальные температуры">↺ Сначала</button><button class="quiet" id="advanceDay">+24 ч</button><div class="speed"><label for="speed">Скорость</label><input id="speed" type="range" min="0" max="6" step="1" value="3"><output id="speedValue">30 мин/с</output></div></div>
+  </section>
+  <section class="chart-card"><div class="chart-heading"><div><p class="eyebrow">ИСТОРИЯ ЭКСПЕРИМЕНТА</p><h2>Температура во времени</h2></div><button class="quiet" id="exportCsv">Скачать CSV ↓</button></div><div class="chart-legend"><span style="--line:#51d5be">T₁</span><span style="--line:#7eafff">T₂</span><span style="--line:#e8b06a">T₃</span><span style="--line:#c5a0ff">T₄</span><span style="--line:#e0e8ef">Снаружи</span></div><canvas id="chart" aria-label="График средних температур четырёх комнат и наружной температуры"></canvas></section>
+  <p class="model-note"><span class="dot"></span><span id="modelNote">Параметры R и C из решения Week 3. Пространственное поле — расширение исходной модели.</span></p>
+ </section>
+ <aside class="sidebar">
+  <div class="sidebar-title"><div><p class="eyebrow">ВАШ ЭКСПЕРИМЕНТ</p><h2>Параметры модели</h2></div><button class="icon-button" id="defaults" title="Вернуть все параметры решения" aria-label="Вернуть все параметры решения">↺</button></div>
+  <label class="select-label" for="solver">Способ расчёта</label><select id="solver"><option value="spatial">Пространственное поле</option><option value="rc">Исходная RC-модель · 16 узлов</option></select>
+  <p class="small-note" id="solverHelp">Воздух разбит на ячейки. Стены, пол и крыша сохраняют узлы исходной RC-схемы.</p>
+  <div id="heaterControls"><div class="section-label">01 <span>Нагреватель</span><span class="live-dot"></span></div><div id="heaterSliders"></div><div class="source-row"><span id="sourceLabel">Источник не установлен</span><button id="removeSource" class="text-button" disabled>Убрать</button></div><div class="place-buttons" aria-label="Поставить нагреватель в центр комнаты"><button data-zone="0">T₁</button><button data-zone="1">T₂</button><button data-zone="2">T₃</button><button data-zone="3">T₄</button></div><p class="small-note">Нажмите в комнате или перетащите источник. Кнопки T₁–T₄ ставят его в центр.</p></div>
+  <div id="dayControls" hidden><div class="section-label">01 <span>Погода в течение дня</span><span>☀</span></div><div class="day-notice">Отопление выключено. Меняется только Tₐ; температура грунта постоянна.</div><div id="daySliders"></div><div class="day-range"><span>Ночь <b id="nightTemp">−25°</b></span><span>День <b id="dayTemp">30°</b></span></div></div>
+  <div class="section-label">02 <span>Среда и начальное состояние</span></div><div id="environmentSliders"></div>
+  <label class="select-label" for="initialMode">Начальные температуры</label><select id="initialMode"><option value="uniform">Одинаковые во всём доме</option><option value="fitted">Начальные состояния из решения</option></select><p class="small-note">Новые начальные температуры применяются кнопкой «Сначала».</p>
+  <div class="section-label">03 <span>Тепловая RC-сеть</span><span class="count">36</span></div>
+  <p class="small-note">Все 16 теплоёмкостей и 20 независимых сопротивлений. Изменение R, C или перемешивания перезапускает эксперимент.</p>
+  <div id="physicalSliders"></div>
+  <details class="group"><summary>Отображение <span>Цветовая шкала</span></summary><div id="displaySliders"></div></details>
+  <div class="settings-actions"><button class="quiet" id="saveSettings">Сохранить настройки ↓</button><button class="quiet" id="loadSettings">Загрузить ↑</button><input type="file" accept="application/json,.json" id="settingsFile" hidden></div>
+ </aside>
+</main>
+<div class="toast" id="toast" role="status" hidden></div>
+<dialog id="about"><button class="close" id="aboutClose" aria-label="Закрыть">×</button><p class="eyebrow">ОТ ЗАДАНИЯ К ПРИЛОЖЕНИЮ</p><h2>Один дом. Два масштаба.</h2><p>Основа — решение Week 3: двухэтажный дом с зонами T₁–T₄, окнами, наружными стенами, перегородками, межэтажным перекрытием, полом и крышей. Грунт по умолчанию: 5 °C.</p><h3>Исходная RC-модель</h3><p>16 состояний: T₁–T₄, O₁–O₄, V₁₂, V₁₃, V₂₄, V₃₄, F₁–F₂, P₃–P₄. Использованы численные параметры из Week3_identified_model.npz. У каждой конструкции своя теплоёмкость; у общей стены, пола и крыши указано сопротивление одной из двух равных половин.</p><div class="equation">Cᵢ dTᵢ/dt = Σⱼ (Tⱼ − Tᵢ) / Rᵢⱼ + Qᵢ</div><h3>Пространственное поле</h3><p>Каждая комната разделена на 20 × 14 ячеек. Их суммарная теплоёмкость точно равна Cᵢ из решения. Проводимости к конструкциям и окнам распределены по соответствующим границам; суммарные значения сохранены. Внутри комнаты тепло передаётся между соседними ячейками с регулируемой проводимостью.</p><p>Это дополнительное допущение: исходные измерения содержат только средние температуры комнат. Пространственное распределение и скорость перемешивания по ним не идентифицированы. Стены и крыша показаны температурами их RC-узлов; разрез и форма скатной крыши схематичны. Отдельного чердачного узла нет.</p><h3>Источник и суточный режим</h3><p>Нагреватель непрерывный. Выбранная мощность распределяется вокруг точки по нормированному гауссову профилю внутри одной комнаты. В исходной RC-модели она подаётся в воздушный узел этой комнаты. В режиме дня Q = 0 во всех комнатах, а наружная температура меняется по синусоиде с периодом 24 часа.</p><h3>Численный расчёт</h3><p>В приложении используется явный шаг Эйлера с ограничением Δt ≤ 0.88 min(Cᵢ / ΣGᵢⱼ), не более 30 секунд. Все внутренние потоки попарно компенсируются. Слайдер скорости меняет только темп показа модельного времени. Отчёт использует метод трапеций; численные методы здесь различаются.</p><p class="small-note">R отображаются в К/кВт, C — в кДж/К, мощность — в кВт. Внутри расчёта — Вт, Дж и секунды. Параметры из решения эффективные: они не определяют однозначно материалы и размеры реального дома. Приложение работает офлайн и не использует внешние библиотеки.</p></dialog>
+<script src="engine.js"></script><script src="app.js"></script>
+</body></html>
