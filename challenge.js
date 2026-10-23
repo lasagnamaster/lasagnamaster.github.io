@@ -4,6 +4,7 @@
 const thermal=typeof module!=='undefined'&&module.exports?require('./engine.js'):root.Thermal;
 const DURATION=72*3600,TARGET=20,MAX_POWER=2500,SPEED=2880;
 const clamp=(v,lo,hi)=>Math.max(lo,Math.min(hi,v));
+const smooth=x=>{const t=clamp(x,0,1);return t*t*(3-2*t);};
 // Continuous visual orbit, including the portion below the ground at night.
 function sunTrackAt(time,width,horizon,radius=11){
  const hour=((time/3600)%24+24)%24,angle=2*Math.PI*(hour-6)/24;
@@ -19,7 +20,8 @@ class HeatingChallenge {
   const m=this.model;this.active=true;this.control=control;this.state='ready';
   m.scenario=null;m.p={...thermal.defaults,initial:20,ground:5,mixing:60,speed:SPEED};
   m.C=thermal.defaultC.map((v,i)=>i<4?v*8:v);m.R=thermal.defaultR.slice();m.initialMode='uniform';m.solver='spatial';m.mode='challenge';m.source=null;m.rebuild();
-  m.scenario=this;this.solarWeights=[];
+  // Reserve stability margin for the maximum 25% increase in exterior conductance.
+  m.maxDt/=1.25;m.scenario=this;this.solarWeights=[];
   for(let z=0;z<4;z++){
    const weights=new Float64Array(m.perZone);let sum=0;
    for(let j=0;j<m.rows;j++)for(let i=0;i<m.cols;i++){
@@ -36,15 +38,27 @@ class HeatingChallenge {
   m.ratesAt(0);this.powers=this.requiredPowers(1).map(v=>Math.round(v/5)*5);
   this.initialEnergy=m.energy();return this;
  }
+ weatherAt(t){
+  const age=t/3600-48,active=age>=0;
+  const wind=smooth(age/3)*(1-smooth((age-8)/5));
+  const snowfall=smooth(age/2)*(1-smooth((age-9)/3));
+  const snow=smooth((age-2)/12),coldDrop=6*wind+2*smooth(age/4);
+  const roofResistance=1+2.5*snow,roofFactor=(1+.25*wind)/roofResistance;
+  return {active,wind,snowfall,snow,snowCm:20*snow,windKmh:42*wind,coldDrop,
+   windowFactor:1+.18*wind,wallFactor:1+.25*wind,roofFactor,roofResistance,
+   // Steady two-half roof branch, relative to the bare, wind-free roof.
+   roofTransfer:2/(1+1/roofFactor),
+   phase:!active?'forecast':age<3?'arriving':age<10?'blizzard':age<14?'settling':'blanket'};
+ }
  outdoorAt(t){
   // Smooth cold front on day two; same curve for player and demonstration.
-  const hours=t/3600;return -14+7*Math.cos(2*Math.PI*(hours-15)/24)-4*Math.exp(-(((hours-39)/11)**2));
+  const hours=t/3600;return -14+7*Math.cos(2*Math.PI*(hours-15)/24)-4*Math.exp(-(((hours-39)/11)**2))-this.weatherAt(t).coldDrop;
  }
  solarAt(t){
   const hour=((t/3600)%24+24)%24,phase=clamp((hour-6)/12,0,1),height=hour>=6&&hour<=18?Math.sin(Math.PI*phase):0;
-  const right=(1+Math.cos(Math.PI*phase))/2,left=1-right,day=Math.min(2,Math.floor(t/86400)),weather=[1,.7,1.1][day];
+  const right=(1+Math.cos(Math.PI*phase))/2,left=1-right,day=Math.min(2,Math.floor(t/86400)),weather=[1,.7,1.1][day],storm=this.weatherAt(t),clouds=1-.85*storm.snowfall-.2*storm.snow*(1-storm.snowfall);
   const air=[],walls=[],roof=[];
-  for(let z=0;z<4;z++){const exposure=.12+.88*(z%2?right:left),gain=height*weather*exposure;air.push((z<2?300:420)*gain);walls.push(85*gain);if(z>=2)roof.push(140*gain);}
+  for(let z=0;z<4;z++){const exposure=.12+.88*(z%2?right:left),gain=height*weather*clouds*exposure;air.push((z<2?300:420)*gain);walls.push(85*gain);if(z>=2)roof.push(140*gain);}
   return {phase,height,x:1.12-1.24*phase,visible:height>1e-6,air,walls,roof,total:air.reduce((a,b)=>a+b,0)+walls.reduce((a,b)=>a+b,0)+roof.reduce((a,b)=>a+b,0)};
  }
  requiredPowers(dt){

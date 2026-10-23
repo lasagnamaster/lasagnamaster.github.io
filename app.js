@@ -5,6 +5,17 @@ const model=new ThermalModel(),challenge=new Thermal.HeatingChallenge(model);win
 const house=$('house'),ctx=house.getContext('2d'),chart=$('chart'),gc=chart.getContext('2d');
 const speeds=[60,300,900,1800,3600,7200,14400],colors=['#51d5be','#7eafff','#e8b06a','#c5a0ff','#e0e8ef'];
 let playing=false,last=0,history=[],lastRecord=-Infinity,fastTarget=null,scaleMin=-25,scaleMax=60,viewMin=-25,viewMax=60,hover=null,dragging=false,toastTimer,geometry=null,realSpeed=0;
+// Display rooms in reading order; retain the coursework indices inside the solver.
+const roomOrder=[2,3,0,1],roomSub=z=>'₃₄₁₂'[z];
+const roomValues=values=>roomOrder.map(z=>values[z]);
+function displayNode(name){
+ return name.replace(/[1-4₁₂₃₄]+/g,part=>{
+  const sub='₁₂₃₄'.includes(part[0]);
+  const mapped=[...part].map(c=>roomOrder[sub?'₁₂₃₄'.indexOf(c):Number(c)-1]+1);
+  if(mapped.length>1)mapped.sort((a,b)=>a-b);
+  return mapped.map(n=>sub?'₁₂₃₄'[n-1]:n).join('');
+ });
+}
 const sliders={};
 let sandboxSnapshot=null,resultShown=false;
 const isChallenge=()=>model.mode==='challenge'&&challenge.active;
@@ -46,16 +57,16 @@ const mixingGroup=group('Room mixing','Additional spatial-model parameter');
 slider(mixingGroup,'mixing','Adjacent-cell conductance',1,80,1,model.p.mixing,'W/K',v=>{model.p.mixing=v;changedNetwork();},{digits:0});
 const descriptions=['Air T₁','Air T₂','Air T₃','Air T₄','Wall O₁','Wall O₂','Wall O₃','Wall O₄','Partition V₁₂','Slab V₁₃','Slab V₂₄','Partition V₃₄','Floor F₁','Floor F₂','Roof P₃','Roof P₄'];
 const cg1=group('Room heat capacities','C₁–C₄ · kJ/K'),cg2=group('Construction heat capacities','12 nodes · kJ/K');
-for(let i=0;i<16;i++)slider(i<4?cg1:cg2,'C'+i,`${names[i]} · ${descriptions[i]}`,Math.log(defaultC[i]/4),Math.log(defaultC[i]*4),.001,model.C[i],'kJ/K',v=>{model.C[i]=v;changedNetwork();},{log:true,digits:1});
-const rg=[group('Windows → outdoor air','Rw₁–Rw₄ · K/kW'),group('Exterior walls → rooms','Ro₁b–Ro₄b · K/kW'),group('Outdoor air → walls','Ro₁a–Ro₄a · K/kW'),group('Partitions and slabs','R₁₂, R₁₃, R₂₄, R₃₄ · one half'),group('Floors and roof','Rf₁, Rf₂, Rr₃, Rr₄ · one half')];
-for(let i=0;i<20;i++)slider(rg[Math.floor(i/4)],'R'+i,rNames[i],Math.log(defaultR[i]/4),Math.log(defaultR[i]*4),.001,model.R[i],'K/kW',v=>{model.R[i]=v;changedNetwork();},{log:true,digits:2});
+for(const i of [2,3,0,1,6,7,4,5,11,9,10,8,12,13,14,15])slider(i<4?cg1:cg2,'C'+i,`${displayNode(names[i])} · ${displayNode(descriptions[i])}`,Math.log(defaultC[i]/4),Math.log(defaultC[i]*4),.001,model.C[i],'kJ/K',v=>{model.C[i]=v;changedNetwork();},{log:true,digits:1});
+const rg=[group('Windows → outdoor air','Rw₁–Rw₄ · K/kW'),group('Exterior walls → rooms','Ro₁b–Ro₄b · K/kW'),group('Outdoor air → walls','Ro₁a–Ro₄a · K/kW'),group('Partitions and slabs','R₁₂, R₁₃, R₂₄, R₃₄ · one half'),group('Floors and roof','Rf₃, Rf₄, Rr₁, Rr₂ · one half')];
+for(const i of [2,3,0,1,6,7,4,5,10,11,8,9,15,13,14,12,16,17,18,19])slider(rg[Math.floor(i/4)],'R'+i,displayNode(rNames[i]),Math.log(defaultR[i]/4),Math.log(defaultR[i]*4),.001,model.R[i],'K/kW',v=>{model.R[i]=v;changedNetwork();},{log:true,digits:2});
 slider($('displaySliders'),'scaleMin','Lower limit',-50,40,1,scaleMin,'°C',v=>{scaleMin=v;if(scaleMax<=v){scaleMax=v+1;sliders.scaleMax.set(scaleMax);}$('autoScale').checked=false;draw();});
 slider($('displaySliders'),'scaleMax','Upper limit',0,200,1,scaleMax,'°C',v=>{scaleMax=v;if(scaleMin>=v){scaleMin=v-1;sliders.scaleMin.set(scaleMin);}$('autoScale').checked=false;draw();});
-for(let z=0;z<4;z++){
- const card=document.createElement('div');card.className='room-heater';card.style.setProperty('--room-color',colors[z]);
- card.innerHTML=`<div class="room-heater-top"><span class="room-name">Room T${'₁₂₃₄'[z]}</span><strong class="room-reading" id="roomT${z}">20.00 °C</strong></div><div class="room-power"></div><div class="room-error"><span>Target 20 °C</span><b id="roomError${z}">On target</b></div>`;
+for(const z of roomOrder){
+ const card=document.createElement('div');card.className='room-heater';card.style.setProperty('--room-color',colors[roomOrder.indexOf(z)]);
+ card.innerHTML=`<div class="room-heater-top"><span class="room-name">Room T${roomSub(z)}</span><strong class="room-reading" id="roomT${z}">20.00 °C</strong></div><div class="room-power"></div><div class="room-error"><span>Target 20 °C</span><b id="roomError${z}">On target</b></div>`;
  $('roomHeaters').append(card);
- slider(card.querySelector('.room-power'),'gameQ'+z,`Heating T${'₁₂₃₄'[z]}`,0,Thermal.MAX_POWER,5,0,'kW',v=>{if(challenge.setPower(z,v))updateMetrics();},{display:v=>v/1000,digits:2});
+ slider(card.querySelector('.room-power'),'gameQ'+z,`Heating T${roomSub(z)}`,0,Thermal.MAX_POWER,5,0,'kW',v=>{if(challenge.setPower(z,v))updateMetrics();},{display:v=>v/1000,digits:2});
 }
 function updateChallengeUI(s){
  if(!isChallenge())return;const time=model.time,done=challenge.state==='finished',day=Math.min(3,1+Math.floor(time/86400));
@@ -64,6 +75,12 @@ function updateChallengeUI(s){
   const error=s.zones[z]-20,reading=$('roomT'+z);reading.textContent=fmt(s.zones[z],2)+' °C';reading.classList.toggle('cold',error<-.25);reading.classList.toggle('hot',error>.25);
   $('roomError'+z).textContent=Math.abs(error)<.005?'Exactly 20 °C':(error>0?'+':'')+fmt(error,2)+' °C';sliders['gameQ'+z].set(challenge.powers[z]);
  }
+ const weather=challenge.weatherAt(time);
+ const captions={forecast:['Day 3: a winter storm is coming','Wind and cold arrive first. Snow then builds an insulating blanket on the roof.'],arriving:['Day 3 · the storm is arriving','Outdoor temperature is falling. Stronger wind increases heat loss.'],blizzard:['Day 3 · wind and heavy snow','Keep an eye on your heaters: cold wind cools the house as snow accumulates.'],settling:['Day 3 · the wind is easing','The snow blanket is growing. Heat escapes through the roof more slowly.'],blanket:['Day 3 · a blanket of snow','The wind has calmed. Snow insulates the roof; less heating may be needed.']};
+ const [title,hint]=captions[weather.phase];$('stormTitle').textContent=title;$('stormHint').textContent=hint;
+ $('stormBanner').classList.toggle('snow-active',weather.active);$('stormMetrics').hidden=!weather.active;
+ $('stormWind').textContent=fmt(weather.windKmh,0)+' km/h';$('stormSnow').textContent=fmt(weather.snowCm,1)+' cm';
+ const transfer=(weather.roofTransfer-1)*100;$('stormRoof').textContent=(transfer>0?'+':'')+fmt(transfer,0)+'%';
  const sun=challenge.solarAt(time);$('sunPower').textContent=fmt(sun.total/1000,2)+' kW';$('sunDirection').textContent=!sun.visible?'Night. No solar heat gain.':sun.phase<.45?'Morning: sun on the right → right-hand rooms gain heat.':sun.phase>.55?'Evening: sun on the left → left-hand rooms gain heat.':'Midday: solar heat reaches both sides.';
 }
 function showResult(){
@@ -71,12 +88,12 @@ function showResult(){
  $('resultEyebrow').textContent=r.control==='auto'?'DEMONSTRATION COMPLETE':'CHALLENGE COMPLETE';$('resultTitle').textContent=r.control==='auto'?'72 hours on autopilot':'Three days under your control';
  $('finalScore').textContent=fmt(r.score,1);$('resultError').textContent=fmt(r.mae,3)+' °C';$('resultComfort').textContent=fmt(r.comfort,1)+' %';$('resultEnergy').textContent=fmt(r.kWh,1)+' kWh';
  $('resultDescription').textContent=r.control==='auto'&&r.mae<.005?'Every room stayed at an average of 20 °C throughout all 72 hours. This result is calculated from the simulated temperatures.':'The score accounts for each room\'s deviation from 20 °C over the entire challenge.';
- $('resultRooms').replaceChildren();r.zones.forEach((z,i)=>{const div=document.createElement('div');div.className='result-room';div.innerHTML=`<div><span>Room T${'₁₂₃₄'[i]}</span><b>${fmt(z.score,1)} / 100</b></div><small>Mean absolute error ${fmt(z.mae,3)} °C<br>Within the comfort band for ${fmt(z.comfort,1)}% of the time</small>`;$('resultRooms').append(div);});
+ $('resultRooms').replaceChildren();roomOrder.forEach(i=>{const z=r.zones[i];const div=document.createElement('div');div.className='result-room';div.innerHTML=`<div><span>Room T${roomSub(i)}</span><b>${fmt(z.score,1)} / 100</b></div><small>Mean absolute error ${fmt(z.mae,3)} °C<br>Within the comfort band for ${fmt(z.comfort,1)}% of the time</small>`;$('resultRooms').append(div);});
  $('resultDemo').hidden=r.control==='auto';$('gameResult').showModal();
 }
 $('resultClose').onclick=()=>$('gameResult').close();$('resultRetry').onclick=()=>startChallenge('manual');$('resultDemo').onclick=()=>startChallenge('auto',true);
 function updateWeather(){$('nightTemp').textContent=fmt(model.p.dayMin,0)+'°';$('dayTemp').textContent=fmt(model.p.dayMax,0)+'°';updateMetrics();}
-function updateSource(){const z=model.source?model.zoneAt(model.source.x,model.source.y):-1;$('sourceLabel').textContent=z<0?'No heater placed':`Heater in room T${'₁₂₃₄'[z]}`;$('removeSource').disabled=!model.source;$('sceneGuide').hidden=!!model.source||model.mode!=='heater';}
+function updateSource(){const z=model.source?model.zoneAt(model.source.x,model.source.y):-1;$('sourceLabel').textContent=z<0?'No heater placed':`Heater in room T${roomSub(z)}`;$('removeSource').disabled=!model.source;$('sceneGuide').hidden=!!model.source||model.mode!=='heater';}
 function placeSource(x,y){if(model.mode!=='heater')return;if(model.setSource({x,y})){updateSource();updateMetrics();if(!playing)startStop(true);draw();}}
 function syncLabControls(){
  for(const [k,v]of Object.entries(model.p))if(sliders[k])sliders[k].set(v);
@@ -111,7 +128,7 @@ function leaveChallenge(){
  $('sidebarHeading').textContent='Model parameters';$('play').disabled=false;$('speed').disabled=false;$('advanceDay').disabled=false;
  document.querySelector('#powerMetric').previousElementSibling.textContent='HEAT SOURCE';
  $('modelNote').textContent='R and C values from the Week 3 solution. The spatial field extends the original model.';
- house.setAttribute('aria-label','House: rooms 3 and 4 upstairs, rooms 1 and 2 downstairs. Click inside a room to place a heater.');
+ house.setAttribute('aria-label','House: rooms 1 and 2 upstairs, rooms 3 and 4 downstairs. Click inside a room to place a heater.');
  syncLabControls();model.rebuild();
 }
 function mode(value){
@@ -141,8 +158,8 @@ for(const id of ['showLabels','showGrid','autoScale'])$(id).onchange=draw;
 function download(name,data,type){const url=URL.createObjectURL(new Blob([data],{type})),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),10000);}
 $('exportCsv').onclick=()=>{
  const rows=history.slice();if(!rows.length||rows.at(-1).t!==model.time){const s=model.stats();rows.push({t:model.time,z:s.zones,a:s.outside,q:isChallenge()?challenge.powers.slice():null,solar:isChallenge()?challenge.solarAt(model.time).total:0});}
- const game=isChallenge(),header='time_hours,T1_C,T2_C,T3_C,T4_C,outside_C,mode,solver'+(game?',Q1_W,Q2_W,Q3_W,Q4_W,solar_W,controller':'');
- download('thermal-house-history.csv','\uFEFF'+header+'\n'+rows.map(r=>[r.t/3600,...r.z,r.a,model.mode,model.solver,...(game?[...(r.q||[0,0,0,0]),r.solar,challenge.control]:[])].join(',')).join('\n'),'text/csv;charset=utf-8');
+ const game=isChallenge(),header='time_hours,T1_C,T2_C,T3_C,T4_C,outside_C,mode,solver'+(game?',Q1_W,Q2_W,Q3_W,Q4_W,solar_W,controller,wind_kmh,snow_cm,storm_cooling_C,roof_outer_R_factor':'');
+ download('thermal-house-history.csv','\uFEFF'+header+'\n'+rows.map(r=>[r.t/3600,...roomValues(r.z),r.a,model.mode,model.solver,...(game?[...roomValues(r.q||[0,0,0,0]),r.solar,challenge.control,...((w)=>[w.windKmh,w.snowCm,w.coldDrop,w.roofResistance])(challenge.weatherAt(r.t))]:[])].join(',')).join('\n'),'text/csv;charset=utf-8');
 };
 $('snapshot').onclick=()=>{draw();house.toBlob(blob=>{if(blob){const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='thermal-house.png';a.click();setTimeout(()=>URL.revokeObjectURL(url),10000);}});};
 $('saveSettings').onclick=()=>{if(isChallenge())return;download('thermal-house-settings.json',JSON.stringify({version:1,parameters:model.p,C:model.C,R:model.R,source:model.source,mode:model.mode,solver:model.solver,initialMode:model.initialMode},null,2),'application/json');};
@@ -190,13 +207,34 @@ function drawHouse(){
   // The moon fades in only as the sun descends below the horizon.
   if(track.night>0){ctx.save();ctx.globalAlpha=track.night;ctx.fillStyle='#b9d2e0';ctx.beginPath();ctx.arc(w-35,28,9,0,2*Math.PI);ctx.fill();ctx.fillStyle='#152130';ctx.beginPath();ctx.arc(w-31,24,9,0,2*Math.PI);ctx.fill();ctx.restore();}
  }
+ const snowWeather=isChallenge()?challenge.weatherAt(model.time):null;
+ if(snowWeather?.active){
+  const storm=snowWeather,phase=model.time/1440;
+  ctx.fillStyle=`rgba(160,190,218,${storm.snowfall*.14})`;ctx.fillRect(0,0,w,base+9);
+  // Snow falls behind the cutaway, so temperatures and controls remain readable.
+  ctx.save();ctx.beginPath();ctx.rect(0,0,w,base+9);ctx.clip();
+  ctx.fillStyle='#dfedf6';
+  for(let i=0;i<110*storm.snowfall;i++){
+   const seed=i*137.508,x=((seed+phase*(10+storm.wind*48))%(w+50))-25;
+   const y=((i*71.17+phase*(31+i%7*3))%(base+40))-20;
+   ctx.globalAlpha=.3+(i%5)*.13;ctx.beginPath();ctx.ellipse(x,y,1+i%3*.4,1+i%2*.5,-.5,0,Math.PI*2);ctx.fill();
+  }
+  if(storm.wind>.05){ctx.globalAlpha=storm.wind*.35;ctx.strokeStyle='#b4d4ed';ctx.lineWidth=1;
+   for(let i=0;i<8;i++){const x=(i*127+phase*85)%(w+90)-90,y=30+(i*43)%(base-50);ctx.beginPath();ctx.moveTo(x,y);ctx.quadraticCurveTo(x+26,y-7,x+55,y-3);ctx.stroke();}
+  }ctx.restore();
+ }
  // Ground.
  ctx.fillStyle='#23282a';ctx.fillRect(0,base+9,w,h-base);ctx.strokeStyle='#59625a';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(0,base+9);ctx.lineTo(w,base+9);ctx.stroke();ctx.strokeStyle='#76816b20';for(let x=0;x<w;x+=17){ctx.beginPath();ctx.moveTo(x,base+25);ctx.lineTo(x+9,base+16);ctx.stroke();}
- // Roof drawn with its two fitted RC temperatures, P3 and P4.
+ if(snowWeather?.snow>0){ctx.fillStyle='#dbeaf1';ctx.beginPath();ctx.moveTo(0,base+9);for(let x=0;x<=w+8;x+=8)ctx.lineTo(x,base+9-snowWeather.snow*(5+Math.sin(x/31)*2));ctx.lineTo(w,base+13);ctx.lineTo(0,base+13);ctx.closePath();ctx.fill();}
+ // Roof drawn with its two fitted RC temperatures, displayed as P1 and P2.
  ctx.shadowColor='#0005';ctx.shadowBlur=20;ctx.fillStyle='#13242d';ctx.beginPath();ctx.moveTo(X(-.015),top);ctx.lineTo(X(.5),ridge-9);ctx.lineTo(X(1.015),top);ctx.closePath();ctx.fill();ctx.shadowBlur=0;
  for(let k=0;k<2;k++){ctx.fillStyle=color(model.structure(14+k));ctx.beginPath();ctx.moveTo(X(k*.5),top-3);ctx.lineTo(X(.5),ridge);ctx.lineTo(X((k+1)*.5),top-3);ctx.closePath();ctx.fill();}
  ctx.strokeStyle='#d7e9ef50';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(X(-.022),top);ctx.lineTo(X(.5),ridge-5);ctx.lineTo(X(1.022),top);ctx.stroke();
  ctx.strokeStyle='#13233355';for(let f=.2;f<1;f+=.2){ctx.beginPath();ctx.moveTo(X(.5*f),top-(top-ridge)*f);ctx.lineTo(X(1-.5*f),top-(top-ridge)*f);ctx.stroke();}
+ if(snowWeather?.snow>0){
+  ctx.save();ctx.strokeStyle='#e6f4fa';ctx.lineWidth=1+snowWeather.snow*11;ctx.lineJoin='round';ctx.lineCap='round';ctx.shadowColor='#a9d6ee88';ctx.shadowBlur=4;
+  ctx.beginPath();ctx.moveTo(X(-.022),top-2);ctx.lineTo(X(.5),ridge-7);ctx.lineTo(X(1.022),top-2);ctx.stroke();ctx.restore();
+ }
  const wall=10,gap=8;
  // Air temperature raster; each room is independently interpolated, avoiding colour bleed through walls.
  for(let z=0;z<4;z++){
@@ -215,7 +253,7 @@ function drawHouse(){
  ctx.strokeStyle='#e4f4ff45';ctx.lineWidth=1;ctx.strokeRect(left,top,bw,bw*.6);ctx.beginPath();ctx.moveTo(X(.5),top);ctx.lineTo(X(.5),base);ctx.moveTo(left,Y(.3));ctx.lineTo(left+bw,Y(.3));ctx.stroke();
  // Windows: direct Rw branch, marked on each external wall.
  for(let z=0;z<4;z++){const x=X(z%2?1:0),y=Y(Math.floor(z/2)*.3+.15);ctx.fillStyle='#a4d9ed';ctx.fillRect(x-3,y-16,6,32);ctx.strokeStyle='#e2f9ff';ctx.lineWidth=.7;ctx.strokeRect(x-3,y-16,6,32);ctx.beginPath();ctx.moveTo(x-4,y);ctx.lineTo(x+4,y);ctx.stroke();}
- if($('showLabels').checked){for(let z=0;z<4;z++){const x=X(z%2*.5+.25),y=Y(Math.floor(z/2)*.3+.24);badge(`T${'₁₂₃₄'[z]}  ${fmt(s.zones[z])} °C`,x,y);}badge(`P₃  ${fmt(model.structure(14))}°`,X(.34),top-(top-ridge)*.35,true);badge(`P₄  ${fmt(model.structure(15))}°`,X(.66),top-(top-ridge)*.35,true);}
+ if($('showLabels').checked){for(let z=0;z<4;z++){const x=X(z%2*.5+.25),y=Y(Math.floor(z/2)*.3+.24);badge(`T${roomSub(z)}  ${fmt(s.zones[z])} °C`,x,y);}badge(`P₁  ${fmt(model.structure(14))}°`,X(.34),top-(top-ridge)*.35,true);badge(`P₂  ${fmt(model.structure(15))}°`,X(.66),top-(top-ridge)*.35,true);}
  badge(`Tₐ  ${fmt(s.outside)} °C`,Math.max(53,left/2),top+bw*.28,true);ctx.fillStyle='#a3afa5';ctx.textAlign='center';ctx.font='10px -apple-system,sans-serif';ctx.fillText(`Ground Tɢ = ${fmt(model.p.ground)} °C`,w/2,base+31);
  if(model.source&&model.mode==='heater'){
   const sp=screenPoint(model.source),x=sp.x,y=sp.y;ctx.strokeStyle='#fff4d9';ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(x,y,12,0,2*Math.PI);ctx.stroke();ctx.fillStyle='#faad5a';ctx.shadowColor='#ffbe68';ctx.shadowBlur=17;ctx.beginPath();ctx.arc(x,y,6,0,2*Math.PI);ctx.fill();ctx.shadowBlur=0;ctx.fillStyle='#2b2116';ctx.font='bold 11px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('+',x,y);ctx.textBaseline='alphabetic';
@@ -232,7 +270,7 @@ function drawChart(){
  for(let k=0;k<5;k++){const t=minT+span*k/4;gc.textAlign=k===0?'left':k===4?'right':'center';gc.fillStyle='#748a9d';gc.fillText(fmt(t/3600,t/3600%1?1:0)+' h',X(t),h-10);}
  gc.save();gc.beginPath();gc.rect(pad.l,pad.t,cw,ch);gc.clip();
  if(isChallenge()){gc.strokeStyle='#64decba0';gc.setLineDash([2,4]);gc.lineWidth=1;gc.beginPath();gc.moveTo(pad.l,Y(20));gc.lineTo(w-pad.r,Y(20));gc.stroke();gc.fillStyle='#8cdac6';gc.font='9px sans-serif';gc.textAlign='right';gc.fillText('Target 20 °C',w-pad.r-4,Y(20)-7);}
- for(let z=0;z<5;z++){gc.strokeStyle=colors[z];gc.lineWidth=z===4?1.2:1.6;gc.setLineDash(z===4?[4,4]:[]);gc.beginPath();let started=false;for(const row of history){if(row.t<minT-300)continue;const y=z===4?row.a:row.z[z];if(!started){gc.moveTo(X(row.t),Y(y));started=true;}else gc.lineTo(X(row.t),Y(y));}gc.stroke();if(history.length===1){const r=history[0];gc.fillStyle=colors[z];gc.beginPath();gc.arc(X(r.t),Y(z===4?r.a:r.z[z]),2,0,2*Math.PI);gc.fill();}}
+ for(let z=0;z<5;z++){gc.strokeStyle=colors[z];gc.lineWidth=z===4?1.2:1.6;gc.setLineDash(z===4?[4,4]:[]);gc.beginPath();let started=false;for(const row of history){if(row.t<minT-300)continue;const y=z===4?row.a:row.z[roomOrder[z]];if(!started){gc.moveTo(X(row.t),Y(y));started=true;}else gc.lineTo(X(row.t),Y(y));}gc.stroke();if(history.length===1){const r=history[0];gc.fillStyle=colors[z];gc.beginPath();gc.arc(X(r.t),Y(z===4?r.a:r.z[roomOrder[z]]),2,0,2*Math.PI);gc.fill();}}
  gc.restore();gc.setLineDash([]);
 }
 function updateMetrics(){
@@ -243,12 +281,12 @@ function updateMetrics(){
 }
 function screenPoint(p){const z=model.zoneAt(p.x,p.y),r=geometry.rooms[z];return{x:r.x+(p.x-z%2*.5)/.5*r.w,y:r.y+r.h-(p.y-Math.floor(z/2)*.3)/.3*r.h};}
 function point(e){const r=house.getBoundingClientRect(),px=e.clientX-r.left,py=e.clientY-r.top;let p={x:(px-geometry.left)/geometry.bw,y:(geometry.base-py)/geometry.bw,px,py,air:false};for(let z=0;z<4;z++){const b=geometry.rooms[z];if(px>=b.x&&px<=b.x+b.w&&py>=b.y&&py<=b.y+b.h){p.x=z%2*.5+(px-b.x)/b.w*.5;p.y=Math.floor(z/2)*.3+(1-(py-b.y)/b.h)*.3;p.air=true;break;}}return p;}
-function sampleView(p){if(p.air){const s=model.sample(p.x,p.y);return s?{...s,name:'T'+'₁₂₃₄'[s.zone]}:null;}const x=(p.px-geometry.left)/geometry.bw,y=(geometry.base-p.py)/geometry.bw;let id=null;if(x>=0&&x<=1){if(y>=.59&&y<=.82-.44*Math.abs(x-.5))id=14+(x>=.5?1:0);else if(y>=-.01&&y<=.01)id=12+(x>=.5?1:0);else if(y>0&&y<.6){const z=(y>=.3?2:0)+(x>=.5?1:0);if(x<.025||x>.975)id=4+z;else if(Math.abs(y-.3)<.02)id=9+(x>=.5?1:0);else if(Math.abs(x-.5)<.025)id=y>=.3?11:8;}}return id===null?null:{temperature:model.structure(id),name:Thermal.fitted.state_names[id]};} 
+function sampleView(p){if(p.air){const s=model.sample(p.x,p.y);return s?{...s,name:'T'+roomSub(s.zone)}:null;}const x=(p.px-geometry.left)/geometry.bw,y=(geometry.base-p.py)/geometry.bw;let id=null;if(x>=0&&x<=1){if(y>=.59&&y<=.82-.44*Math.abs(x-.5))id=14+(x>=.5?1:0);else if(y>=-.01&&y<=.01)id=12+(x>=.5?1:0);else if(y>0&&y<.6){const z=(y>=.3?2:0)+(x>=.5?1:0);if(x<.025||x>.975)id=4+z;else if(Math.abs(y-.3)<.02)id=9+(x>=.5?1:0);else if(Math.abs(x-.5)<.025)id=y>=.3?11:8;}}return id===null?null:{temperature:model.structure(id),name:displayNode(Thermal.fitted.state_names[id])};} 
 house.addEventListener('pointerdown',e=>{const p=point(e);if(model.mode==='heater'&&p.air){dragging=true;house.setPointerCapture(e.pointerId);placeSource(p.x,p.y);}});
 house.addEventListener('pointermove',e=>{const p=point(e);hover=p;if(dragging&&p.air)placeSource(p.x,p.y);const sample=sampleView(p);$('probe').hidden=!sample;if(sample){$('probe').textContent=`${sample.name} · ${fmt(sample.temperature)} °C`;$('probe').style.left=Math.max(7,Math.min(p.px+15,house.clientWidth-170))+'px';$('probe').style.top=Math.max(4,p.py-36)+'px';}if(!playing)drawHouse();});
 for(const event of ['pointerup','pointercancel'])house.addEventListener(event,()=>{dragging=false;});
 house.addEventListener('pointerleave',()=>{if(!dragging){hover=null;$('probe').hidden=true;drawHouse();}});
-house.addEventListener('keydown',e=>{if(['1','2','3','4'].includes(e.key)){const z=+e.key-1;placeSource(z%2*.5+.25,Math.floor(z/2)*.3+.15);}else if(e.code==='Space'){e.preventDefault();togglePlayback();}});
+house.addEventListener('keydown',e=>{if(['1','2','3','4'].includes(e.key)){const z=roomOrder[+e.key-1];placeSource(z%2*.5+.25,Math.floor(z/2)*.3+.15);}else if(e.code==='Space'){e.preventDefault();togglePlayback();}});
 function draw(){drawHouse();drawChart();}
 new ResizeObserver(draw).observe($('house').parentElement);new ResizeObserver(drawChart).observe($('chart').parentElement);
 function animate(now){

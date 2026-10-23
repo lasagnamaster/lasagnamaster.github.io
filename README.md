@@ -36,20 +36,20 @@ Returning to either laboratory mode restores its R, C, initial settings, selecte
 ### Fixed challenge scenario
 
 - Room grid: 20 × 14 cells, as in the spatial model.
-- All resistances and the 12 construction heat capacities retain their fitted values.
+- Bare-house resistances and the 12 construction heat capacities retain their fitted values. Third-day weather modifies exterior conductances and adds snow resistance to the outer roof branch as described below.
 - The four effective air heat capacities are **eight times** their original values to make manual control practical during accelerated playback. Mixing conductance is fixed at **60 W/K**. This is a teaching profile, distinct from the original identified model.
 - Ground temperature: 5 °C. Initial room averages: 20 °C. Shared constructions start at 20 °C. Exterior walls, ground floors, and the roof are initialised at balance temperatures between the initial boundaries. Laboratory settings do not change the challenge scenario.
 - With h = t / 3600, outdoor temperature is:
 
-  `Ta = -14 + 7 cos(2π(h - 15)/24) - 4 exp(-((h - 39)/11)²)`.
+  `Ta = -14 + 7 cos(2π(h - 15)/24) - 4 exp(-((h - 39)/11)²) - storm_cooling(h)`.
 
-  This is a daily cycle with an additional cold spell on day two. The environment stays colder than the target, allowing heating to offset losses without negative power or air conditioning.
+  This is a daily cycle with an additional cold spell on day two and the prescribed storm cooling on day three. The environment stays colder than the target, allowing heating to offset losses without negative power or air conditioning.
 
 ### Sun and actual solar heat gains
 
 The sun rises at the right edge of the scene at 06:00 and sets at the left edge at 18:00. Its centre follows a continuous arc across the entire scene. At night, the trajectory continues below ground. The ground clips the disc and glow as they cross the horizon, so the sun gradually disappears behind it rather than being switched off at sunset. The daytime phase p increases from 0 to 1; solar heat intensity is proportional to `sin(πp)`.
 
-The right-hand morning exposure is `(1 + cos(πp))/2`; the left-hand exposure is its complement. The distribution reverses in the evening. Demonstration coefficients allow up to 300 W of direct solar gain in each downstairs room and 420 W in each upstairs room at full exposure. Each exterior wall can receive an additional 85 W, and each roof section 140 W. Daily sunlight multipliers are 1, 0.7, and 1.1. All solar heat inputs are zero at night.
+The right-hand morning exposure is `(1 + cos(πp))/2`; the left-hand exposure is its complement. The distribution reverses in the evening. Demonstration coefficients allow up to 300 W of direct solar gain in each downstairs room and 420 W in each upstairs room at full exposure. Each exterior wall can receive an additional 85 W, and each roof section 140 W. Base daily sunlight multipliers are 1, 0.7, and 1.1, with additional third-day attenuation from storm clouds. All solar heat inputs are zero at night.
 
 Within each room, direct gain is distributed from the exterior window using normalised weights `exp(-distance_in_cells/4)`, then propagates through the same thermal network. Sun position and heat gains use the same simulation clock. The rays and displayed solar power use the heat-input function. These are demonstration values: the coursework does not specify actual irradiance, materials, or the building's geographical orientation.
 
@@ -75,11 +75,23 @@ Power is distributed uniformly over the room's air cells. Starting from a 20 °C
 
 Temperatures are not forcibly assigned during play and the score is not a constant. They follow the same numerical equations used for manual control. The controller has full access to the teaching model's state and heat flows; it is a demonstration reference, not a claim about real thermostat accuracy.
 
+### Day 3: winter storm and snow blanket
+
+From hour 48, wind and snowfall build smoothly. Wind peaks at 42 km/h, then settles by hour 61. Outdoor temperature receives an extra cooling term of up to 6 °C from the storm wind plus a 2 °C cold-front term. The nominal daily cycle and day-two cold spell still apply. This is an imposed air-temperature scenario, not a wind-chill correction applied to the house.
+
+Wind multiplies window conductance by up to 1.18 and exterior wall/roof conductance by up to 1.25. Starting at hour 50, accumulated snow grows smoothly to 20 cm by hour 62 and remains until the end. Snow adds effective thermal resistance to the **outer roof half only**: `R_outer = R_bare × (1 + 2.5 × snow_fraction)`. Wind is applied to that effective branch as `G_outer = G_bare × (1 + 0.25 × wind_fraction) / (1 + 2.5 × snow_fraction)`. The inner roof half, walls, windows, floors, and all heat capacities retain their fitted values (apart from the challenge's existing air-capacity multiplier).
+
+At full cover in calm weather, the two-half roof's steady heat transfer at a fixed indoor/outdoor temperature difference is `2 / (1 + 3.5) ≈ 44%` of the bare value, or about **56% less**. The banner reports this roof-only comparison; it is not a 56% reduction in whole-house heating. Temperatures still evolve through the RC network. Snow is represented as added resistance without a separate snow temperature, snow heat capacity, melting, or latent-heat model. The depth and resistance scaling are prescribed teaching values, not fitted material properties.
+
+Snowfall attenuates solar input by up to 85%; after the storm, residual cloud cover reduces it by up to 20%. Drawing, accumulation, wind, weather, and heat exchange share the simulation clock and freeze when paused. Snowfall is rendered behind the house cutaway; snow remains on the roof and ground after the wind stops. CSV exports include wind speed, snow depth, extra cooling, and the outer-roof resistance multiplier. The same weather and conductance changes apply to manual control and autopilot.
+
+The challenge uses `maxDt / 1.25` as a conservative stability margin for increased exterior conductance. Boundary heat accounting uses the actual time-varying conductances, preserving energy balance. Laboratory and Daily cycle modes do not receive the winter storm.
+
 ### Challenge verification
 
-Run `node test-challenge.cjs` to check the fixed scenario, sun movement and solar gains, the 90-second duration, continuous sunrise and sunset at scene edges, independent heaters, 72-hour automatic control, global energy balance including sunlight, exact stopping at 72 hours, manual scoring from integrated actual errors, reproducibility, and resetting. The nine original checks in `test-model.cjs` are also retained.
+Run `node test-challenge.cjs` to check the fixed scenario, sun movement and solar gains, the 90-second duration, continuous sunrise and sunset at scene edges, independent heaters, continuous third-day weather, wind-enhanced heat loss, roof insulation at equal temperatures, lower heating energy with snow, numerical stability under wind, 72-hour automatic control, global energy balance including sunlight, exact stopping at 72 hours, manual scoring from integrated actual errors, reproducibility, and resetting. The nine original checks in `test-model.cjs` are also retained.
 
-A complete automatic run has also been checked through the browser interface: 100/100 and 100% of time within the comfort band. Manual slider operation, locked physical controls, and restoring laboratory parameters on exit have been verified.
+A complete automatic winter run has also been checked through the browser interface: 100/100, 100% of time within the comfort band, and 252.8 kWh. The browser CSV confirms 72 hours, all four room means at 20 °C, day-three-only wind/snow, 42 km/h peak wind, and a retained 20 cm blanket. Manual operation was checked on a 390 px viewport: heating T1 alone warms the upper-left room, the other three rooms cool with zero power, and CSV columns match the new numbering. Mobile layout has no horizontal overflow. Pausing freezes the weather as well as the thermal simulation. All 13 challenge checks and 9 original model checks pass.
 
 ## Source materials reviewed
 
@@ -91,6 +103,12 @@ Materials in `/Users/owner/Desktop/Sk/Maths for Eng/week3/`:
 - `Week3_identified_model.npz`: exact parameters, initial states, matrices, and node names. Values are embedded in `engine.js`; the original NPZ is not required at runtime.
 
 The solution contains 44,641 observations over 744 hours at one-minute intervals. Inputs are four heating signals and outdoor temperature; outputs are four room temperatures. In the original dataset, an enabled Control supplies 5000 kJ/h = 1.388889 kW. Parameters were fitted on the first 60% of the record, followed by 20% validation and 20% test. Reported test RMSE values are 0.130, 0.203, 0.310, and 0.356 °C. These refer to the original model driven by measured inputs, **not to the new spatial field**. The application does not refit parameters or load the dataset while running.
+
+## Room numbering
+
+The house and all visible controls use reading order: **T1 top left, T2 top right, T3 bottom left, T4 bottom right**. Heater shortcuts, keyboard keys 1–4, parameter labels, temperature probes, chart colours, result rows, and CSV temperature/heating columns follow this numbering.
+
+The original coursework uses T3/T4 upstairs and T1/T2 downstairs. Display rooms 1, 2, 3, 4 therefore map to solver zones 3, 4, 1, 2. Construction and parameter labels are mapped too: displayed floors are F3/F4 and roof nodes P1/P2. Fitted data, internal solver arrays, and settings JSON retain the original coursework order, preserving saved settings and the original thermal network. The state order below refers to that original internal order.
 
 ## Original RC model
 
@@ -138,7 +156,7 @@ The application uses explicit Euler integration. Its stable step limit is recalc
 
 `dt_max = min(30 s, 0.88 × min_i(C_i / Σ_j G_ij))`.
 
-The sum includes every outgoing conductance, including those connected to prescribed boundary temperatures. Without heating, each updated value is a convex combination of previous temperatures and boundaries, ensuring the discrete maximum principle. Every internal branch contributes +q and −q, so internal exchange cannot create energy. Temperatures are never secretly clipped; only colours may saturate on a fixed display scale. Continuous heating without a thermostat can produce high temperatures.
+In the challenge this limit is divided by 1.25 to cover the maximum wind enhancement. The sum includes every outgoing conductance, including those connected to prescribed boundary temperatures. Without heating, each updated value is a convex combination of previous temperatures and boundaries, ensuring the discrete maximum principle. Every internal branch contributes +q and −q, so internal exchange cannot create energy. Temperatures are never secretly clipped; only colours may saturate on a fixed display scale. Continuous heating without a thermostat can produce high temperatures.
 
 The original notebook uses implicit trapezoidal integration, so the application's time discretisation differs. Chart and CSV history are recorded every five simulated minutes. At 10,000 records the history is thinned to limit memory use.
 
@@ -173,4 +191,4 @@ There are no external dependencies or network requests. Deployment, network acce
 
 ## Speed and sunset
 
-The challenge runs four times faster than its first version: 2880 simulated seconds per real second, or 72 hours in approximately 90 seconds without pauses. Physical integration steps, solar inputs, scenario parameters, and scoring are preserved. Daily cycle and challenge modes share the continuous `sunTrackAt` visual trajectory, which spans all 24 hours and adapts to the scene's dimensions. The sun reaches the left edge of the scene and passes behind the ground horizon.
+The challenge runs four times faster than its first version: 2880 simulated seconds per real second, or 72 hours in approximately 90 seconds without pauses. Playback speed does not change the prescribed physical inputs or scoring. The third-day winter scenario is described above. Daily cycle and challenge modes share the continuous `sunTrackAt` visual trajectory, which spans all 24 hours and adapts to the scene's dimensions. The sun reaches the left edge of the scene and passes behind the ground horizon.

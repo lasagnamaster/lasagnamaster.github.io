@@ -60,8 +60,12 @@ class ThermalModel {
  ratesAt(time){
   const T=this.T,q=this.rate;q.fill(0);let boundary=0,solar=0;
   for(let e=0;e<this.ea.length;e++){const a=this.ea[e],b=this.eb[e],v=this.eg[e]*(T[b]-T[a]);q[a]+=v;q[b]-=v;}
-  const outside=this.outdoorAt(time);
-  for(let e=0;e<this.ba.length;e++){const a=this.ba[e],v=this.bg[e]*((this.bt[e]?this.p.ground:outside)-T[a]);q[a]+=v;boundary+=v;}
+  const outside=this.outdoorAt(time),weather=this.scenario?this.scenario.weatherAt(time):null;
+  for(let e=0;e<this.ba.length;e++){
+   const a=this.ba[e];let factor=1;
+   if(weather&&!this.bt[e])factor=a<this.airN?weather.windowFactor:a<this.airN+4?weather.wallFactor:weather.roofFactor;
+   const v=this.bg[e]*factor*((this.bt[e]?this.p.ground:outside)-T[a]);q[a]+=v;boundary+=v;
+  }
   if(this.scenario){
    const sun=this.scenario.solarAt(time);
    for(let z=0;z<4;z++){

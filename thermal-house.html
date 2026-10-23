@@ -11,6 +11,9 @@
 .challenge-active .intro{display:none}.challenge-active .mode-tabs{margin-top:0}.challenge-active .canvas-wrap{height:360px}.challenge-active .metrics{margin-top:18px;margin-bottom:17px}.challenge-active .mission{padding:15px 19px}.challenge-active .room-heater{padding:11px 12px}.challenge-active .room-heater-top{margin-bottom:11px}@media(max-width:760px){.challenge-active .mode-tabs{margin-top:17px}.challenge-active .canvas-wrap{height:280px}.challenge-active .mission{padding:13px}.challenge-active .room-heater{padding:11px 10px}.challenge-active .metrics{margin-top:17px;margin-bottom:15px}.challenge-active .intro{display:none}}
 @media(max-width:760px){.challenge-active .mode-tabs{width:calc(100% - 32px)}.challenge-active .mode-tabs button{flex:1;min-width:0;padding:8px 4px;font-size:10px;white-space:nowrap}}
 
+/* The third-day weather remains visible alongside the challenge clock. */
+.storm-banner{border-top:1px solid #335247;margin-top:15px;padding-top:12px}.storm-heading{display:flex;gap:10px;align-items:flex-start}.snow-icon{font-size:23px;line-height:1.1;color:#9bc8e2}.storm-heading b{font-size:11px;font-weight:550;color:#b5ccdc}.mission .storm-heading p{font-size:10px;margin:3px 0 0;line-height:1.55}.storm-banner.snow-active{border-top-color:#46617a}.storm-banner.snow-active .storm-heading b{color:#d5edff}.storm-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:11px 0 0 33px}.storm-metrics>span{font-size:7px;letter-spacing:.6px;color:#8fa9ba}.storm-metrics b{display:block;font-size:14px;font-weight:500;letter-spacing:0;color:#d0e9fa;margin-top:3px;font-variant-numeric:tabular-nums}@media(max-width:760px){.storm-metrics{gap:7px;margin-left:0}.storm-metrics>span{font-size:6px;letter-spacing:.2px}.storm-metrics b{font-size:13px}.storm-heading b{font-size:10px}.mission .storm-heading p{font-size:9px}}
+
 </style>
 </head>
 <body>
@@ -26,11 +29,12 @@
   <section class="mission" id="mission" hidden>
    <div class="mission-heading"><div><span class="mission-badge" id="controllerBadge">YOU ARE IN CONTROL</span><h2>Three days. Four rooms. Exactly 20 °C.</h2><p>Adjust the heating in each room. Weather and sunlight change throughout the day.</p></div><div class="mission-target">20<span>°C</span><small>TARGET IN EVERY ROOM</small></div></div>
    <div class="mission-progress"><div><span id="gameDay">Day 1 of 3</span><span id="gameRemaining">72 h remaining</span></div><progress id="gameProgress" max="259200" value="0" aria-label="Three-day challenge progress"></progress></div>
+   <div class="storm-banner" id="stormBanner"><div class="storm-heading"><span class="snow-icon" aria-hidden="true">❄</span><div><b id="stormTitle">Day 3: a winter storm is coming</b><p id="stormHint">Wind and cold arrive first. Snow then builds an insulating blanket on the roof.</p></div></div><div class="storm-metrics" id="stormMetrics" hidden><span>WIND <b id="stormWind">0 km/h</b></span><span>SNOW COVER <b id="stormSnow">0 cm</b></span><span title="Steady heat transfer compared with a bare roof in calm weather, at the same indoor/outdoor temperature difference. Actual temperatures respond gradually.">ROOF HEAT TRANSFER <b id="stormRoof">0%</b></span></div></div>
   </section>
   <div class="metrics"><div><span>OUTDOORS · Tₐ</span><strong id="outdoor">−5.0<small>°C</small></strong></div><div><span>INDOORS · AVERAGE</span><strong id="average">20.0<small>°C</small></strong></div><div><span>HEAT SOURCE</span><strong id="powerMetric">—<small>kW</small></strong></div><div><span>SIMULATION TIME</span><strong id="clock">00:00<small>day 1</small></strong></div></div>
   <section class="scene-card" aria-label="House temperature map">
    <div class="scene-top"><span id="sceneTitle">House section / temperature field</span><div><label class="check"><input type="checkbox" id="showLabels" checked>Temperatures</label><label class="check"><input type="checkbox" id="showGrid">Grid</label><button class="icon-button" id="snapshot" title="Save image" aria-label="Save image">↓</button></div></div>
-   <div class="canvas-wrap"><canvas id="house" aria-label="House: rooms 3 and 4 upstairs, rooms 1 and 2 downstairs. Click inside a room to place a heater." tabindex="0"></canvas><div id="probe" class="probe" hidden></div><div class="scene-guide" id="sceneGuide"><span>＋</span> Click inside a room to add heat</div></div>
+   <div class="canvas-wrap"><canvas id="house" aria-label="House: rooms 1 and 2 upstairs, rooms 3 and 4 downstairs. Click inside a room to place a heater." tabindex="0"></canvas><div id="probe" class="probe" hidden></div><div class="scene-guide" id="sceneGuide"><span>＋</span> Click inside a room to add heat</div></div>
    <div class="legend"><span id="scaleLow">−25 °C</span><div class="gradient"></div><span id="scaleHigh">60 °C</span><label class="check"><input type="checkbox" id="autoScale" checked>Auto scale</label></div>
    <div class="transport"><button class="play" id="play">▶ <span>Start</span></button><button class="quiet" id="reset" title="Restore initial temperatures">↺ Reset</button><button class="quiet" id="advanceDay">+24 h</button><div class="speed"><label for="speed">Speed</label><input id="speed" type="range" min="0" max="6" step="1" value="3"><output id="speedValue">30 min/s</output></div></div>
   </section>
@@ -42,7 +46,7 @@
   <section id="challengeControls" hidden>
    <div class="controller-tabs" role="group" aria-label="Heating controller"><button id="manualControl" class="active">Manual</button><button id="autoControl">Autopilot</button></div>
    <p class="small-note" id="controllerHint">Adjust the four sliders to keep each room at an average of 20 °C.</p>
-   <div class="locked-notice"><span>▣</span><div><b>Fixed conditions</b><small>72 hours · preset weather and sunlight<br>Only the heating power can be changed.</small></div></div>
+   <div class="locked-notice"><span>▣</span><div><b>Fixed conditions</b><small>72 hours · preset weather, sunlight and snow<br>Only the heating power can be changed.</small></div></div>
    <div class="room-heaters" id="roomHeaters"></div>
    <div class="game-actions"><button id="gameStart" class="play">▶ Start 3-day run</button><button id="gameRestart" class="quiet">↺ New run</button></div>
    <button id="demoFinish" class="demo-finish" hidden>Fast-forward all 3 days →</button>
@@ -52,7 +56,7 @@
   <fieldset id="labControls">
   <label class="select-label" for="solver">Simulation model</label><select id="solver"><option value="spatial">Spatial field</option><option value="rc">Original RC model · 16 nodes</option></select>
   <p class="small-note" id="solverHelp">Air is divided into cells. Walls, floors, and the roof retain the original RC nodes.</p>
-  <div id="heaterControls"><div class="section-label">01 <span>Heater</span><span class="live-dot"></span></div><div id="heaterSliders"></div><div class="source-row"><span id="sourceLabel">No heater placed</span><button id="removeSource" class="text-button" disabled>Remove</button></div><div class="place-buttons" aria-label="Place a heater at the room centre"><button data-zone="0">T₁</button><button data-zone="1">T₂</button><button data-zone="2">T₃</button><button data-zone="3">T₄</button></div><p class="small-note">Click inside a room or drag the heater. T₁–T₄ place it at the room centre.</p></div>
+  <div id="heaterControls"><div class="section-label">01 <span>Heater</span><span class="live-dot"></span></div><div id="heaterSliders"></div><div class="source-row"><span id="sourceLabel">No heater placed</span><button id="removeSource" class="text-button" disabled>Remove</button></div><div class="place-buttons" aria-label="Place a heater at the room centre"><button data-zone="2">T₁</button><button data-zone="3">T₂</button><button data-zone="0">T₃</button><button data-zone="1">T₄</button></div><p class="small-note">Click inside a room or drag the heater. T₁–T₄ place it at the room centre.</p></div>
   <div id="dayControls" hidden><div class="section-label">01 <span>Daily weather</span><span>☀</span></div><div class="day-notice">Heating is off. Only Tₐ changes; the ground temperature stays constant.</div><div id="daySliders"></div><div class="day-range"><span>Night <b id="nightTemp">−25°</b></span><span>Day <b id="dayTemp">30°</b></span></div></div>
   <div class="section-label">02 <span>Environment and initial state</span></div><div id="environmentSliders"></div>
   <label class="select-label" for="initialMode">Initial temperatures</label><select id="initialMode"><option value="uniform">Uniform throughout the house</option><option value="fitted">Initial states from the solution</option></select><p class="small-note">Press Reset to apply the selected initial temperatures.</p>
@@ -66,7 +70,7 @@
 </main>
 <div class="toast" id="toast" role="status" hidden></div>
 <dialog id="gameResult" class="result-dialog" aria-labelledby="resultTitle"><button class="close" id="resultClose" aria-label="Close results">×</button><p class="eyebrow" id="resultEyebrow">CHALLENGE COMPLETE</p><h2 id="resultTitle">Three days under your control</h2><div class="result-score"><strong id="finalScore">0</strong><span>/ 100</span></div><p id="resultDescription"></p><div class="result-stats"><div><b id="resultError">0.00 °C</b><small>Mean absolute error</small></div><div><b id="resultComfort">0 %</b><small>Time within ±0.5 °C</small></div><div><b id="resultEnergy">0 kWh</b><small>Heating energy over 3 days</small></div></div><div class="result-rooms" id="resultRooms"></div><p class="small-note">Room averages are evaluated over all 72 hours. Overheating one room cannot offset another room being too cold.</p><div class="result-actions"><button class="play" id="resultRetry">Try again</button><button class="quiet" id="resultDemo">Watch ideal control →</button></div></dialog>
-<dialog id="about"><button class="close" id="aboutClose" aria-label="Close">×</button><p class="eyebrow">FROM COURSEWORK TO APPLICATION</p><h2>One house. Two scales.</h2><p>Based on the Week 3 solution: a two-storey house with zones T₁–T₄, windows, exterior walls, partitions, an inter-storey slab, ground floors, and a roof. Default ground temperature: 5 °C.</p><h3>Original RC model</h3><p>16 states: T₁–T₄, O₁–O₄, V₁₂, V₁₃, V₂₄, V₃₄, F₁–F₂, P₃–P₄. Numerical parameters come from Week3_identified_model.npz. Each construction has its own heat capacity. For shared walls, floors, and the roof, each resistance value represents one of two equal halves.</p><div class="equation">Cᵢ dTᵢ/dt = Σⱼ (Tⱼ − Tᵢ) / Rᵢⱼ + Qᵢ</div><h3>Spatial field</h3><p>Each room is divided into 20 × 14 cells. Their total heat capacity equals Cᵢ from the solution. Conductances to constructions and windows are distributed over the corresponding boundaries, preserving their totals. Within a room, heat flows between adjacent cells through an adjustable conductance.</p><p>This is an additional assumption: the original measurements contain only room-average temperatures. They do not identify the spatial field or mixing rate. Walls and the roof display their RC-node temperatures; the section and pitched roof are schematic. There is no separate attic node.</p><h3>Heat source and daily cycle</h3><p>The heater runs continuously. Its selected power is distributed around the chosen point using a normalised Gaussian profile within one room. In the original RC model, this power enters that room's air node. In Daily cycle mode, Q = 0 in every room, while outdoor temperature follows a 24-hour sinusoid.</p><h3>Keep 20 °C challenge</h3><p>72 simulated hours with four independent whole-room heaters, each rated from 0 to 2.5 kW. Outdoor temperature follows a daily cycle with a cold spell on day two. The sun rises on the right at 06:00 and sets on the left at 18:00. Solar heat enters cells near windows, exterior walls, and the roof, with stronger gains on the right in the morning and on the left in the evening.</p><p>Challenge parameters are locked. To make manual control practical during the accelerated three-day run, effective air heat capacities are eight times the original values and mixing conductance is fixed at 60 W/K. All other fitted R and C values are retained. Manual control and autopilot use the same fixed teaching scenario.</p><p>The target and score refer to each room's average temperature. Autopilot calculates heating power from the current heat balance, limited to 0–2.5 kW. The same numerical simulation determines the temperatures and final score.</p><h3>Numerical simulation</h3><p>The app uses explicit Euler integration with Δt ≤ 0.88 min(Cᵢ / ΣGᵢⱼ), capped at 30 seconds. Internal heat flows cancel in pairs. The speed slider changes playback speed only. The coursework report uses trapezoidal integration, so the numerical methods differ.</p><p class="small-note">R is displayed in K/kW, C in kJ/K, and power in kW. The solver uses W, J, and seconds. The fitted parameters are effective values; they do not uniquely identify the materials or dimensions of a real house. The app works offline without external libraries.</p></dialog>
+<dialog id="about"><button class="close" id="aboutClose" aria-label="Close">×</button><p class="eyebrow">FROM COURSEWORK TO APPLICATION</p><h2>One house. Two scales.</h2><p>Based on the Week 3 solution: a two-storey house with zones T₁–T₄, windows, exterior walls, partitions, an inter-storey slab, ground floors, and a roof. Default ground temperature: 5 °C.</p><p>Rooms are numbered left to right: T₁–T₂ upstairs, T₃–T₄ downstairs. Controls, charts, and CSV exports use this order. The original coursework numbers are mapped to this display order; fitted parameters and physical connections are retained.</p><h3>Original RC model</h3><p>16 states, using the display numbering: T₁–T₄, O₁–O₄, V₁₂, V₁₃, V₂₄, V₃₄, F₃–F₄, P₁–P₂. Numerical parameters come from Week3_identified_model.npz. Each construction has its own heat capacity. For shared walls, floors, and the roof, each resistance value represents one of two equal halves.</p><div class="equation">Cᵢ dTᵢ/dt = Σⱼ (Tⱼ − Tᵢ) / Rᵢⱼ + Qᵢ</div><h3>Spatial field</h3><p>Each room is divided into 20 × 14 cells. Their total heat capacity equals Cᵢ from the solution. Conductances to constructions and windows are distributed over the corresponding boundaries, preserving their totals. Within a room, heat flows between adjacent cells through an adjustable conductance.</p><p>This is an additional assumption: the original measurements contain only room-average temperatures. They do not identify the spatial field or mixing rate. Walls and the roof display their RC-node temperatures; the section and pitched roof are schematic. There is no separate attic node.</p><h3>Heat source and daily cycle</h3><p>The heater runs continuously. Its selected power is distributed around the chosen point using a normalised Gaussian profile within one room. In the original RC model, this power enters that room's air node. In Daily cycle mode, Q = 0 in every room, while outdoor temperature follows a 24-hour sinusoid.</p><h3>Keep 20 °C challenge</h3><p>72 simulated hours with four independent whole-room heaters, each rated from 0 to 2.5 kW. Outdoor temperature follows a daily cycle with a cold spell on day two. The sun rises on the right at 06:00 and sets on the left at 18:00. Solar heat enters cells near windows, exterior walls, and the roof, with stronger gains on the right in the morning and on the left in the evening.</p><p>Challenge parameters are locked. To make manual control practical during the accelerated three-day run, effective air heat capacities are eight times the original values and mixing conductance is fixed at 60 W/K. Bare-house R values and construction heat capacities are retained; third-day weather modifies exterior heat exchange and adds snow insulation as described below. Manual control and autopilot use the same fixed teaching scenario.</p><p>The target and score refer to each room's average temperature. Autopilot calculates heating power from the current heat balance, limited to 0–2.5 kW. The same numerical simulation determines the temperatures and final score.</p><h3>Day 3: wind, snow, and insulation</h3><p>A winter storm begins at hour 48. Wind rises smoothly to 42 km/h and adds up to 6 °C of outdoor cooling; the cold front adds another 2 °C. Wind raises window conductance by up to 18% and the outer wall/roof conductance by up to 25%. Snowfall weakens solar gain. Snow builds up gradually to a 20 cm blanket and remains through the end of the run.</p><p>Accumulated snow adds resistance to the outer roof branch: at full cover its resistance is 3.5 times the bare value. With the unchanged inner half, steady roof heat transfer is then about 56% lower at the same temperature difference in calm weather. The displayed reduction describes the roof only. Walls and windows still lose heat. These prescribed values are a teaching scenario, not measured material properties. Autopilot responds to the same changing heat flows.</p><h3>Numerical simulation</h3><p>The app uses explicit Euler integration with Δt ≤ 0.88 min(Cᵢ / ΣGᵢⱼ), capped at 30 seconds. The challenge adds a conservative stability margin for wind-enhanced exterior heat exchange. Internal heat flows cancel in pairs. The speed slider changes playback speed only. The coursework report uses trapezoidal integration, so the numerical methods differ.</p><p class="small-note">R is displayed in K/kW, C in kJ/K, and power in kW. The solver uses W, J, and seconds. The fitted parameters are effective values; they do not uniquely identify the materials or dimensions of a real house. The app works offline without external libraries.</p></dialog>
 <script>
 /* Thermal RC graph, SI units internally. See README for spatial extension. */
 (function(root){
@@ -130,8 +134,12 @@ class ThermalModel {
  ratesAt(time){
   const T=this.T,q=this.rate;q.fill(0);let boundary=0,solar=0;
   for(let e=0;e<this.ea.length;e++){const a=this.ea[e],b=this.eb[e],v=this.eg[e]*(T[b]-T[a]);q[a]+=v;q[b]-=v;}
-  const outside=this.outdoorAt(time);
-  for(let e=0;e<this.ba.length;e++){const a=this.ba[e],v=this.bg[e]*((this.bt[e]?this.p.ground:outside)-T[a]);q[a]+=v;boundary+=v;}
+  const outside=this.outdoorAt(time),weather=this.scenario?this.scenario.weatherAt(time):null;
+  for(let e=0;e<this.ba.length;e++){
+   const a=this.ba[e];let factor=1;
+   if(weather&&!this.bt[e])factor=a<this.airN?weather.windowFactor:a<this.airN+4?weather.wallFactor:weather.roofFactor;
+   const v=this.bg[e]*factor*((this.bt[e]?this.p.ground:outside)-T[a]);q[a]+=v;boundary+=v;
+  }
   if(this.scenario){
    const sun=this.scenario.solarAt(time);
    for(let z=0;z<4;z++){
@@ -167,6 +175,7 @@ root.Thermal={ThermalModel,defaults,defaultC,defaultR,names,rNames,fitted};if(ty
 const thermal=typeof module!=='undefined'&&module.exports?require('./engine.js'):root.Thermal;
 const DURATION=72*3600,TARGET=20,MAX_POWER=2500,SPEED=2880;
 const clamp=(v,lo,hi)=>Math.max(lo,Math.min(hi,v));
+const smooth=x=>{const t=clamp(x,0,1);return t*t*(3-2*t);};
 // Continuous visual orbit, including the portion below the ground at night.
 function sunTrackAt(time,width,horizon,radius=11){
  const hour=((time/3600)%24+24)%24,angle=2*Math.PI*(hour-6)/24;
@@ -182,7 +191,8 @@ class HeatingChallenge {
   const m=this.model;this.active=true;this.control=control;this.state='ready';
   m.scenario=null;m.p={...thermal.defaults,initial:20,ground:5,mixing:60,speed:SPEED};
   m.C=thermal.defaultC.map((v,i)=>i<4?v*8:v);m.R=thermal.defaultR.slice();m.initialMode='uniform';m.solver='spatial';m.mode='challenge';m.source=null;m.rebuild();
-  m.scenario=this;this.solarWeights=[];
+  // Reserve stability margin for the maximum 25% increase in exterior conductance.
+  m.maxDt/=1.25;m.scenario=this;this.solarWeights=[];
   for(let z=0;z<4;z++){
    const weights=new Float64Array(m.perZone);let sum=0;
    for(let j=0;j<m.rows;j++)for(let i=0;i<m.cols;i++){
@@ -199,15 +209,27 @@ class HeatingChallenge {
   m.ratesAt(0);this.powers=this.requiredPowers(1).map(v=>Math.round(v/5)*5);
   this.initialEnergy=m.energy();return this;
  }
+ weatherAt(t){
+  const age=t/3600-48,active=age>=0;
+  const wind=smooth(age/3)*(1-smooth((age-8)/5));
+  const snowfall=smooth(age/2)*(1-smooth((age-9)/3));
+  const snow=smooth((age-2)/12),coldDrop=6*wind+2*smooth(age/4);
+  const roofResistance=1+2.5*snow,roofFactor=(1+.25*wind)/roofResistance;
+  return {active,wind,snowfall,snow,snowCm:20*snow,windKmh:42*wind,coldDrop,
+   windowFactor:1+.18*wind,wallFactor:1+.25*wind,roofFactor,roofResistance,
+   // Steady two-half roof branch, relative to the bare, wind-free roof.
+   roofTransfer:2/(1+1/roofFactor),
+   phase:!active?'forecast':age<3?'arriving':age<10?'blizzard':age<14?'settling':'blanket'};
+ }
  outdoorAt(t){
   // Smooth cold front on day two; same curve for player and demonstration.
-  const hours=t/3600;return -14+7*Math.cos(2*Math.PI*(hours-15)/24)-4*Math.exp(-(((hours-39)/11)**2));
+  const hours=t/3600;return -14+7*Math.cos(2*Math.PI*(hours-15)/24)-4*Math.exp(-(((hours-39)/11)**2))-this.weatherAt(t).coldDrop;
  }
  solarAt(t){
   const hour=((t/3600)%24+24)%24,phase=clamp((hour-6)/12,0,1),height=hour>=6&&hour<=18?Math.sin(Math.PI*phase):0;
-  const right=(1+Math.cos(Math.PI*phase))/2,left=1-right,day=Math.min(2,Math.floor(t/86400)),weather=[1,.7,1.1][day];
+  const right=(1+Math.cos(Math.PI*phase))/2,left=1-right,day=Math.min(2,Math.floor(t/86400)),weather=[1,.7,1.1][day],storm=this.weatherAt(t),clouds=1-.85*storm.snowfall-.2*storm.snow*(1-storm.snowfall);
   const air=[],walls=[],roof=[];
-  for(let z=0;z<4;z++){const exposure=.12+.88*(z%2?right:left),gain=height*weather*exposure;air.push((z<2?300:420)*gain);walls.push(85*gain);if(z>=2)roof.push(140*gain);}
+  for(let z=0;z<4;z++){const exposure=.12+.88*(z%2?right:left),gain=height*weather*clouds*exposure;air.push((z<2?300:420)*gain);walls.push(85*gain);if(z>=2)roof.push(140*gain);}
   return {phase,height,x:1.12-1.24*phase,visible:height>1e-6,air,walls,roof,total:air.reduce((a,b)=>a+b,0)+walls.reduce((a,b)=>a+b,0)+roof.reduce((a,b)=>a+b,0)};
  }
  requiredPowers(dt){
@@ -248,6 +270,17 @@ const model=new ThermalModel(),challenge=new Thermal.HeatingChallenge(model);win
 const house=$('house'),ctx=house.getContext('2d'),chart=$('chart'),gc=chart.getContext('2d');
 const speeds=[60,300,900,1800,3600,7200,14400],colors=['#51d5be','#7eafff','#e8b06a','#c5a0ff','#e0e8ef'];
 let playing=false,last=0,history=[],lastRecord=-Infinity,fastTarget=null,scaleMin=-25,scaleMax=60,viewMin=-25,viewMax=60,hover=null,dragging=false,toastTimer,geometry=null,realSpeed=0;
+// Display rooms in reading order; retain the coursework indices inside the solver.
+const roomOrder=[2,3,0,1],roomSub=z=>'₃₄₁₂'[z];
+const roomValues=values=>roomOrder.map(z=>values[z]);
+function displayNode(name){
+ return name.replace(/[1-4₁₂₃₄]+/g,part=>{
+  const sub='₁₂₃₄'.includes(part[0]);
+  const mapped=[...part].map(c=>roomOrder[sub?'₁₂₃₄'.indexOf(c):Number(c)-1]+1);
+  if(mapped.length>1)mapped.sort((a,b)=>a-b);
+  return mapped.map(n=>sub?'₁₂₃₄'[n-1]:n).join('');
+ });
+}
 const sliders={};
 let sandboxSnapshot=null,resultShown=false;
 const isChallenge=()=>model.mode==='challenge'&&challenge.active;
@@ -289,16 +322,16 @@ const mixingGroup=group('Room mixing','Additional spatial-model parameter');
 slider(mixingGroup,'mixing','Adjacent-cell conductance',1,80,1,model.p.mixing,'W/K',v=>{model.p.mixing=v;changedNetwork();},{digits:0});
 const descriptions=['Air T₁','Air T₂','Air T₃','Air T₄','Wall O₁','Wall O₂','Wall O₃','Wall O₄','Partition V₁₂','Slab V₁₃','Slab V₂₄','Partition V₃₄','Floor F₁','Floor F₂','Roof P₃','Roof P₄'];
 const cg1=group('Room heat capacities','C₁–C₄ · kJ/K'),cg2=group('Construction heat capacities','12 nodes · kJ/K');
-for(let i=0;i<16;i++)slider(i<4?cg1:cg2,'C'+i,`${names[i]} · ${descriptions[i]}`,Math.log(defaultC[i]/4),Math.log(defaultC[i]*4),.001,model.C[i],'kJ/K',v=>{model.C[i]=v;changedNetwork();},{log:true,digits:1});
-const rg=[group('Windows → outdoor air','Rw₁–Rw₄ · K/kW'),group('Exterior walls → rooms','Ro₁b–Ro₄b · K/kW'),group('Outdoor air → walls','Ro₁a–Ro₄a · K/kW'),group('Partitions and slabs','R₁₂, R₁₃, R₂₄, R₃₄ · one half'),group('Floors and roof','Rf₁, Rf₂, Rr₃, Rr₄ · one half')];
-for(let i=0;i<20;i++)slider(rg[Math.floor(i/4)],'R'+i,rNames[i],Math.log(defaultR[i]/4),Math.log(defaultR[i]*4),.001,model.R[i],'K/kW',v=>{model.R[i]=v;changedNetwork();},{log:true,digits:2});
+for(const i of [2,3,0,1,6,7,4,5,11,9,10,8,12,13,14,15])slider(i<4?cg1:cg2,'C'+i,`${displayNode(names[i])} · ${displayNode(descriptions[i])}`,Math.log(defaultC[i]/4),Math.log(defaultC[i]*4),.001,model.C[i],'kJ/K',v=>{model.C[i]=v;changedNetwork();},{log:true,digits:1});
+const rg=[group('Windows → outdoor air','Rw₁–Rw₄ · K/kW'),group('Exterior walls → rooms','Ro₁b–Ro₄b · K/kW'),group('Outdoor air → walls','Ro₁a–Ro₄a · K/kW'),group('Partitions and slabs','R₁₂, R₁₃, R₂₄, R₃₄ · one half'),group('Floors and roof','Rf₃, Rf₄, Rr₁, Rr₂ · one half')];
+for(const i of [2,3,0,1,6,7,4,5,10,11,8,9,15,13,14,12,16,17,18,19])slider(rg[Math.floor(i/4)],'R'+i,displayNode(rNames[i]),Math.log(defaultR[i]/4),Math.log(defaultR[i]*4),.001,model.R[i],'K/kW',v=>{model.R[i]=v;changedNetwork();},{log:true,digits:2});
 slider($('displaySliders'),'scaleMin','Lower limit',-50,40,1,scaleMin,'°C',v=>{scaleMin=v;if(scaleMax<=v){scaleMax=v+1;sliders.scaleMax.set(scaleMax);}$('autoScale').checked=false;draw();});
 slider($('displaySliders'),'scaleMax','Upper limit',0,200,1,scaleMax,'°C',v=>{scaleMax=v;if(scaleMin>=v){scaleMin=v-1;sliders.scaleMin.set(scaleMin);}$('autoScale').checked=false;draw();});
-for(let z=0;z<4;z++){
- const card=document.createElement('div');card.className='room-heater';card.style.setProperty('--room-color',colors[z]);
- card.innerHTML=`<div class="room-heater-top"><span class="room-name">Room T${'₁₂₃₄'[z]}</span><strong class="room-reading" id="roomT${z}">20.00 °C</strong></div><div class="room-power"></div><div class="room-error"><span>Target 20 °C</span><b id="roomError${z}">On target</b></div>`;
+for(const z of roomOrder){
+ const card=document.createElement('div');card.className='room-heater';card.style.setProperty('--room-color',colors[roomOrder.indexOf(z)]);
+ card.innerHTML=`<div class="room-heater-top"><span class="room-name">Room T${roomSub(z)}</span><strong class="room-reading" id="roomT${z}">20.00 °C</strong></div><div class="room-power"></div><div class="room-error"><span>Target 20 °C</span><b id="roomError${z}">On target</b></div>`;
  $('roomHeaters').append(card);
- slider(card.querySelector('.room-power'),'gameQ'+z,`Heating T${'₁₂₃₄'[z]}`,0,Thermal.MAX_POWER,5,0,'kW',v=>{if(challenge.setPower(z,v))updateMetrics();},{display:v=>v/1000,digits:2});
+ slider(card.querySelector('.room-power'),'gameQ'+z,`Heating T${roomSub(z)}`,0,Thermal.MAX_POWER,5,0,'kW',v=>{if(challenge.setPower(z,v))updateMetrics();},{display:v=>v/1000,digits:2});
 }
 function updateChallengeUI(s){
  if(!isChallenge())return;const time=model.time,done=challenge.state==='finished',day=Math.min(3,1+Math.floor(time/86400));
@@ -307,6 +340,12 @@ function updateChallengeUI(s){
   const error=s.zones[z]-20,reading=$('roomT'+z);reading.textContent=fmt(s.zones[z],2)+' °C';reading.classList.toggle('cold',error<-.25);reading.classList.toggle('hot',error>.25);
   $('roomError'+z).textContent=Math.abs(error)<.005?'Exactly 20 °C':(error>0?'+':'')+fmt(error,2)+' °C';sliders['gameQ'+z].set(challenge.powers[z]);
  }
+ const weather=challenge.weatherAt(time);
+ const captions={forecast:['Day 3: a winter storm is coming','Wind and cold arrive first. Snow then builds an insulating blanket on the roof.'],arriving:['Day 3 · the storm is arriving','Outdoor temperature is falling. Stronger wind increases heat loss.'],blizzard:['Day 3 · wind and heavy snow','Keep an eye on your heaters: cold wind cools the house as snow accumulates.'],settling:['Day 3 · the wind is easing','The snow blanket is growing. Heat escapes through the roof more slowly.'],blanket:['Day 3 · a blanket of snow','The wind has calmed. Snow insulates the roof; less heating may be needed.']};
+ const [title,hint]=captions[weather.phase];$('stormTitle').textContent=title;$('stormHint').textContent=hint;
+ $('stormBanner').classList.toggle('snow-active',weather.active);$('stormMetrics').hidden=!weather.active;
+ $('stormWind').textContent=fmt(weather.windKmh,0)+' km/h';$('stormSnow').textContent=fmt(weather.snowCm,1)+' cm';
+ const transfer=(weather.roofTransfer-1)*100;$('stormRoof').textContent=(transfer>0?'+':'')+fmt(transfer,0)+'%';
  const sun=challenge.solarAt(time);$('sunPower').textContent=fmt(sun.total/1000,2)+' kW';$('sunDirection').textContent=!sun.visible?'Night. No solar heat gain.':sun.phase<.45?'Morning: sun on the right → right-hand rooms gain heat.':sun.phase>.55?'Evening: sun on the left → left-hand rooms gain heat.':'Midday: solar heat reaches both sides.';
 }
 function showResult(){
@@ -314,12 +353,12 @@ function showResult(){
  $('resultEyebrow').textContent=r.control==='auto'?'DEMONSTRATION COMPLETE':'CHALLENGE COMPLETE';$('resultTitle').textContent=r.control==='auto'?'72 hours on autopilot':'Three days under your control';
  $('finalScore').textContent=fmt(r.score,1);$('resultError').textContent=fmt(r.mae,3)+' °C';$('resultComfort').textContent=fmt(r.comfort,1)+' %';$('resultEnergy').textContent=fmt(r.kWh,1)+' kWh';
  $('resultDescription').textContent=r.control==='auto'&&r.mae<.005?'Every room stayed at an average of 20 °C throughout all 72 hours. This result is calculated from the simulated temperatures.':'The score accounts for each room\'s deviation from 20 °C over the entire challenge.';
- $('resultRooms').replaceChildren();r.zones.forEach((z,i)=>{const div=document.createElement('div');div.className='result-room';div.innerHTML=`<div><span>Room T${'₁₂₃₄'[i]}</span><b>${fmt(z.score,1)} / 100</b></div><small>Mean absolute error ${fmt(z.mae,3)} °C<br>Within the comfort band for ${fmt(z.comfort,1)}% of the time</small>`;$('resultRooms').append(div);});
+ $('resultRooms').replaceChildren();roomOrder.forEach(i=>{const z=r.zones[i];const div=document.createElement('div');div.className='result-room';div.innerHTML=`<div><span>Room T${roomSub(i)}</span><b>${fmt(z.score,1)} / 100</b></div><small>Mean absolute error ${fmt(z.mae,3)} °C<br>Within the comfort band for ${fmt(z.comfort,1)}% of the time</small>`;$('resultRooms').append(div);});
  $('resultDemo').hidden=r.control==='auto';$('gameResult').showModal();
 }
 $('resultClose').onclick=()=>$('gameResult').close();$('resultRetry').onclick=()=>startChallenge('manual');$('resultDemo').onclick=()=>startChallenge('auto',true);
 function updateWeather(){$('nightTemp').textContent=fmt(model.p.dayMin,0)+'°';$('dayTemp').textContent=fmt(model.p.dayMax,0)+'°';updateMetrics();}
-function updateSource(){const z=model.source?model.zoneAt(model.source.x,model.source.y):-1;$('sourceLabel').textContent=z<0?'No heater placed':`Heater in room T${'₁₂₃₄'[z]}`;$('removeSource').disabled=!model.source;$('sceneGuide').hidden=!!model.source||model.mode!=='heater';}
+function updateSource(){const z=model.source?model.zoneAt(model.source.x,model.source.y):-1;$('sourceLabel').textContent=z<0?'No heater placed':`Heater in room T${roomSub(z)}`;$('removeSource').disabled=!model.source;$('sceneGuide').hidden=!!model.source||model.mode!=='heater';}
 function placeSource(x,y){if(model.mode!=='heater')return;if(model.setSource({x,y})){updateSource();updateMetrics();if(!playing)startStop(true);draw();}}
 function syncLabControls(){
  for(const [k,v]of Object.entries(model.p))if(sliders[k])sliders[k].set(v);
@@ -354,7 +393,7 @@ function leaveChallenge(){
  $('sidebarHeading').textContent='Model parameters';$('play').disabled=false;$('speed').disabled=false;$('advanceDay').disabled=false;
  document.querySelector('#powerMetric').previousElementSibling.textContent='HEAT SOURCE';
  $('modelNote').textContent='R and C values from the Week 3 solution. The spatial field extends the original model.';
- house.setAttribute('aria-label','House: rooms 3 and 4 upstairs, rooms 1 and 2 downstairs. Click inside a room to place a heater.');
+ house.setAttribute('aria-label','House: rooms 1 and 2 upstairs, rooms 3 and 4 downstairs. Click inside a room to place a heater.');
  syncLabControls();model.rebuild();
 }
 function mode(value){
@@ -384,8 +423,8 @@ for(const id of ['showLabels','showGrid','autoScale'])$(id).onchange=draw;
 function download(name,data,type){const url=URL.createObjectURL(new Blob([data],{type})),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),10000);}
 $('exportCsv').onclick=()=>{
  const rows=history.slice();if(!rows.length||rows.at(-1).t!==model.time){const s=model.stats();rows.push({t:model.time,z:s.zones,a:s.outside,q:isChallenge()?challenge.powers.slice():null,solar:isChallenge()?challenge.solarAt(model.time).total:0});}
- const game=isChallenge(),header='time_hours,T1_C,T2_C,T3_C,T4_C,outside_C,mode,solver'+(game?',Q1_W,Q2_W,Q3_W,Q4_W,solar_W,controller':'');
- download('thermal-house-history.csv','\uFEFF'+header+'\n'+rows.map(r=>[r.t/3600,...r.z,r.a,model.mode,model.solver,...(game?[...(r.q||[0,0,0,0]),r.solar,challenge.control]:[])].join(',')).join('\n'),'text/csv;charset=utf-8');
+ const game=isChallenge(),header='time_hours,T1_C,T2_C,T3_C,T4_C,outside_C,mode,solver'+(game?',Q1_W,Q2_W,Q3_W,Q4_W,solar_W,controller,wind_kmh,snow_cm,storm_cooling_C,roof_outer_R_factor':'');
+ download('thermal-house-history.csv','\uFEFF'+header+'\n'+rows.map(r=>[r.t/3600,...roomValues(r.z),r.a,model.mode,model.solver,...(game?[...roomValues(r.q||[0,0,0,0]),r.solar,challenge.control,...((w)=>[w.windKmh,w.snowCm,w.coldDrop,w.roofResistance])(challenge.weatherAt(r.t))]:[])].join(',')).join('\n'),'text/csv;charset=utf-8');
 };
 $('snapshot').onclick=()=>{draw();house.toBlob(blob=>{if(blob){const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='thermal-house.png';a.click();setTimeout(()=>URL.revokeObjectURL(url),10000);}});};
 $('saveSettings').onclick=()=>{if(isChallenge())return;download('thermal-house-settings.json',JSON.stringify({version:1,parameters:model.p,C:model.C,R:model.R,source:model.source,mode:model.mode,solver:model.solver,initialMode:model.initialMode},null,2),'application/json');};
@@ -433,13 +472,34 @@ function drawHouse(){
   // The moon fades in only as the sun descends below the horizon.
   if(track.night>0){ctx.save();ctx.globalAlpha=track.night;ctx.fillStyle='#b9d2e0';ctx.beginPath();ctx.arc(w-35,28,9,0,2*Math.PI);ctx.fill();ctx.fillStyle='#152130';ctx.beginPath();ctx.arc(w-31,24,9,0,2*Math.PI);ctx.fill();ctx.restore();}
  }
+ const snowWeather=isChallenge()?challenge.weatherAt(model.time):null;
+ if(snowWeather?.active){
+  const storm=snowWeather,phase=model.time/1440;
+  ctx.fillStyle=`rgba(160,190,218,${storm.snowfall*.14})`;ctx.fillRect(0,0,w,base+9);
+  // Snow falls behind the cutaway, so temperatures and controls remain readable.
+  ctx.save();ctx.beginPath();ctx.rect(0,0,w,base+9);ctx.clip();
+  ctx.fillStyle='#dfedf6';
+  for(let i=0;i<110*storm.snowfall;i++){
+   const seed=i*137.508,x=((seed+phase*(10+storm.wind*48))%(w+50))-25;
+   const y=((i*71.17+phase*(31+i%7*3))%(base+40))-20;
+   ctx.globalAlpha=.3+(i%5)*.13;ctx.beginPath();ctx.ellipse(x,y,1+i%3*.4,1+i%2*.5,-.5,0,Math.PI*2);ctx.fill();
+  }
+  if(storm.wind>.05){ctx.globalAlpha=storm.wind*.35;ctx.strokeStyle='#b4d4ed';ctx.lineWidth=1;
+   for(let i=0;i<8;i++){const x=(i*127+phase*85)%(w+90)-90,y=30+(i*43)%(base-50);ctx.beginPath();ctx.moveTo(x,y);ctx.quadraticCurveTo(x+26,y-7,x+55,y-3);ctx.stroke();}
+  }ctx.restore();
+ }
  // Ground.
  ctx.fillStyle='#23282a';ctx.fillRect(0,base+9,w,h-base);ctx.strokeStyle='#59625a';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(0,base+9);ctx.lineTo(w,base+9);ctx.stroke();ctx.strokeStyle='#76816b20';for(let x=0;x<w;x+=17){ctx.beginPath();ctx.moveTo(x,base+25);ctx.lineTo(x+9,base+16);ctx.stroke();}
- // Roof drawn with its two fitted RC temperatures, P3 and P4.
+ if(snowWeather?.snow>0){ctx.fillStyle='#dbeaf1';ctx.beginPath();ctx.moveTo(0,base+9);for(let x=0;x<=w+8;x+=8)ctx.lineTo(x,base+9-snowWeather.snow*(5+Math.sin(x/31)*2));ctx.lineTo(w,base+13);ctx.lineTo(0,base+13);ctx.closePath();ctx.fill();}
+ // Roof drawn with its two fitted RC temperatures, displayed as P1 and P2.
  ctx.shadowColor='#0005';ctx.shadowBlur=20;ctx.fillStyle='#13242d';ctx.beginPath();ctx.moveTo(X(-.015),top);ctx.lineTo(X(.5),ridge-9);ctx.lineTo(X(1.015),top);ctx.closePath();ctx.fill();ctx.shadowBlur=0;
  for(let k=0;k<2;k++){ctx.fillStyle=color(model.structure(14+k));ctx.beginPath();ctx.moveTo(X(k*.5),top-3);ctx.lineTo(X(.5),ridge);ctx.lineTo(X((k+1)*.5),top-3);ctx.closePath();ctx.fill();}
  ctx.strokeStyle='#d7e9ef50';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(X(-.022),top);ctx.lineTo(X(.5),ridge-5);ctx.lineTo(X(1.022),top);ctx.stroke();
  ctx.strokeStyle='#13233355';for(let f=.2;f<1;f+=.2){ctx.beginPath();ctx.moveTo(X(.5*f),top-(top-ridge)*f);ctx.lineTo(X(1-.5*f),top-(top-ridge)*f);ctx.stroke();}
+ if(snowWeather?.snow>0){
+  ctx.save();ctx.strokeStyle='#e6f4fa';ctx.lineWidth=1+snowWeather.snow*11;ctx.lineJoin='round';ctx.lineCap='round';ctx.shadowColor='#a9d6ee88';ctx.shadowBlur=4;
+  ctx.beginPath();ctx.moveTo(X(-.022),top-2);ctx.lineTo(X(.5),ridge-7);ctx.lineTo(X(1.022),top-2);ctx.stroke();ctx.restore();
+ }
  const wall=10,gap=8;
  // Air temperature raster; each room is independently interpolated, avoiding colour bleed through walls.
  for(let z=0;z<4;z++){
@@ -458,7 +518,7 @@ function drawHouse(){
  ctx.strokeStyle='#e4f4ff45';ctx.lineWidth=1;ctx.strokeRect(left,top,bw,bw*.6);ctx.beginPath();ctx.moveTo(X(.5),top);ctx.lineTo(X(.5),base);ctx.moveTo(left,Y(.3));ctx.lineTo(left+bw,Y(.3));ctx.stroke();
  // Windows: direct Rw branch, marked on each external wall.
  for(let z=0;z<4;z++){const x=X(z%2?1:0),y=Y(Math.floor(z/2)*.3+.15);ctx.fillStyle='#a4d9ed';ctx.fillRect(x-3,y-16,6,32);ctx.strokeStyle='#e2f9ff';ctx.lineWidth=.7;ctx.strokeRect(x-3,y-16,6,32);ctx.beginPath();ctx.moveTo(x-4,y);ctx.lineTo(x+4,y);ctx.stroke();}
- if($('showLabels').checked){for(let z=0;z<4;z++){const x=X(z%2*.5+.25),y=Y(Math.floor(z/2)*.3+.24);badge(`T${'₁₂₃₄'[z]}  ${fmt(s.zones[z])} °C`,x,y);}badge(`P₃  ${fmt(model.structure(14))}°`,X(.34),top-(top-ridge)*.35,true);badge(`P₄  ${fmt(model.structure(15))}°`,X(.66),top-(top-ridge)*.35,true);}
+ if($('showLabels').checked){for(let z=0;z<4;z++){const x=X(z%2*.5+.25),y=Y(Math.floor(z/2)*.3+.24);badge(`T${roomSub(z)}  ${fmt(s.zones[z])} °C`,x,y);}badge(`P₁  ${fmt(model.structure(14))}°`,X(.34),top-(top-ridge)*.35,true);badge(`P₂  ${fmt(model.structure(15))}°`,X(.66),top-(top-ridge)*.35,true);}
  badge(`Tₐ  ${fmt(s.outside)} °C`,Math.max(53,left/2),top+bw*.28,true);ctx.fillStyle='#a3afa5';ctx.textAlign='center';ctx.font='10px -apple-system,sans-serif';ctx.fillText(`Ground Tɢ = ${fmt(model.p.ground)} °C`,w/2,base+31);
  if(model.source&&model.mode==='heater'){
   const sp=screenPoint(model.source),x=sp.x,y=sp.y;ctx.strokeStyle='#fff4d9';ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(x,y,12,0,2*Math.PI);ctx.stroke();ctx.fillStyle='#faad5a';ctx.shadowColor='#ffbe68';ctx.shadowBlur=17;ctx.beginPath();ctx.arc(x,y,6,0,2*Math.PI);ctx.fill();ctx.shadowBlur=0;ctx.fillStyle='#2b2116';ctx.font='bold 11px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('+',x,y);ctx.textBaseline='alphabetic';
@@ -475,7 +535,7 @@ function drawChart(){
  for(let k=0;k<5;k++){const t=minT+span*k/4;gc.textAlign=k===0?'left':k===4?'right':'center';gc.fillStyle='#748a9d';gc.fillText(fmt(t/3600,t/3600%1?1:0)+' h',X(t),h-10);}
  gc.save();gc.beginPath();gc.rect(pad.l,pad.t,cw,ch);gc.clip();
  if(isChallenge()){gc.strokeStyle='#64decba0';gc.setLineDash([2,4]);gc.lineWidth=1;gc.beginPath();gc.moveTo(pad.l,Y(20));gc.lineTo(w-pad.r,Y(20));gc.stroke();gc.fillStyle='#8cdac6';gc.font='9px sans-serif';gc.textAlign='right';gc.fillText('Target 20 °C',w-pad.r-4,Y(20)-7);}
- for(let z=0;z<5;z++){gc.strokeStyle=colors[z];gc.lineWidth=z===4?1.2:1.6;gc.setLineDash(z===4?[4,4]:[]);gc.beginPath();let started=false;for(const row of history){if(row.t<minT-300)continue;const y=z===4?row.a:row.z[z];if(!started){gc.moveTo(X(row.t),Y(y));started=true;}else gc.lineTo(X(row.t),Y(y));}gc.stroke();if(history.length===1){const r=history[0];gc.fillStyle=colors[z];gc.beginPath();gc.arc(X(r.t),Y(z===4?r.a:r.z[z]),2,0,2*Math.PI);gc.fill();}}
+ for(let z=0;z<5;z++){gc.strokeStyle=colors[z];gc.lineWidth=z===4?1.2:1.6;gc.setLineDash(z===4?[4,4]:[]);gc.beginPath();let started=false;for(const row of history){if(row.t<minT-300)continue;const y=z===4?row.a:row.z[roomOrder[z]];if(!started){gc.moveTo(X(row.t),Y(y));started=true;}else gc.lineTo(X(row.t),Y(y));}gc.stroke();if(history.length===1){const r=history[0];gc.fillStyle=colors[z];gc.beginPath();gc.arc(X(r.t),Y(z===4?r.a:r.z[roomOrder[z]]),2,0,2*Math.PI);gc.fill();}}
  gc.restore();gc.setLineDash([]);
 }
 function updateMetrics(){
@@ -486,12 +546,12 @@ function updateMetrics(){
 }
 function screenPoint(p){const z=model.zoneAt(p.x,p.y),r=geometry.rooms[z];return{x:r.x+(p.x-z%2*.5)/.5*r.w,y:r.y+r.h-(p.y-Math.floor(z/2)*.3)/.3*r.h};}
 function point(e){const r=house.getBoundingClientRect(),px=e.clientX-r.left,py=e.clientY-r.top;let p={x:(px-geometry.left)/geometry.bw,y:(geometry.base-py)/geometry.bw,px,py,air:false};for(let z=0;z<4;z++){const b=geometry.rooms[z];if(px>=b.x&&px<=b.x+b.w&&py>=b.y&&py<=b.y+b.h){p.x=z%2*.5+(px-b.x)/b.w*.5;p.y=Math.floor(z/2)*.3+(1-(py-b.y)/b.h)*.3;p.air=true;break;}}return p;}
-function sampleView(p){if(p.air){const s=model.sample(p.x,p.y);return s?{...s,name:'T'+'₁₂₃₄'[s.zone]}:null;}const x=(p.px-geometry.left)/geometry.bw,y=(geometry.base-p.py)/geometry.bw;let id=null;if(x>=0&&x<=1){if(y>=.59&&y<=.82-.44*Math.abs(x-.5))id=14+(x>=.5?1:0);else if(y>=-.01&&y<=.01)id=12+(x>=.5?1:0);else if(y>0&&y<.6){const z=(y>=.3?2:0)+(x>=.5?1:0);if(x<.025||x>.975)id=4+z;else if(Math.abs(y-.3)<.02)id=9+(x>=.5?1:0);else if(Math.abs(x-.5)<.025)id=y>=.3?11:8;}}return id===null?null:{temperature:model.structure(id),name:Thermal.fitted.state_names[id]};} 
+function sampleView(p){if(p.air){const s=model.sample(p.x,p.y);return s?{...s,name:'T'+roomSub(s.zone)}:null;}const x=(p.px-geometry.left)/geometry.bw,y=(geometry.base-p.py)/geometry.bw;let id=null;if(x>=0&&x<=1){if(y>=.59&&y<=.82-.44*Math.abs(x-.5))id=14+(x>=.5?1:0);else if(y>=-.01&&y<=.01)id=12+(x>=.5?1:0);else if(y>0&&y<.6){const z=(y>=.3?2:0)+(x>=.5?1:0);if(x<.025||x>.975)id=4+z;else if(Math.abs(y-.3)<.02)id=9+(x>=.5?1:0);else if(Math.abs(x-.5)<.025)id=y>=.3?11:8;}}return id===null?null:{temperature:model.structure(id),name:displayNode(Thermal.fitted.state_names[id])};} 
 house.addEventListener('pointerdown',e=>{const p=point(e);if(model.mode==='heater'&&p.air){dragging=true;house.setPointerCapture(e.pointerId);placeSource(p.x,p.y);}});
 house.addEventListener('pointermove',e=>{const p=point(e);hover=p;if(dragging&&p.air)placeSource(p.x,p.y);const sample=sampleView(p);$('probe').hidden=!sample;if(sample){$('probe').textContent=`${sample.name} · ${fmt(sample.temperature)} °C`;$('probe').style.left=Math.max(7,Math.min(p.px+15,house.clientWidth-170))+'px';$('probe').style.top=Math.max(4,p.py-36)+'px';}if(!playing)drawHouse();});
 for(const event of ['pointerup','pointercancel'])house.addEventListener(event,()=>{dragging=false;});
 house.addEventListener('pointerleave',()=>{if(!dragging){hover=null;$('probe').hidden=true;drawHouse();}});
-house.addEventListener('keydown',e=>{if(['1','2','3','4'].includes(e.key)){const z=+e.key-1;placeSource(z%2*.5+.25,Math.floor(z/2)*.3+.15);}else if(e.code==='Space'){e.preventDefault();togglePlayback();}});
+house.addEventListener('keydown',e=>{if(['1','2','3','4'].includes(e.key)){const z=roomOrder[+e.key-1];placeSource(z%2*.5+.25,Math.floor(z/2)*.3+.15);}else if(e.code==='Space'){e.preventDefault();togglePlayback();}});
 function draw(){drawHouse();drawChart();}
 new ResizeObserver(draw).observe($('house').parentElement);new ResizeObserver(drawChart).observe($('chart').parentElement);
 function animate(now){

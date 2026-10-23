@@ -25,6 +25,41 @@ check('90-second run and continuous sunrise/sunset at scene edges',()=>{
   near(sunTrackAt(0,width,horizon).x,sunTrackAt(24*3600,width,horizon).x);near(sunTrackAt(0,width,horizon).y,sunTrackAt(24*3600,width,horizon).y);
  }
 });
+check('Day-three storm is continuous, colder first, then retains an insulating snow cover',()=>{
+ const {game}=make(),before=game.weatherAt(48*3600-1),start=game.weatherAt(48*3600),storm=game.weatherAt(53*3600),late=game.weatherAt(66*3600);
+ assert(!before.active);assert(start.active);near(start.wind,0);near(start.snow,0);near(start.coldDrop,0);
+ assert(storm.wind>.9);assert(storm.snowfall>.9);assert(storm.coldDrop>7);assert(storm.snow<.2);
+ near(late.wind,0);near(late.snowfall,0);near(late.snowCm,20);near(late.roofResistance,3.5);near(late.roofTransfer,2/4.5);
+ near(game.weatherAt(DURATION).snowCm,20);assert(game.solarAt(57*3600).total<game.solarAt(9*3600).total*.3);
+ const nominal=t=>-14+7*Math.cos(2*Math.PI*(t/3600-15)/24)-4*Math.exp(-(((t/3600-39)/11)**2));
+ near(game.outdoorAt(53*3600),nominal(53*3600)-storm.coldDrop);
+ for(const t of [48,50,51,52,56,57,60,61,62,66]){
+  const a=game.weatherAt(t*3600-.01),b=game.weatherAt(t*3600+.01);
+  for(const key of ['wind','snowfall','snowCm','coldDrop','windowFactor','wallFactor','roofFactor'])assert(Math.abs(a[key]-b[key])<.001,key);
+ }
+});
+check('Wind increases boundary heat loss; snow reduces roof loss at equal temperatures',()=>{
+ const {game,model}=make(),weather=game.weatherAt.bind(game);
+ model.T.fill(20);model.outdoorAt=()=>-20;
+ game.solarAt=()=>({air:[0,0,0,0],walls:[0,0,0,0],roof:[0,0]});
+ game.weatherAt=()=>weather(0);model.ratesAt(0);const bare=model.lastBoundaryRate,bareRoof=model.rate[model.airN+10];
+ game.weatherAt=()=>({...weather(0),windowFactor:1.18,wallFactor:1.25,roofFactor:1.25});model.ratesAt(0);assert(model.lastBoundaryRate<bare);assert(model.rate[model.airN+10]<bareRoof);
+ game.weatherAt=()=>weather(66*3600);model.ratesAt(0);assert(model.lastBoundaryRate>bare);near(model.rate[model.airN+10],bareRoof/3.5);
+ // Conservative time step remains stable even at the highest allowed wind exchange.
+ for(let a=0;a<model.n;a++){
+  let loss=model.loss[a];for(let e=0;e<model.ba.length;e++)if(model.ba[e]===a&&!model.bt[e])loss+=model.bg[e]*.25;
+  if(loss)assert(model.maxDt<=.88*model.cap[a]/loss+1e-9);
+ }
+});
+check('Accumulated snow reduces three-day heating energy with identical cold weather',()=>{
+ const insulated=make('auto'),bare=make('auto'),weather=bare.game.weatherAt.bind(bare.game);
+ bare.game.weatherAt=t=>{const w=weather(t);return {...w,roofFactor:1+.25*w.wind,roofResistance:1};};
+ insulated.game.advance(DURATION);bare.game.advance(DURATION);
+ assert(insulated.game.result().score>99.999999);assert(bare.game.result().score>99.999999);
+ assert(insulated.game.result().kWh<bare.game.result().kWh-.05);
+ for(const z of [2,3])assert(insulated.game.powers[z]<bare.game.powers[z]);
+ console.log('  Snow blanket saves:',bare.game.result().kWh-insulated.game.result().kWh,'kWh compared with the same storm and bare roof');
+});
 check('Room heaters are independent and bounded',()=>{
  const a=make(),b=make();a.game.powers=[0,0,0,0];b.game.powers=[0,0,0,0];b.game.setPower(2,1000);a.game.step(10);b.game.step(10);
  for(let z=0;z<4;z++){const change=b.model.stats().zones[z]-a.model.stats().zones[z];near(change,z===2?1000*10/(b.model.C[2]*1000):0);}
