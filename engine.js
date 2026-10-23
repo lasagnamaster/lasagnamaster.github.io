@@ -44,7 +44,7 @@ class ThermalModel {
   this.maxDt=30;for(let a=0;a<this.n;a++)if(this.loss[a])this.maxDt=Math.min(this.maxDt,.88*this.cap[a]/this.loss[a]);
   this.reset();this.setSource(oldSource);return this;
  }
- reset(){for(let a=0;a<this.n;a++){const z=a<this.airN?Math.floor(a/this.perZone):a-this.airN+4;this.T[a]=this.initialMode==='fitted'?this.initials[z]:this.p.initial;}this.time=0;this.deliveredEnergy=0;this.boundaryEnergy=0;}
+ reset(){for(let a=0;a<this.n;a++){const z=a<this.airN?Math.floor(a/this.perZone):a-this.airN+4;this.T[a]=this.initialMode==='fitted'?this.initials[z]:this.p.initial;}this.time=0;this.deliveredEnergy=0;this.boundaryEnergy=0;this.solarEnergy=0;}
  setSource(source){
   this.source=null;this.weights=new Float64Array(this.n);this.heaterCells=[];if(!source)return false;
   const z=this.zoneAt(source.x,source.y);if(z<0)return false;this.source={...source};
@@ -56,15 +56,30 @@ class ThermalModel {
   }
   for(const a of this.heaterCells)this.weights[a]/=sum;return true;
  }
- outdoorAt(t=this.time){const p=this.p;return this.mode==='day'?(p.dayMin+p.dayMax)/2+(p.dayMax-p.dayMin)/2*Math.cos(2*Math.PI*(t/3600-p.peakHour)/24):p.outside;}
- step(dt){
-  const T=this.T,q=this.rate;q.fill(0);let boundary=0;
+ outdoorAt(t=this.time){if(this.scenario)return this.scenario.outdoorAt(t);const p=this.p;return this.mode==='day'?(p.dayMin+p.dayMax)/2+(p.dayMax-p.dayMin)/2*Math.cos(2*Math.PI*(t/3600-p.peakHour)/24):p.outside;}
+ ratesAt(time){
+  const T=this.T,q=this.rate;q.fill(0);let boundary=0,solar=0;
   for(let e=0;e<this.ea.length;e++){const a=this.ea[e],b=this.eb[e],v=this.eg[e]*(T[b]-T[a]);q[a]+=v;q[b]-=v;}
-  const outside=this.outdoorAt(this.time+dt/2);
+  const outside=this.outdoorAt(time);
   for(let e=0;e<this.ba.length;e++){const a=this.ba[e],v=this.bg[e]*((this.bt[e]?this.p.ground:outside)-T[a]);q[a]+=v;boundary+=v;}
-  const power=this.mode==='heater'&&this.source?this.p.power:0;if(power)for(const a of this.heaterCells)q[a]+=power*this.weights[a];
+  if(this.scenario){
+   const sun=this.scenario.solarAt(time);
+   for(let z=0;z<4;z++){
+    const profiles=this.scenario.solarWeights[z];
+    for(let k=0;k<this.perZone;k++)q[z*this.perZone+k]+=sun.air[z]*profiles[k];
+    q[this.airN+z]+=sun.walls[z];solar+=sun.air[z]+sun.walls[z];
+   }
+   for(let k=0;k<2;k++){q[this.airN+10+k]+=sun.roof[k];solar+=sun.roof[k];}
+  }
+  this.lastBoundaryRate=boundary;this.lastSolarRate=solar;return q;
+ }
+ step(dt,roomPowers=null,prepared=false){
+  const T=this.T,q=prepared?this.rate:this.ratesAt(this.time+dt/2);
+  let power=0;
+  if(roomPowers){for(let z=0;z<4;z++){power+=roomPowers[z];const v=roomPowers[z]/this.perZone;for(let k=0;k<this.perZone;k++)q[z*this.perZone+k]+=v;}}
+  else {power=this.mode==='heater'&&this.source?this.p.power:0;if(power)for(const a of this.heaterCells)q[a]+=power*this.weights[a];}
   for(let a=0;a<this.n;a++)T[a]+=dt*q[a]/this.cap[a];
-  this.time+=dt;this.deliveredEnergy+=power*dt;this.boundaryEnergy+=boundary*dt;
+  this.time+=dt;this.deliveredEnergy+=power*dt;this.boundaryEnergy+=this.lastBoundaryRate*dt;this.solarEnergy+=this.lastSolarRate*dt;
  }
  advance(seconds,maxSteps=Infinity){let rest=seconds,steps=0;while(rest>1e-8&&steps<maxSteps){const dt=Math.min(this.maxDt,rest);this.step(dt);rest-=dt;steps++;}return seconds-rest;}
  energy(){let e=0;for(let a=0;a<this.n;a++)e+=this.cap[a]*this.T[a];return e;}

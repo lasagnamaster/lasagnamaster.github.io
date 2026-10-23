@@ -6,6 +6,10 @@
 <style>
 :root{--bg:#0b1016;--panel:#111922;--panel2:#151f2a;--line:#25313e;--text:#e7eef6;--muted:#91a2b4;--cyan:#64decb;--amber:#f0b276;--radius:16px}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.5 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}button,input,select{font:inherit}button,a,input,select,summary{ -webkit-tap-highlight-color:transparent}button{cursor:pointer}button:disabled{opacity:.35;cursor:default}button:focus-visible,a:focus-visible,summary:focus-visible,canvas:focus-visible{outline:2px solid var(--cyan);outline-offset:4px}button{border:0}button,a,select,input{accent-color:var(--cyan)}a{color:inherit;text-decoration:none}.topbar{height:89px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:48px;padding:0 36px}.brand{display:flex;gap:13px;align-items:center;font-size:21px;font-weight:650;letter-spacing:-.5px}.brand-icon{height:43px;width:43px;background:#18372f;color:var(--cyan);border:1px solid #2b5c50;border-radius:12px;font-size:32px;font-weight:400;text-align:center;line-height:36px}.brand small{display:block;font-size:9px;letter-spacing:1.8px;font-weight:500;color:var(--muted);margin-top:2px}.project-tag{color:var(--muted);display:flex;gap:10px;align-items:center;font-size:12px}.dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--cyan);flex-shrink:0}.divider{color:#405160;padding:0 6px}.topbar>.quiet{margin-left:auto}.quiet{background:transparent;color:var(--muted);padding:8px 10px;border-radius:7px;font-size:12px;white-space:nowrap}.quiet:hover{background:#1b2834;color:var(--text)}.quiet span{padding-left:8px;color:var(--cyan)}main{max-width:1720px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) 335px}.workspace{padding:29px 30px 18px 36px;min-width:0}.intro{display:flex;justify-content:space-between;gap:14px;align-items:center}.eyebrow{margin:0 0 6px;color:var(--cyan);font-size:9px;letter-spacing:1.8px;font-weight:650}h1{font-size:clamp(21px,2.1vw,31px);line-height:1.25;margin:0;letter-spacing:-.8px;font-weight:580}.subtitle{color:var(--muted);font-size:12px;margin:9px 0 0}.status{font-size:10px;border:1px solid var(--line);border-radius:30px;padding:5px 10px;white-space:nowrap;color:var(--muted)}.status i{display:inline-block;height:5px;width:5px;border-radius:50%;background:#7e8d9e;margin-right:6px}.status.running{color:var(--cyan);border-color:#285246}.status.running i{background:var(--cyan);box-shadow:0 0 9px #64decb50}.mode-tabs{display:inline-flex;background:#151d27;padding:4px;border:1px solid var(--line);border-radius:10px;margin-top:23px;gap:3px}.mode-tabs button{background:none;color:var(--muted);padding:8px 19px;font-size:12px;border-radius:6px}.mode-tabs button.active{background:#2a3c40;color:#a5f2df;box-shadow:0 1px 3px #0003}.metrics{display:grid;grid-template-columns:repeat(4,1fr);margin:23px 0 20px}.metrics>div{border-left:1px solid var(--line);padding-left:22px}.metrics>div:first-child{padding-left:0;border:0}.metrics>div>span{font-size:9px;color:var(--muted);letter-spacing:1px}.metrics strong{display:block;font-size:26px;line-height:1.5;font-weight:500;letter-spacing:-.5px;font-variant-numeric:tabular-nums}.metrics strong small{font-size:12px;margin-left:6px;color:var(--muted);font-weight:400;letter-spacing:0}.scene-card,.chart-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}.scene-top{height:47px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;color:var(--muted);font-size:11px;gap:12px}.scene-top>div{display:flex;align-items:center;gap:14px}.check{display:inline-flex;align-items:center;gap:6px;font-size:10px;color:var(--muted);cursor:pointer;white-space:nowrap}.check input{margin:0;width:12px;height:12px}.icon-button{background:transparent;color:var(--muted);font-size:19px;width:28px;height:28px;border-radius:6px}.icon-button:hover{color:var(--cyan);background:#20313c}.canvas-wrap{position:relative;height:clamp(330px,38vw,520px);overflow:hidden}#house{display:block;width:100%;height:100%;touch-action:none;cursor:crosshair}.scene-guide{position:absolute;left:50%;bottom:15px;transform:translateX(-50%);background:#0b111ae8;backdrop-filter:blur(12px);border:1px solid #334250;border-radius:24px;padding:7px 14px;font-size:11px;color:#c6d6e1;white-space:nowrap;pointer-events:none}.scene-guide span{color:var(--amber);font-size:16px;margin-right:5px}.probe{position:absolute;z-index:2;background:#0b111aef;border:1px solid #506070;border-radius:8px;pointer-events:none;font-size:11px;padding:6px 10px;white-space:nowrap;color:#e7eef6}.legend{display:flex;align-items:center;justify-content:center;gap:12px;padding:6px 22px 18px;color:var(--muted);font-size:10px}.gradient{max-width:270px;flex:1;height:7px;border-radius:4px;background:linear-gradient(90deg,#202269,#265eaa,#2db4c1,#93d7ae,#f0d17f,#f08850,#b32a4d)}.legend .check{margin-left:9px}.transport{border-top:1px solid var(--line);display:flex;align-items:center;gap:9px;padding:13px 19px}.play{display:flex;align-items:center;gap:8px;background:var(--cyan);color:#09211d;border-radius:8px;padding:9px 14px;font-size:12px;font-weight:650;min-width:116px;justify-content:center}.play:hover{background:#91efdc}.speed{display:flex;align-items:center;margin-left:auto;gap:10px;font-size:10px;color:var(--muted)}input[type=range]{width:100%;height:4px;display:block;cursor:pointer;margin:12px 0 5px}input[type=range]:focus-visible{outline:2px solid var(--cyan);outline-offset:5px}.speed input{width:80px;margin:0}.speed output{font-size:10px;min-width:63px;text-align:right;color:#b9cbd9}.chart-card{margin-top:18px;padding:18px 20px 10px}.chart-heading{display:flex;align-items:center;justify-content:space-between}.chart-heading .eyebrow{font-size:8px;color:var(--muted);letter-spacing:1.4px}h2{font-size:17px;margin:0;font-weight:550;letter-spacing:-.3px}.chart-legend{display:flex;gap:18px;justify-content:flex-end;margin:2px 0 0;color:var(--muted);font-size:10px}.chart-legend span:before{content:'';display:inline-block;width:12px;height:2px;background:var(--line);margin-right:6px;vertical-align:middle}#chart{width:100%;height:150px;display:block}.model-note{display:flex;gap:8px;align-items:center;font-size:10px;color:#7890a3;margin:15px 3px 0}.model-note .dot{width:4px;height:4px}.sidebar{background:#101720;border-left:1px solid var(--line);padding:27px 23px 24px;min-width:0}.sidebar-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:23px}.sidebar-title .eyebrow{font-size:8px;color:var(--muted)}.sidebar-title h2{font-size:19px}.select-label{display:block;font-size:11px;color:var(--muted);margin:14px 0 7px}select{background:#17212d;border:1px solid #304051;border-radius:7px;padding:10px 8px;width:100%;color:var(--text);font-size:11px;cursor:pointer;outline-color:var(--cyan)}.small-note{color:#7e93a6;font-size:10px;line-height:1.65;margin:9px 0 13px}.section-label{display:flex;align-items:center;gap:9px;font-size:10px;color:#5f7b8f;border-top:1px solid var(--line);padding-top:19px;margin:22px 0 17px;letter-spacing:.5px}.section-label>span:first-child{color:#d2dde8;font-size:12px;letter-spacing:0;font-weight:500}.section-label>span:last-child:not(:first-child){margin-left:auto}.live-dot{width:5px;height:5px;background:var(--amber);border-radius:50%}.slider{margin:0 0 18px}.slider-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;font-size:11px;color:#aebdca}.slider-head label{cursor:pointer;line-height:1.5}.slider-head output{font-variant-numeric:tabular-nums;color:var(--text);font-size:11px;white-space:nowrap}.slider-head output b{font-weight:500}.slider-head output small{font-size:9px;color:#7791a4;margin-left:3px}.slider-range{display:flex;justify-content:space-between;color:#536e81;font-size:8px;margin-top:7px}.source-row{background:#19242d;border:1px solid var(--line);border-radius:7px;display:flex;align-items:center;justify-content:space-between;padding:8px 10px;font-size:10px;color:#9ab1bf;gap:6px}.text-button{background:none;color:var(--cyan);font-size:10px;padding:0}.place-buttons{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:9px}.place-buttons button{padding:6px;background:#1b2733;color:#b2c7d7;border:1px solid #304151;border-radius:5px;font-size:11px}.place-buttons button:hover{border-color:var(--cyan);color:var(--cyan)}.count{font-size:9px;border:1px solid #324150;border-radius:4px;padding:0 5px;color:var(--muted)}.group{border:1px solid var(--line);border-radius:8px;margin:9px 0;overflow:hidden}.group summary{padding:11px 10px;font-size:11px;cursor:pointer;color:#b9cad9;list-style:none;position:relative}.group summary:after{content:'+';position:absolute;right:10px;color:#6f8a9c}.group[open] summary:after{content:'−'}.group summary>span{display:block;color:#698395;font-size:9px;margin-top:2px;padding-right:12px}.group>div{padding:12px 11px 0}.group[open] summary{border-bottom:1px solid var(--line);background:#16212b}.group .slider{margin-bottom:18px}.settings-actions{display:flex;flex-wrap:wrap;gap:0;margin-top:16px}.settings-actions .quiet{font-size:10px;padding:8px 3px}.day-notice{font-size:10px;color:#d3c5ab;background:#302b21;border:1px solid #4c4130;border-radius:8px;padding:9px 11px;margin-bottom:17px}.day-range{display:flex;justify-content:space-between;color:var(--muted);font-size:10px;background:linear-gradient(90deg,#19385055,#5e492955);padding:8px 12px;border-radius:6px}.day-range b{font-weight:500;color:var(--text);padding-left:6px}.toast{position:fixed;bottom:25px;left:50%;transform:translateX(-50%);max-width:90vw;border:1px solid #416353;background:#172d26;color:#cff3de;font-size:12px;padding:11px 19px;border-radius:9px;box-shadow:0 6px 25px #0006;z-index:10}dialog{width:min(680px,92vw);border:1px solid #3a5061;background:#121d28;color:var(--text);border-radius:18px;padding:35px;max-height:85vh;box-shadow:0 20px 90px #0009}dialog::backdrop{background:#030910bb;backdrop-filter:blur(4px)}dialog h2{font-size:26px;margin:10px 0 18px}dialog h3{font-size:14px;color:var(--cyan);margin:23px 0 8px}dialog p{color:#aebdcb;font-size:12px;line-height:1.8}.close{float:right;background:none;color:var(--muted);font-size:26px}.equation{font-family:ui-monospace,monospace;color:#d4eee7;background:#1d302e;border:1px solid #395b51;padding:15px;border-radius:8px;font-size:13px;text-align:center}[hidden]{display:none!important}@media(min-width:1350px){main{grid-template-columns:minmax(0,1fr) 360px}.sidebar{padding:28px}.workspace{padding-right:35px}}@media(max-width:1000px){main{grid-template-columns:minmax(0,1fr) 300px}.workspace{padding:24px 18px}.topbar{padding:0 22px;gap:24px}.project-tag{display:none}.sidebar{padding:24px 18px}.speed label{display:none}.speed{gap:7px}.speed input{width:50px}.transport{gap:3px;padding:12px}.transport .quiet{padding:8px}.metrics strong{font-size:23px}.metrics>div{padding-left:12px}.metrics>div>span{letter-spacing:.3px;font-size:8px}.scene-top{padding:0 12px}.scene-top>div{gap:9px}.scene-top>span{font-size:10px}.legend{gap:8px;padding:10px 12px 16px}.scene-guide{font-size:10px;padding:6px 10px}.status{display:none}.intro h1{font-size:24px}.chart-card{padding:16px 12px 8px}}@media(max-width:760px){main{display:flex;flex-direction:column}.workspace{padding:23px 16px}.sidebar{border-left:0;border-top:1px solid var(--line);padding:24px;display:block}.topbar{height:76px;padding:0 17px;gap:12px}.brand{font-size:18px}.brand-icon{width:38px;height:38px}.brand small{font-size:7px;letter-spacing:1.2px}.topbar .quiet{font-size:10px;padding:6px}.intro h1{font-size:25px}.subtitle{font-size:11px}.mode-tabs{display:flex;width:100%}.mode-tabs button{flex:1;padding:8px}.metrics{margin:20px 0 16px}.metrics strong{font-size:21px}.metrics strong small{font-size:9px;margin-left:3px}.metrics>div{padding-left:9px}.metrics>div>span{font-size:7px;letter-spacing:0}.canvas-wrap{height:360px}.scene-top{font-size:10px}.scene-top .check{font-size:9px}.scene-top>div{gap:7px}.transport{flex-wrap:wrap;gap:3px}.play{min-width:108px;padding:8px 10px}.speed{gap:7px}.speed input{width:55px}.speed output{min-width:52px;font-size:9px}.legend .check{margin-left:1px;font-size:9px}.legend{gap:6px;font-size:9px}.chart-legend{justify-content:flex-start;margin:9px 0 0;gap:17px}.chart-heading h2{font-size:16px}.model-note{font-size:9px;align-items:flex-start}.model-note .dot{margin-top:5px}.sidebar .small-note{font-size:11px}.sidebar .slider-head{font-size:12px}.sidebar .slider-head output{font-size:12px}.sidebar .group summary{font-size:12px}.sidebar .group summary span{font-size:10px}dialog{padding:26px}.scene-guide{font-size:9px}.chart-heading .quiet{font-size:10px}.sidebar-title h2{font-size:22px}.sidebar .section-label span:first-child{font-size:14px}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
 @media(max-width:760px){.metrics strong{white-space:nowrap}#clock small{display:block;line-height:1.2;margin:0;white-space:nowrap}.canvas-wrap{height:310px}}
+/* Three-day heating challenge */
+#labControls{border:0;padding:0;margin:0;min-width:0}.mode-tabs{flex-wrap:wrap}.mission{margin-top:19px;border:1px solid #395648;border-radius:12px;background:linear-gradient(120deg,#15322b80,#17243170);padding:19px 21px}.mission-heading{display:flex;gap:15px;align-items:center;justify-content:space-between}.mission-badge{display:inline-block;border-radius:4px;background:#30564b;color:#b3f3df;font-size:8px;letter-spacing:1.2px;padding:3px 6px;margin-bottom:9px}.mission h2{font-size:18px}.mission p{font-size:11px;color:var(--muted);margin:7px 0 0}.mission-target{color:var(--cyan);font-size:40px;font-weight:550;line-height:1.1;text-align:right;white-space:nowrap}.mission-target>span{font-size:19px;margin-left:4px}.mission-target small{display:block;font-size:7px;letter-spacing:.8px;margin-top:6px;font-weight:400;color:#95b6ac}.mission-progress{margin-top:17px}.mission-progress>div{display:flex;justify-content:space-between;color:#a8c3be;font-size:10px;margin-bottom:8px}.mission-progress progress{display:block;width:100%;height:5px;border:0;border-radius:4px;background:#203b36}.mission-progress progress::-webkit-progress-bar{background:#203b36;border-radius:4px}.mission-progress progress::-webkit-progress-value{background:var(--cyan);border-radius:4px}.controller-tabs{display:flex;padding:4px;background:#182430;border:1px solid var(--line);border-radius:8px;gap:4px}.controller-tabs button{flex:1;background:none;color:var(--muted);font-size:11px;border-radius:5px;padding:8px 6px}.controller-tabs button.active{color:var(--cyan);background:#2b403f}.locked-notice{display:flex;gap:10px;background:#18222e;border:1px solid #304050;padding:10px 12px;border-radius:8px;margin:15px 0 18px;color:#88a5bc}.locked-notice>span{font-size:18px}.locked-notice b{display:block;font-size:11px;font-weight:500;color:#bacbd9}.locked-notice small{display:block;font-size:10px;margin-top:3px;line-height:1.7;color:#7e98ad}.room-heater{background:#14212c;border:1px solid #304050;border-radius:10px;padding:12px 13px;margin:10px 0;--room-color:var(--cyan)}.room-heater-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:13px}.room-name{color:#bbd0dc;font-size:12px;font-weight:500}.room-name:before{content:'';display:inline-block;background:var(--room-color);height:6px;width:6px;border-radius:50%;margin-right:7px}.room-reading{font-size:17px;font-variant-numeric:tabular-nums;color:var(--cyan);font-weight:550}.room-reading.cold{color:#8cbaff}.room-reading.hot{color:#f1ae79}.room-heater .slider{margin-bottom:0}.room-heater .slider-head label{font-size:10px}.room-error{display:flex;align-items:center;justify-content:space-between;font-size:9px;color:#7895a9;margin-top:9px}.room-error b{font-weight:400;color:#adbeca}.room-heater input:disabled{cursor:default;opacity:.8}.game-actions{display:flex;align-items:center;gap:8px;margin-top:19px}.game-actions .play{flex:1;font-size:11px;padding:10px 8px}.game-actions .quiet{font-size:10px;padding:8px 3px}.demo-finish{width:100%;background:#22384d;color:#afd4f0;border:1px solid #395b78;border-radius:7px;font-size:11px;padding:10px;margin-top:11px}.demo-finish:hover{background:#2c4761}.game-weather{border-top:1px solid var(--line);margin-top:23px;padding-top:17px;display:flex;align-items:center;flex-wrap:wrap;justify-content:space-between}.game-weather>span{font-size:8px;letter-spacing:1px;color:#7f9eb4}.game-weather>strong{font-size:14px;font-weight:500;color:var(--amber)}.game-weather>p{width:100%;font-size:10px;color:#a0adba;margin:9px 0}.score-explanation p{font-size:11px;color:#8fa6b8;line-height:1.7;margin:0 0 13px}.result-dialog{width:min(710px,94vw)}.result-score{display:flex;align-items:baseline;justify-content:center;gap:12px;margin:25px 0 7px}.result-score strong{font-size:90px;line-height:1.05;font-weight:550;letter-spacing:-5px;color:var(--cyan)}.result-score span{font-size:22px;color:#7793a6}.result-dialog>p:not(.eyebrow){text-align:center}.result-dialog h2{text-align:center;font-size:24px}.result-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:24px 0}.result-stats>div{border:1px solid #304454;background:#182733;border-radius:9px;padding:13px 8px;text-align:center}.result-stats b{display:block;font-size:17px;font-weight:500;color:#d9ece5}.result-stats small{font-size:9px;display:block;color:#86a1b2;margin-top:5px}.result-rooms{display:grid;grid-template-columns:1fr 1fr;gap:8px}.result-room{background:#15242d;border:1px solid #2c414e;border-radius:8px;padding:11px 13px}.result-room>div{display:flex;justify-content:space-between;color:#b3c9d7;font-size:12px}.result-room b{font-weight:500;color:var(--cyan)}.result-room small{display:block;margin-top:5px;font-size:10px;color:#809aaa}.result-actions{display:flex;gap:12px;justify-content:center;margin-top:24px;flex-wrap:wrap}.challenge-active #sceneGuide{display:none}.challenge-active #house{cursor:default}.challenge-active #advanceDay,.challenge-active .transport .speed{display:none}.challenge-active .sidebar-title .icon-button{display:none}.challenge-active .scene-top{color:#b1c7c1}.challenge-active #gameStart:disabled{opacity:.5}.challenge-active .sidebar-title{margin-bottom:17px}.challenge-active #modelNote{color:#81a797}.mission .demo-mode{background:#2a4157;color:#b9d9ff}.game-room-flash{color:#c9eae2}.challenge-active .sidebar{padding-top:27px}body.challenge-active .room-heaters input[type=range]{height:6px}.sun-caption{font-size:10px}@media(min-width:1050px){.challenge-active #challengeControls{position:sticky;top:18px}.challenge-active .sidebar{align-self:stretch}}@media(max-width:1000px){.mission h2{font-size:16px}.mission{padding:15px}.mission-target{font-size:32px}.mission-target small{font-size:6px}}@media(max-width:760px){.mode-tabs button{flex:1 1 auto;padding:8px 10px;font-size:11px}.mission-heading{align-items:flex-start}.mission h2{font-size:16px}.mission-target{font-size:31px}.mission-target small{font-size:6px;max-width:88px;white-space:normal;line-height:1.5}.mission p{font-size:10px}.mission{padding:14px}.challenge-active .sidebar{order:1}.challenge-active .workspace{display:contents}.challenge-active .intro,.challenge-active .mode-tabs,.challenge-active .metrics,.challenge-active .mission{margin-left:16px;margin-right:16px}.challenge-active .intro{margin-top:23px}.challenge-active .mission{margin-top:16px}.challenge-active .scene-card{margin:0 16px;order:0}.challenge-active .chart-card{margin:16px;order:2}.challenge-active .model-note{margin:0 18px 20px;order:3}.challenge-active .sidebar{margin-top:17px;border:1px solid var(--line);border-radius:12px;margin-left:16px;margin-right:16px;padding:20px}.challenge-active .sidebar-title{display:none}.challenge-active .room-heaters{display:grid;grid-template-columns:1fr 1fr;gap:8px}.challenge-active .room-heater{margin:0;padding:11px 10px}.room-heater .slider-head{flex-wrap:wrap;gap:4px}.challenge-active .room-name{font-size:11px}.challenge-active .room-reading{font-size:14px}.challenge-active .room-heater-top{gap:4px;margin-bottom:9px}.challenge-active .locked-notice{margin:10px 0 14px}.challenge-active .room-error{font-size:8px}.challenge-active .controller-tabs button{font-size:12px}.challenge-active .score-explanation p{font-size:11px}.challenge-active .sidebar .small-note{font-size:10px}.result-dialog{padding:25px 17px}.result-dialog h2{font-size:20px}.result-stats{gap:6px}.result-stats b{font-size:14px}.result-stats small{font-size:8px}.result-room{padding:10px}.result-room small{font-size:9px}.result-score strong{font-size:75px}.result-score span{font-size:19px}}
+.challenge-active .intro{display:none}.challenge-active .mode-tabs{margin-top:0}.challenge-active .canvas-wrap{height:360px}.challenge-active .metrics{margin-top:18px;margin-bottom:17px}.challenge-active .mission{padding:15px 19px}.challenge-active .room-heater{padding:11px 12px}.challenge-active .room-heater-top{margin-bottom:11px}@media(max-width:760px){.challenge-active .mode-tabs{margin-top:17px}.challenge-active .canvas-wrap{height:280px}.challenge-active .mission{padding:13px}.challenge-active .room-heater{padding:11px 10px}.challenge-active .metrics{margin-top:17px;margin-bottom:15px}.challenge-active .intro{display:none}}
+@media(max-width:760px){.challenge-active .mode-tabs{width:calc(100% - 32px)}.challenge-active .mode-tabs button{flex:1;min-width:0;padding:8px 4px;font-size:10px;white-space:nowrap}}
 
 </style>
 </head>
@@ -18,7 +22,11 @@
 <main>
  <section class="workspace">
   <div class="intro"><div><p class="eyebrow">ТЕПЛОПЕРЕДАЧА В ДЕЙСТВИИ</p><h1>Почувствуйте, как движется тепло.</h1><p class="subtitle" id="modeHint">Поставьте нагреватель в любой комнате и наблюдайте за температурой.</p></div><span class="status" id="status"><i></i>Ожидание</span></div>
-  <div class="mode-tabs" role="group" aria-label="Режим эксперимента"><button id="heaterMode" class="active">◎ Точечный нагрев</button><button id="dayMode">☀ В течение дня</button></div>
+  <div class="mode-tabs" role="group" aria-label="Режим эксперимента"><button id="heaterMode" class="active">◎ Точечный нагрев</button><button id="dayMode">☀ В течение дня</button><button id="challengeMode">♨ Удержи 20 °C</button></div>
+  <section class="mission" id="mission" hidden>
+   <div class="mission-heading"><div><span class="mission-badge" id="controllerBadge">ВЫ УПРАВЛЯЕТЕ</span><h2>Три дня. Четыре комнаты. Ровно 20 °C.</h2><p>Регулируйте общее отопление каждой комнаты. Погода и солнце меняются сами.</p></div><div class="mission-target">20<span>°C</span><small>ЦЕЛЬ В КАЖДОЙ КОМНАТЕ</small></div></div>
+   <div class="mission-progress"><div><span id="gameDay">День 1 из 3</span><span id="gameRemaining">Осталось 72 ч</span></div><progress id="gameProgress" max="259200" value="0" aria-label="Прогресс испытания за три дня"></progress></div>
+  </section>
   <div class="metrics"><div><span>СНАРУЖИ · Tₐ</span><strong id="outdoor">−5.0<small>°C</small></strong></div><div><span>В ДОМЕ · СРЕДНЕЕ</span><strong id="average">20.0<small>°C</small></strong></div><div><span>ИСТОЧНИК ТЕПЛА</span><strong id="powerMetric">—<small>кВт</small></strong></div><div><span>МОДЕЛЬНОЕ ВРЕМЯ</span><strong id="clock">00:00<small>день 1</small></strong></div></div>
   <section class="scene-card" aria-label="Тепловая карта дома">
    <div class="scene-top"><span id="sceneTitle">Разрез дома / температурное поле</span><div><label class="check"><input type="checkbox" id="showLabels" checked>Температуры</label><label class="check"><input type="checkbox" id="showGrid">Сетка</label><button class="icon-button" id="snapshot" title="Сохранить изображение" aria-label="Сохранить изображение">↓</button></div></div>
@@ -30,7 +38,18 @@
   <p class="model-note"><span class="dot"></span><span id="modelNote">Параметры R и C из решения Week 3. Пространственное поле — расширение исходной модели.</span></p>
  </section>
  <aside class="sidebar">
-  <div class="sidebar-title"><div><p class="eyebrow">ВАШ ЭКСПЕРИМЕНТ</p><h2>Параметры модели</h2></div><button class="icon-button" id="defaults" title="Вернуть все параметры решения" aria-label="Вернуть все параметры решения">↺</button></div>
+  <div class="sidebar-title"><div><p class="eyebrow">ВАШ ЭКСПЕРИМЕНТ</p><h2 id="sidebarHeading">Параметры модели</h2></div><button class="icon-button" id="defaults" title="Вернуть все параметры решения" aria-label="Вернуть все параметры решения">↺</button></div>
+  <section id="challengeControls" hidden>
+   <div class="controller-tabs" role="group" aria-label="Кто управляет отоплением"><button id="manualControl" class="active">Я управляю</button><button id="autoControl">Автопилот</button></div>
+   <p class="small-note" id="controllerHint">Двигайте четыре слайдера, чтобы средняя температура каждой комнаты оставалась 20 °C.</p>
+   <div class="locked-notice"><span>▣</span><div><b>Условия зафиксированы</b><small>72 часа · погода и солнце по сценарию<br>Меняется только мощность отопления.</small></div></div>
+   <div class="room-heaters" id="roomHeaters"></div>
+   <div class="game-actions"><button id="gameStart" class="play">▶ Начать 3 дня</button><button id="gameRestart" class="quiet">↺ Новый заезд</button></div>
+   <button id="demoFinish" class="demo-finish" hidden>Ускоренно показать все 3 дня →</button>
+   <div class="game-weather"><span>СОЛНЕЧНЫЙ НАГРЕВ</span><strong id="sunPower">0,00 кВт</strong><p id="sunDirection">Ночь. Солнце не греет.</p></div>
+   <details class="group"><summary>Как считается оценка<span>Честная шкала от 0 до 100</span></summary><div class="score-explanation"><p>Считается отклонение средней температуры каждой комнаты от 20 °C на каждом шаге за все 72 часа. Все комнаты имеют одинаковый вес.</p><p>При 20 °C — 100 баллов. Отклонение на 1 °C даёт 75 баллов за этот момент, на 2 °C — 50, от 4 °C — 0. Итог — среднее по комнатам и времени.</p><p>Комфорт — доля времени в диапазоне 19,5–20,5 °C. Расход энергии показывается отдельно и на оценку не влияет.</p><p>Автопилот использует ту же модель и ограничения мощности. Он компенсирует текущие теплопотери и солнечный приток; температуры не подменяются.</p></div></details>
+  </section>
+  <fieldset id="labControls">
   <label class="select-label" for="solver">Способ расчёта</label><select id="solver"><option value="spatial">Пространственное поле</option><option value="rc">Исходная RC-модель · 16 узлов</option></select>
   <p class="small-note" id="solverHelp">Воздух разбит на ячейки. Стены, пол и крыша сохраняют узлы исходной RC-схемы.</p>
   <div id="heaterControls"><div class="section-label">01 <span>Нагреватель</span><span class="live-dot"></span></div><div id="heaterSliders"></div><div class="source-row"><span id="sourceLabel">Источник не установлен</span><button id="removeSource" class="text-button" disabled>Убрать</button></div><div class="place-buttons" aria-label="Поставить нагреватель в центр комнаты"><button data-zone="0">T₁</button><button data-zone="1">T₂</button><button data-zone="2">T₃</button><button data-zone="3">T₄</button></div><p class="small-note">Нажмите в комнате или перетащите источник. Кнопки T₁–T₄ ставят его в центр.</p></div>
@@ -42,10 +61,12 @@
   <div id="physicalSliders"></div>
   <details class="group"><summary>Отображение <span>Цветовая шкала</span></summary><div id="displaySliders"></div></details>
   <div class="settings-actions"><button class="quiet" id="saveSettings">Сохранить настройки ↓</button><button class="quiet" id="loadSettings">Загрузить ↑</button><input type="file" accept="application/json,.json" id="settingsFile" hidden></div>
+  </fieldset>
  </aside>
 </main>
 <div class="toast" id="toast" role="status" hidden></div>
-<dialog id="about"><button class="close" id="aboutClose" aria-label="Закрыть">×</button><p class="eyebrow">ОТ ЗАДАНИЯ К ПРИЛОЖЕНИЮ</p><h2>Один дом. Два масштаба.</h2><p>Основа — решение Week 3: двухэтажный дом с зонами T₁–T₄, окнами, наружными стенами, перегородками, межэтажным перекрытием, полом и крышей. Грунт по умолчанию: 5 °C.</p><h3>Исходная RC-модель</h3><p>16 состояний: T₁–T₄, O₁–O₄, V₁₂, V₁₃, V₂₄, V₃₄, F₁–F₂, P₃–P₄. Использованы численные параметры из Week3_identified_model.npz. У каждой конструкции своя теплоёмкость; у общей стены, пола и крыши указано сопротивление одной из двух равных половин.</p><div class="equation">Cᵢ dTᵢ/dt = Σⱼ (Tⱼ − Tᵢ) / Rᵢⱼ + Qᵢ</div><h3>Пространственное поле</h3><p>Каждая комната разделена на 20 × 14 ячеек. Их суммарная теплоёмкость точно равна Cᵢ из решения. Проводимости к конструкциям и окнам распределены по соответствующим границам; суммарные значения сохранены. Внутри комнаты тепло передаётся между соседними ячейками с регулируемой проводимостью.</p><p>Это дополнительное допущение: исходные измерения содержат только средние температуры комнат. Пространственное распределение и скорость перемешивания по ним не идентифицированы. Стены и крыша показаны температурами их RC-узлов; разрез и форма скатной крыши схематичны. Отдельного чердачного узла нет.</p><h3>Источник и суточный режим</h3><p>Нагреватель непрерывный. Выбранная мощность распределяется вокруг точки по нормированному гауссову профилю внутри одной комнаты. В исходной RC-модели она подаётся в воздушный узел этой комнаты. В режиме дня Q = 0 во всех комнатах, а наружная температура меняется по синусоиде с периодом 24 часа.</p><h3>Численный расчёт</h3><p>В приложении используется явный шаг Эйлера с ограничением Δt ≤ 0.88 min(Cᵢ / ΣGᵢⱼ), не более 30 секунд. Все внутренние потоки попарно компенсируются. Слайдер скорости меняет только темп показа модельного времени. Отчёт использует метод трапеций; численные методы здесь различаются.</p><p class="small-note">R отображаются в К/кВт, C — в кДж/К, мощность — в кВт. Внутри расчёта — Вт, Дж и секунды. Параметры из решения эффективные: они не определяют однозначно материалы и размеры реального дома. Приложение работает офлайн и не использует внешние библиотеки.</p></dialog>
+<dialog id="gameResult" class="result-dialog" aria-labelledby="resultTitle"><button class="close" id="resultClose" aria-label="Закрыть результат">×</button><p class="eyebrow" id="resultEyebrow">ИСПЫТАНИЕ ЗАВЕРШЕНО</p><h2 id="resultTitle">Три дня под вашим управлением</h2><div class="result-score"><strong id="finalScore">0</strong><span>/ 100</span></div><p id="resultDescription"></p><div class="result-stats"><div><b id="resultError">0,00 °C</b><small>Среднее отклонение</small></div><div><b id="resultComfort">0 %</b><small>Время в комфорте ±0,5 °C</small></div><div><b id="resultEnergy">0 кВт·ч</b><small>На отопление за 3 дня</small></div></div><div class="result-rooms" id="resultRooms"></div><p class="small-note">Оцениваются средние температуры комнат за все 72 часа. Нельзя компенсировать холодную комнату перегревом другой.</p><div class="result-actions"><button class="play" id="resultRetry">Попробовать ещё</button><button class="quiet" id="resultDemo">Посмотреть идеальное управление →</button></div></dialog>
+<dialog id="about"><button class="close" id="aboutClose" aria-label="Закрыть">×</button><p class="eyebrow">ОТ ЗАДАНИЯ К ПРИЛОЖЕНИЮ</p><h2>Один дом. Два масштаба.</h2><p>Основа — решение Week 3: двухэтажный дом с зонами T₁–T₄, окнами, наружными стенами, перегородками, межэтажным перекрытием, полом и крышей. Грунт по умолчанию: 5 °C.</p><h3>Исходная RC-модель</h3><p>16 состояний: T₁–T₄, O₁–O₄, V₁₂, V₁₃, V₂₄, V₃₄, F₁–F₂, P₃–P₄. Использованы численные параметры из Week3_identified_model.npz. У каждой конструкции своя теплоёмкость; у общей стены, пола и крыши указано сопротивление одной из двух равных половин.</p><div class="equation">Cᵢ dTᵢ/dt = Σⱼ (Tⱼ − Tᵢ) / Rᵢⱼ + Qᵢ</div><h3>Пространственное поле</h3><p>Каждая комната разделена на 20 × 14 ячеек. Их суммарная теплоёмкость точно равна Cᵢ из решения. Проводимости к конструкциям и окнам распределены по соответствующим границам; суммарные значения сохранены. Внутри комнаты тепло передаётся между соседними ячейками с регулируемой проводимостью.</p><p>Это дополнительное допущение: исходные измерения содержат только средние температуры комнат. Пространственное распределение и скорость перемешивания по ним не идентифицированы. Стены и крыша показаны температурами их RC-узлов; разрез и форма скатной крыши схематичны. Отдельного чердачного узла нет.</p><h3>Источник и суточный режим</h3><p>Нагреватель непрерывный. Выбранная мощность распределяется вокруг точки по нормированному гауссову профилю внутри одной комнаты. В исходной RC-модели она подаётся в воздушный узел этой комнаты. В режиме дня Q = 0 во всех комнатах, а наружная температура меняется по синусоиде с периодом 24 часа.</p><h3>Испытание «Удержи 20 °C»</h3><p>72 модельных часа, четыре независимых общих нагревателя от 0 до 2,5 кВт. Наружная температура меняется по суточному циклу с похолоданием на второй день. Солнце восходит справа в 06:00 и заходит слева в 18:00. Солнечное тепло поступает в ячейки у окон, наружные стены и крышу; воздействие утром сильнее справа, вечером слева.</p><p>В игре параметры заблокированы. Для управляемости при ускоренном показе трёх дней эффективные воздушные теплоёмкости исходной модели увеличены в 8 раз, а проводимость перемешивания фиксирована на 60 Вт/К. Остальные R и C из решения сохранены. Это фиксированный учебный сценарий, одинаковый для ручного и автоматического управления.</p><p>Цель и оценка относятся к средней температуре каждой комнаты. Автопилот рассчитывает мощность по текущему балансу тепла с ограничением 0–2,5 кВт; тот же численный расчёт определяет температуры и итоговую оценку.</p><h3>Численный расчёт</h3><p>В приложении используется явный шаг Эйлера с ограничением Δt ≤ 0.88 min(Cᵢ / ΣGᵢⱼ), не более 30 секунд. Все внутренние потоки попарно компенсируются. Слайдер скорости меняет только темп показа модельного времени. Отчёт использует метод трапеций; численные методы здесь различаются.</p><p class="small-note">R отображаются в К/кВт, C — в кДж/К, мощность — в кВт. Внутри расчёта — Вт, Дж и секунды. Параметры из решения эффективные: они не определяют однозначно материалы и размеры реального дома. Приложение работает офлайн и не использует внешние библиотеки.</p></dialog>
 <script>
 /* Thermal RC graph, SI units internally. See README for spatial extension. */
 (function(root){
@@ -93,7 +114,7 @@ class ThermalModel {
   this.maxDt=30;for(let a=0;a<this.n;a++)if(this.loss[a])this.maxDt=Math.min(this.maxDt,.88*this.cap[a]/this.loss[a]);
   this.reset();this.setSource(oldSource);return this;
  }
- reset(){for(let a=0;a<this.n;a++){const z=a<this.airN?Math.floor(a/this.perZone):a-this.airN+4;this.T[a]=this.initialMode==='fitted'?this.initials[z]:this.p.initial;}this.time=0;this.deliveredEnergy=0;this.boundaryEnergy=0;}
+ reset(){for(let a=0;a<this.n;a++){const z=a<this.airN?Math.floor(a/this.perZone):a-this.airN+4;this.T[a]=this.initialMode==='fitted'?this.initials[z]:this.p.initial;}this.time=0;this.deliveredEnergy=0;this.boundaryEnergy=0;this.solarEnergy=0;}
  setSource(source){
   this.source=null;this.weights=new Float64Array(this.n);this.heaterCells=[];if(!source)return false;
   const z=this.zoneAt(source.x,source.y);if(z<0)return false;this.source={...source};
@@ -105,15 +126,30 @@ class ThermalModel {
   }
   for(const a of this.heaterCells)this.weights[a]/=sum;return true;
  }
- outdoorAt(t=this.time){const p=this.p;return this.mode==='day'?(p.dayMin+p.dayMax)/2+(p.dayMax-p.dayMin)/2*Math.cos(2*Math.PI*(t/3600-p.peakHour)/24):p.outside;}
- step(dt){
-  const T=this.T,q=this.rate;q.fill(0);let boundary=0;
+ outdoorAt(t=this.time){if(this.scenario)return this.scenario.outdoorAt(t);const p=this.p;return this.mode==='day'?(p.dayMin+p.dayMax)/2+(p.dayMax-p.dayMin)/2*Math.cos(2*Math.PI*(t/3600-p.peakHour)/24):p.outside;}
+ ratesAt(time){
+  const T=this.T,q=this.rate;q.fill(0);let boundary=0,solar=0;
   for(let e=0;e<this.ea.length;e++){const a=this.ea[e],b=this.eb[e],v=this.eg[e]*(T[b]-T[a]);q[a]+=v;q[b]-=v;}
-  const outside=this.outdoorAt(this.time+dt/2);
+  const outside=this.outdoorAt(time);
   for(let e=0;e<this.ba.length;e++){const a=this.ba[e],v=this.bg[e]*((this.bt[e]?this.p.ground:outside)-T[a]);q[a]+=v;boundary+=v;}
-  const power=this.mode==='heater'&&this.source?this.p.power:0;if(power)for(const a of this.heaterCells)q[a]+=power*this.weights[a];
+  if(this.scenario){
+   const sun=this.scenario.solarAt(time);
+   for(let z=0;z<4;z++){
+    const profiles=this.scenario.solarWeights[z];
+    for(let k=0;k<this.perZone;k++)q[z*this.perZone+k]+=sun.air[z]*profiles[k];
+    q[this.airN+z]+=sun.walls[z];solar+=sun.air[z]+sun.walls[z];
+   }
+   for(let k=0;k<2;k++){q[this.airN+10+k]+=sun.roof[k];solar+=sun.roof[k];}
+  }
+  this.lastBoundaryRate=boundary;this.lastSolarRate=solar;return q;
+ }
+ step(dt,roomPowers=null,prepared=false){
+  const T=this.T,q=prepared?this.rate:this.ratesAt(this.time+dt/2);
+  let power=0;
+  if(roomPowers){for(let z=0;z<4;z++){power+=roomPowers[z];const v=roomPowers[z]/this.perZone;for(let k=0;k<this.perZone;k++)q[z*this.perZone+k]+=v;}}
+  else {power=this.mode==='heater'&&this.source?this.p.power:0;if(power)for(const a of this.heaterCells)q[a]+=power*this.weights[a];}
   for(let a=0;a<this.n;a++)T[a]+=dt*q[a]/this.cap[a];
-  this.time+=dt;this.deliveredEnergy+=power*dt;this.boundaryEnergy+=boundary*dt;
+  this.time+=dt;this.deliveredEnergy+=power*dt;this.boundaryEnergy+=this.lastBoundaryRate*dt;this.solarEnergy+=this.lastSolarRate*dt;
  }
  advance(seconds,maxSteps=Infinity){let rest=seconds,steps=0;while(rest>1e-8&&steps<maxSteps){const dt=Math.min(this.maxDt,rest);this.step(dt);rest-=dt;steps++;}return seconds-rest;}
  energy(){let e=0;for(let a=0;a<this.n;a++)e+=this.cap[a]*this.T[a];return e;}
@@ -125,20 +161,102 @@ root.Thermal={ThermalModel,defaults,defaultC,defaultR,names,rNames,fitted};if(ty
 })(typeof window!=='undefined'?window:globalThis);
 
 </script><script>
+/* Deterministic three-day heating challenge. No temperature overrides during play. */
+(function(root){
+'use strict';
+const thermal=typeof module!=='undefined'&&module.exports?require('./engine.js'):root.Thermal;
+const DURATION=72*3600,TARGET=20,MAX_POWER=2500,SPEED=2880;
+const clamp=(v,lo,hi)=>Math.max(lo,Math.min(hi,v));
+// Continuous visual orbit, including the portion below the ground at night.
+function sunTrackAt(time,width,horizon,radius=11){
+ const hour=((time/3600)%24+24)%24,angle=2*Math.PI*(hour-6)/24;
+ const elevation=Math.sin(angle),vertical=Math.sign(elevation)*Math.abs(elevation)**1.2;
+ const margin=radius+7,span=Math.max(0,width/2-margin),arc=Math.max(radius,horizon-25);
+ const x=width/2+span*Math.cos(angle),y=horizon-arc*vertical;
+ return {x,y,radius,horizon,elevation,visible:y-radius<horizon,night:Math.max(0,Math.min(1,-elevation*4))};
+}
+class HeatingChallenge {
+ constructor(model){this.model=model;this.active=false;this.state='ready';this.control='manual';this.powers=[0,0,0,0];}
+ setup(control='manual'){
+  if(!['manual','auto'].includes(control))throw Error('Unknown controller');
+  const m=this.model;this.active=true;this.control=control;this.state='ready';
+  m.scenario=null;m.p={...thermal.defaults,initial:20,ground:5,mixing:60,speed:SPEED};
+  m.C=thermal.defaultC.map((v,i)=>i<4?v*8:v);m.R=thermal.defaultR.slice();m.initialMode='uniform';m.solver='spatial';m.mode='challenge';m.source=null;m.rebuild();
+  m.scenario=this;this.solarWeights=[];
+  for(let z=0;z<4;z++){
+   const weights=new Float64Array(m.perZone);let sum=0;
+   for(let j=0;j<m.rows;j++)for(let i=0;i<m.cols;i++){
+    const distance=z%2?m.cols-1-i:i,w=Math.exp(-distance/4);weights[j*m.cols+i]=w;sum+=w;
+   }
+   for(let k=0;k<weights.length;k++)weights[k]/=sum;this.solarWeights.push(weights);
+  }
+  const ta=this.outdoorAt(0);
+  for(let z=0;z<4;z++){
+   const inside=1000/m.R[4+z],outside=1000/m.R[8+z];m.T[m.airN+z]=(inside*TARGET+outside*ta)/(inside+outside);
+  }
+  for(let z=0;z<2;z++){m.T[m.airN+8+z]=(TARGET+m.p.ground)/2;m.T[m.airN+10+z]=(TARGET+ta)/2;}
+  this.absError=[0,0,0,0];this.squareError=[0,0,0,0];this.penalty=[0,0,0,0];this.comfort=[0,0,0,0];this.maxError=[0,0,0,0];this.roomEnergy=[0,0,0,0];this.clippedSteps=0;
+  m.ratesAt(0);this.powers=this.requiredPowers(1).map(v=>Math.round(v/5)*5);
+  this.initialEnergy=m.energy();return this;
+ }
+ outdoorAt(t){
+  // Smooth cold front on day two; same curve for player and demonstration.
+  const hours=t/3600;return -14+7*Math.cos(2*Math.PI*(hours-15)/24)-4*Math.exp(-(((hours-39)/11)**2));
+ }
+ solarAt(t){
+  const hour=((t/3600)%24+24)%24,phase=clamp((hour-6)/12,0,1),height=hour>=6&&hour<=18?Math.sin(Math.PI*phase):0;
+  const right=(1+Math.cos(Math.PI*phase))/2,left=1-right,day=Math.min(2,Math.floor(t/86400)),weather=[1,.7,1.1][day];
+  const air=[],walls=[],roof=[];
+  for(let z=0;z<4;z++){const exposure=.12+.88*(z%2?right:left),gain=height*weather*exposure;air.push((z<2?300:420)*gain);walls.push(85*gain);if(z>=2)roof.push(140*gain);}
+  return {phase,height,x:1.12-1.24*phase,visible:height>1e-6,air,walls,roof,total:air.reduce((a,b)=>a+b,0)+walls.reduce((a,b)=>a+b,0)+roof.reduce((a,b)=>a+b,0)};
+ }
+ requiredPowers(dt){
+  const m=this.model,powers=[];
+  for(let z=0;z<4;z++){let passive=0,average=0;for(let k=0;k<m.perZone;k++){const a=z*m.perZone+k;passive+=m.rate[a];average+=m.T[a]/m.perZone;}
+   const raw=-passive+(TARGET-average)*m.C[z]*1000/600;
+   const value=clamp(raw,0,MAX_POWER);if(Math.abs(raw-value)>1e-6)this.clippedSteps++;powers.push(value);
+  }
+  return powers;
+ }
+ setPower(z,value){if(!this.active||this.state==='finished'||this.control!=='manual')return false;if(!Number.isInteger(z)||z<0||z>3||!Number.isFinite(value))return false;this.powers[z]=clamp(value,0,MAX_POWER);return true;}
+ start(){if(this.state==='ready')this.state='running';}
+ step(requestedDt){
+  if(!this.active||this.state==='finished')return 0;if(!Number.isFinite(requestedDt)||requestedDt<=0)return 0;
+  const m=this.model,dt=Math.min(requestedDt,m.maxDt,DURATION-m.time);if(dt<=1e-8){m.time=DURATION;this.state='finished';return 0;}
+  this.start();const before=m.stats().zones;
+  m.ratesAt(m.time+dt/2);if(this.control==='auto')this.powers=this.requiredPowers(dt);
+  m.step(dt,this.powers,true);const after=m.stats().zones;
+  for(let z=0;z<4;z++){
+   const a=Math.abs(before[z]-TARGET),b=Math.abs(after[z]-TARGET);
+   this.absError[z]+=(a+b)*dt/2;this.squareError[z]+=(a*a+b*b)*dt/2;
+   this.penalty[z]+=(Math.min(a/4,1)+Math.min(b/4,1))*dt/2;
+   this.comfort[z]+=((a<=.5?1:0)+(b<=.5?1:0))*dt/2;this.maxError[z]=Math.max(this.maxError[z],a,b);this.roomEnergy[z]+=this.powers[z]*dt;
+  }
+  if(m.time>=DURATION-1e-7){m.time=DURATION;this.state='finished';}return dt;
+ }
+ advance(seconds){let remaining=Math.max(0,seconds);while(remaining>1e-7&&this.state!=='finished'){const dt=this.step(Math.min(remaining,this.model.maxDt));if(!dt)break;remaining-=dt;}return seconds-remaining;}
+ result(){const t=Math.max(this.model.time,1e-9),zones=this.absError.map((error,z)=>({mae:error/t,rmse:Math.sqrt(this.squareError[z]/t),maxError:this.maxError[z],comfort:100*this.comfort[z]/t,score:clamp(100*(1-this.penalty[z]/t),0,100),kWh:this.roomEnergy[z]/3600000}));return {score:zones.reduce((a,z)=>a+z.score,0)/4,mae:zones.reduce((a,z)=>a+z.mae,0)/4,comfort:zones.reduce((a,z)=>a+z.comfort,0)/4,kWh:this.roomEnergy.reduce((a,b)=>a+b,0)/3600000,zones,seconds:this.model.time,complete:this.state==='finished',control:this.control};}
+}
+const api={HeatingChallenge,DURATION,TARGET,MAX_POWER,SPEED,sunTrackAt};Object.assign(thermal,api);if(typeof module!=='undefined'&&module.exports)module.exports=api;
+})(typeof window!=='undefined'?window:globalThis);
+
+</script><script>
 (function(){
 'use strict';
 const $=id=>document.getElementById(id),{ThermalModel,defaults,defaultC,defaultR,names,rNames}=Thermal;
-const model=new ThermalModel();window.thermalApp={model};
+const model=new ThermalModel(),challenge=new Thermal.HeatingChallenge(model);window.thermalApp={model,challenge};
 const house=$('house'),ctx=house.getContext('2d'),chart=$('chart'),gc=chart.getContext('2d');
 const speeds=[60,300,900,1800,3600,7200,14400],colors=['#51d5be','#7eafff','#e8b06a','#c5a0ff','#e0e8ef'];
 let playing=false,last=0,history=[],lastRecord=-Infinity,fastTarget=null,scaleMin=-25,scaleMax=60,viewMin=-25,viewMax=60,hover=null,dragging=false,toastTimer,geometry=null,realSpeed=0;
 const sliders={};
+let sandboxSnapshot=null,resultShown=false;
+const isChallenge=()=>model.mode==='challenge'&&challenge.active;
 const fmt=(v,n=1)=>Number(v).toLocaleString('ru-RU',{maximumFractionDigits:n,minimumFractionDigits:n});
 const toast=message=>{$('toast').textContent=message;$('toast').hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').hidden=true,3500);};
 function slider(container,key,label,min,max,step,value,unit,onChange,options={}){
  const div=document.createElement('div');div.className='slider';
  const id='param-'+key;
- div.innerHTML=`<div class="slider-head"><label for="${id}">${label}</label><output for="${id}"><b></b><small>${unit}</small></output></div><input type="range" id="${id}" min="${min}" max="${max}" step="${step}"><div class="slider-range"><span>${fmt(options.display?options.display(min):min,0)}</span><span>${fmt(options.display?options.display(max):max,0)}</span></div>`;
+ div.innerHTML=`<div class="slider-head"><label for="${id}">${label}</label><output for="${id}"><b></b><small>${unit}</small></output></div><input type="range" id="${id}" min="${min}" max="${max}" step="${step}"><div class="slider-range"><span>${fmt(options.display?options.display(min):min,0)}</span><span>${fmt(options.display?options.display(max):max,options.display&&!Number.isInteger(options.display(max))?1:0)}</span></div>`;
  const input=div.querySelector('input'),out=div.querySelector('b'); input.value=options.log?Math.log(value):value;
  const read=()=>options.log?Math.exp(+input.value):+input.value;
  const display=v=>{out.textContent=fmt(options.display?options.display(v):v,options.digits??1);input.setAttribute('aria-valuetext',out.textContent+' '+unit);};display(value);
@@ -146,8 +264,15 @@ function slider(container,key,label,min,max,step,value,unit,onChange,options={})
  if(options.log){div.querySelector('.slider-range').firstElementChild.textContent='×0,25';div.querySelector('.slider-range').lastElementChild.textContent='×4';}
  container.append(div);sliders[key]={input,set(v){input.value=options.log?Math.log(v):v;display(v);},div};return div;
 }
-function startStop(value){playing=value;$('play').innerHTML=playing?'Ⅱ <span>Пауза</span>':'▶ <span>Запустить</span>';$('status').classList.toggle('running',playing||fastTarget!==null);$('status').innerHTML=(playing||fastTarget!==null)?'<i></i>Эксперимент идёт':'<i></i>Пауза';}
-function record(force=false){if(force||model.time-lastRecord>=299.999){const s=model.stats();history.push({t:model.time,z:s.zones,a:s.outside});lastRecord=model.time;if(history.length>10000)history=history.filter((_,i)=>i%2===0);}}
+function startStop(value){
+ playing=value;
+ const game=isChallenge(),finished=game&&challenge.state==='finished',active=playing||fastTarget!==null;
+ const text=finished?'Завершено':active?'Пауза':game?(model.time>0?'Продолжить':'Начать 3 дня'):'Запустить';
+ $('play').innerHTML=(active?'Ⅱ ':'▶ ')+`<span>${text}</span>`;$('play').disabled=finished;
+ $('status').classList.toggle('running',active);$('status').innerHTML='<i></i>'+(finished?'72 часа завершены':active?(game?(challenge.control==='auto'?'Автопилот':'Вы управляете'):'Эксперимент идёт'):'Пауза');
+ if(game){$('gameStart').textContent=(active?'Ⅱ ':'▶ ')+text;$('gameStart').disabled=finished;$('demoFinish').disabled=finished;}
+}
+function record(force=false){if(force||model.time-lastRecord>=299.999){const s=model.stats();if(history.length&&Math.abs(history.at(-1).t-model.time)<1e-7)history.pop();history.push({t:model.time,z:s.zones,a:s.outside,q:isChallenge()?challenge.powers.slice():null,solar:isChallenge()?challenge.solarAt(model.time).total:0});lastRecord=model.time;if(history.length>10000)history=history.filter((_,i)=>i%2===0);}}
 function clearHistory(){history=[];lastRecord=-Infinity;record(true);}
 function reset(rebuild=false,message){fastTarget=null;if(rebuild)model.rebuild();else model.reset();clearHistory();updateSource();updateMetrics();draw();if(message)toast(message);}
 function changedNetwork(){reset(true,'Модель перезапущена с новыми параметрами');}
@@ -169,28 +294,103 @@ const rg=[group('Окна → наружный воздух','Rw₁–Rw₄ · �
 for(let i=0;i<20;i++)slider(rg[Math.floor(i/4)],'R'+i,rNames[i],Math.log(defaultR[i]/4),Math.log(defaultR[i]*4),.001,model.R[i],'К/кВт',v=>{model.R[i]=v;changedNetwork();},{log:true,digits:2});
 slider($('displaySliders'),'scaleMin','Нижняя граница',-50,40,1,scaleMin,'°C',v=>{scaleMin=v;if(scaleMax<=v){scaleMax=v+1;sliders.scaleMax.set(scaleMax);}$('autoScale').checked=false;draw();});
 slider($('displaySliders'),'scaleMax','Верхняя граница',0,200,1,scaleMax,'°C',v=>{scaleMax=v;if(scaleMin>=v){scaleMin=v-1;sliders.scaleMin.set(scaleMin);}$('autoScale').checked=false;draw();});
+for(let z=0;z<4;z++){
+ const card=document.createElement('div');card.className='room-heater';card.style.setProperty('--room-color',colors[z]);
+ card.innerHTML=`<div class="room-heater-top"><span class="room-name">Комната T${'₁₂₃₄'[z]}</span><strong class="room-reading" id="roomT${z}">20,00 °C</strong></div><div class="room-power"></div><div class="room-error"><span>Цель 20 °C</span><b id="roomError${z}">В норме</b></div>`;
+ $('roomHeaters').append(card);
+ slider(card.querySelector('.room-power'),'gameQ'+z,`Отопление T${'₁₂₃₄'[z]}`,0,Thermal.MAX_POWER,5,0,'кВт',v=>{if(challenge.setPower(z,v))updateMetrics();},{display:v=>v/1000,digits:2});
+}
+function updateChallengeUI(s){
+ if(!isChallenge())return;const time=model.time,done=challenge.state==='finished',day=Math.min(3,1+Math.floor(time/86400));
+ $('gameDay').textContent=done?'Все 3 дня завершены':`День ${day} из 3 · ${fmt(time/3600,1)} / 72 ч`;$('gameRemaining').textContent=done?'Финиш':`Осталось ${fmt((Thermal.DURATION-time)/3600,1)} ч`;$('gameProgress').value=time;
+ for(let z=0;z<4;z++){
+  const error=s.zones[z]-20,reading=$('roomT'+z);reading.textContent=fmt(s.zones[z],2)+' °C';reading.classList.toggle('cold',error<-.25);reading.classList.toggle('hot',error>.25);
+  $('roomError'+z).textContent=Math.abs(error)<.005?'Ровно 20 °C':(error>0?'+':'')+fmt(error,2)+' °C';sliders['gameQ'+z].set(challenge.powers[z]);
+ }
+ const sun=challenge.solarAt(time);$('sunPower').textContent=fmt(sun.total/1000,2)+' кВт';$('sunDirection').textContent=!sun.visible?'Ночь. Солнце не греет.':sun.phase<.45?'Утро: солнце справа → нагреваются правые комнаты.':sun.phase>.55?'Вечер: солнце слева → нагреваются левые комнаты.':'Полдень: солнечное тепло поступает с обеих сторон.';
+}
+function showResult(){
+ const r=challenge.result();if(!r.complete)return;resultShown=true;
+ $('resultEyebrow').textContent=r.control==='auto'?'ДЕМОНСТРАЦИЯ ЗАВЕРШЕНА':'ИСПЫТАНИЕ ЗАВЕРШЕНО';$('resultTitle').textContent=r.control==='auto'?'72 часа под управлением автопилота':'Три дня под вашим управлением';
+ $('finalScore').textContent=fmt(r.score,1);$('resultError').textContent=fmt(r.mae,3)+' °C';$('resultComfort').textContent=fmt(r.comfort,1)+' %';$('resultEnergy').textContent=fmt(r.kWh,1)+' кВт·ч';
+ $('resultDescription').textContent=r.control==='auto'&&r.mae<.005?'Средняя температура каждой комнаты удерживалась на 20 °C все 72 часа. Показанный результат рассчитан по фактическим температурам.':'Оценка учитывает отклонение от 20 °C в каждой комнате за всё время испытания.';
+ $('resultRooms').replaceChildren();r.zones.forEach((z,i)=>{const div=document.createElement('div');div.className='result-room';div.innerHTML=`<div><span>Комната T${'₁₂₃₄'[i]}</span><b>${fmt(z.score,1)} / 100</b></div><small>Среднее отклонение ${fmt(z.mae,3)} °C<br>В комфорте ${fmt(z.comfort,1)} % времени</small>`;$('resultRooms').append(div);});
+ $('resultDemo').hidden=r.control==='auto';$('gameResult').showModal();
+}
+$('resultClose').onclick=()=>$('gameResult').close();$('resultRetry').onclick=()=>startChallenge('manual');$('resultDemo').onclick=()=>startChallenge('auto',true);
 function updateWeather(){$('nightTemp').textContent=fmt(model.p.dayMin,0)+'°';$('dayTemp').textContent=fmt(model.p.dayMax,0)+'°';updateMetrics();}
-function updateSource(){const z=model.source?model.zoneAt(model.source.x,model.source.y):-1;$('sourceLabel').textContent=z<0?'Источник не установлен':`Нагреватель в комнате T${'₁₂₃₄'[z]}`;$('removeSource').disabled=!model.source;$('sceneGuide').hidden=!!model.source||model.mode==='day';}
+function updateSource(){const z=model.source?model.zoneAt(model.source.x,model.source.y):-1;$('sourceLabel').textContent=z<0?'Источник не установлен':`Нагреватель в комнате T${'₁₂₃₄'[z]}`;$('removeSource').disabled=!model.source;$('sceneGuide').hidden=!!model.source||model.mode!=='heater';}
 function placeSource(x,y){if(model.mode!=='heater')return;if(model.setSource({x,y})){updateSource();updateMetrics();if(!playing)startStop(true);draw();}}
-function mode(value){if(model.mode===value)return;model.mode=value;$('heaterMode').classList.toggle('active',value==='heater');$('dayMode').classList.toggle('active',value==='day');$('heaterControls').hidden=value!=='heater';$('dayControls').hidden=value!=='day';sliders.outside.div.hidden=value==='day';$('modeHint').textContent=value==='day'?'За окном от мороза до жары. Наблюдайте, как дом отвечает на смену погоды.':'Поставьте нагреватель в любой комнате и наблюдайте за температурой.';reset(false);startStop(value==='day');updateSource();}
-$('heaterMode').onclick=()=>mode('heater');$('dayMode').onclick=()=>mode('day');
-$('play').onclick=()=>{if(fastTarget!==null){fastTarget=null;startStop(false);}else startStop(!playing);};
-$('reset').onclick=()=>reset(false,'Возвращены начальные температуры');
-$('advanceDay').onclick=()=>{fastTarget=model.time+86400;startStop(false);$('status').innerHTML='<i></i>Расчёт следующих суток';$('play').innerHTML='Ⅱ <span>Остановить</span>';};
-$('speed').oninput=()=>{model.p.speed=speeds[+$('speed').value];$('speedValue').textContent=(model.p.speed/60)+' мин/с';};
+function syncLabControls(){
+ for(const [k,v]of Object.entries(model.p))if(sliders[k])sliders[k].set(v);
+ for(let i=0;i<16;i++)sliders['C'+i].set(model.C[i]);for(let i=0;i<20;i++)sliders['R'+i].set(model.R[i]);
+ $('solver').value=model.solver;$('initialMode').value=model.initialMode;
+ sliders.mixing.input.disabled=model.solver==='rc';sliders.radius.input.disabled=model.solver==='rc';sliders.initial.input.disabled=model.initialMode==='fitted';
+ $('speed').value=speeds.indexOf(model.p.speed);$('speedValue').textContent=(model.p.speed/60)+' мин/с';
+ $('solverHelp').textContent=model.solver==='rc'?'Точная структура из задания: 4 воздушных и 12 конструкционных узлов. Температура внутри комнаты одинакова.':'Воздух разбит на ячейки. Стены, пол и крыша сохраняют узлы исходной RC-схемы.';
+}
+function startChallenge(control='manual',autostart=false){
+ if(!sandboxSnapshot)sandboxSnapshot={p:{...model.p},C:model.C.slice(),R:model.R.slice(),solver:model.solver,initialMode:model.initialMode,source:model.source?{...model.source}:null,scaleMin,scaleMax,autoScale:$('autoScale').checked};
+ fastTarget=null;playing=false;hover=null;$('probe').hidden=true;challenge.setup(control);resultShown=false;
+ if($('gameResult').open)$('gameResult').close();
+ document.body.classList.add('challenge-active');$('labControls').hidden=true;$('labControls').disabled=true;$('challengeControls').hidden=false;$('mission').hidden=false;
+ $('sidebarHeading').textContent='Управление отоплением';$('challengeMode').classList.add('active');$('heaterMode').classList.remove('active');$('dayMode').classList.remove('active');
+ $('manualControl').classList.toggle('active',control==='manual');$('autoControl').classList.toggle('active',control==='auto');
+ $('controllerBadge').textContent=control==='auto'?'ДЕМОНСТРАЦИЯ АВТОПИЛОТА':'ВЫ УПРАВЛЯЕТЕ';$('controllerBadge').classList.toggle('demo-mode',control==='auto');
+ $('controllerHint').textContent=control==='auto'?'Смотрите, как автопилот двигает слайдеры и компенсирует погоду и солнце. Тот же дом, те же 72 часа.':'Двигайте четыре слайдера, чтобы средняя температура каждой комнаты оставалась 20 °C. Без пауз заезд длится около 90 секунд.';
+ $('demoFinish').hidden=control!=='auto';for(let z=0;z<4;z++)sliders['gameQ'+z].input.disabled=control==='auto';
+ house.setAttribute('aria-label','Тепловая карта испытания. Цель — средняя температура 20 градусов в каждой комнате.');
+ $('modeHint').textContent='Удерживайте среднюю температуру каждой комнаты на 20 °C в течение 72 часов.';
+ $('sceneTitle').textContent='Тепловая карта / цель в каждой комнате: 20 °C';$('modelNote').textContent='Учебный сценарий: параметры зафиксированы. Оцениваются средние температуры четырёх комнат.';
+ document.querySelector('#powerMetric').previousElementSibling.textContent='ОБЩЕЕ ОТОПЛЕНИЕ';
+ $('speed').disabled=true;$('advanceDay').disabled=true;scaleMin=16;scaleMax=24;$('autoScale').checked=false;
+ clearHistory();updateSource();updateMetrics();startStop(autostart);draw();
+}
+function leaveChallenge(){
+ if(!challenge.active)return;challenge.active=false;model.scenario=null;fastTarget=null;playing=false;
+ const old=sandboxSnapshot;sandboxSnapshot=null;
+ if(old){model.p={...old.p};model.C=old.C.slice();model.R=old.R.slice();model.solver=old.solver;model.initialMode=old.initialMode;model.source=old.source;scaleMin=old.scaleMin;scaleMax=old.scaleMax;$('autoScale').checked=old.autoScale;}
+ document.body.classList.remove('challenge-active');$('labControls').hidden=false;$('labControls').disabled=false;$('challengeControls').hidden=true;$('mission').hidden=true;$('challengeMode').classList.remove('active');
+ $('sidebarHeading').textContent='Параметры модели';$('play').disabled=false;$('speed').disabled=false;$('advanceDay').disabled=false;
+ document.querySelector('#powerMetric').previousElementSibling.textContent='ИСТОЧНИК ТЕПЛА';
+ $('modelNote').textContent='Параметры R и C из решения Week 3. Пространственное поле — расширение исходной модели.';
+ house.setAttribute('aria-label','Дом: зоны 3 и 4 сверху, зоны 1 и 2 снизу. Нажмите в комнате для установки нагревателя.');
+ syncLabControls();model.rebuild();
+}
+function mode(value){
+ if(value==='challenge'){if(!isChallenge())startChallenge();return;}
+ if(model.mode===value)return;leaveChallenge();model.mode=value;
+ $('heaterMode').classList.toggle('active',value==='heater');$('dayMode').classList.toggle('active',value==='day');$('heaterControls').hidden=value!=='heater';$('dayControls').hidden=value!=='day';sliders.outside.div.hidden=value==='day';
+ $('sceneTitle').textContent=model.solver==='rc'?'Разрез дома / температуры RC-узлов':'Разрез дома / температурное поле';
+ $('modeHint').textContent=value==='day'?'За окном от мороза до жары. Наблюдайте, как дом отвечает на смену погоды.':'Поставьте нагреватель в любой комнате и наблюдайте за температурой.';reset(false);startStop(value==='day');updateSource();
+}
+function togglePlayback(){if(isChallenge()&&challenge.state==='finished')return;if(fastTarget!==null){fastTarget=null;startStop(false);}else {if(isChallenge()&&!playing)challenge.start();startStop(!playing);}}
+$('heaterMode').onclick=()=>mode('heater');$('dayMode').onclick=()=>mode('day');$('challengeMode').onclick=()=>mode('challenge');
+$('play').onclick=togglePlayback;$('gameStart').onclick=togglePlayback;
+$('reset').onclick=()=>isChallenge()?startChallenge(challenge.control,false):reset(false,'Возвращены начальные температуры');
+$('advanceDay').onclick=()=>{if(isChallenge())return;fastTarget=model.time+86400;startStop(false);$('status').innerHTML='<i></i>Расчёт следующих суток';$('play').innerHTML='Ⅱ <span>Остановить</span>';};
+$('speed').oninput=()=>{if(isChallenge())return;model.p.speed=speeds[+$('speed').value];$('speedValue').textContent=(model.p.speed/60)+' мин/с';};
+$('manualControl').onclick=()=>{if(challenge.control!=='manual'||challenge.state==='finished')startChallenge('manual');};
+$('autoControl').onclick=()=>{if(challenge.control!=='auto'||challenge.state==='finished')startChallenge('auto',true);else if(!playing)startStop(true);};
+$('gameRestart').onclick=()=>startChallenge(challenge.control,false);
+$('demoFinish').onclick=()=>{if(!isChallenge()||challenge.control!=='auto'||challenge.state==='finished')return;fastTarget=Thermal.DURATION;startStop(false);$('status').innerHTML='<i></i>Автопилот · ускоренный показ';};
 $('removeSource').onclick=()=>{model.setSource(null);updateSource();updateMetrics();draw();};
 document.querySelectorAll('[data-zone]').forEach(b=>b.onclick=()=>{const z=+b.dataset.zone;placeSource(z%2*.5+.25,Math.floor(z/2)*.3+.15);});
-$('solver').onchange=()=>{model.solver=$('solver').value;sliders.mixing.input.disabled=model.solver==='rc';sliders.radius.input.disabled=model.solver==='rc';$('solverHelp').textContent=model.solver==='rc'?'Точная структура из задания: 4 воздушных и 12 конструкционных узлов. Температура внутри комнаты одинакова.':'Воздух разбит на ячейки. Стены, пол и крыша сохраняют узлы исходной RC-схемы.';$('sceneTitle').textContent=model.solver==='rc'?'Разрез дома / температуры RC-узлов':'Разрез дома / температурное поле';reset(true,'Способ расчёта изменён, эксперимент начат заново');};
-$('initialMode').onchange=()=>{model.initialMode=$('initialMode').value;sliders.initial.input.disabled=model.initialMode==='fitted';toast('Начальные состояния выбраны. Нажмите «Сначала» для применения.');};
-$('defaults').onclick=()=>{model.p={...defaults};model.C=defaultC.slice();model.R=defaultR.slice();model.initialMode='uniform';$('initialMode').value='uniform';sliders.initial.input.disabled=false;for(const [k,v]of Object.entries(model.p))if(sliders[k])sliders[k].set(v);for(let i=0;i<16;i++)sliders['C'+i].set(model.C[i]);for(let i=0;i<20;i++)sliders['R'+i].set(model.R[i]);$('speed').value=3;$('speed').oninput();updateWeather();reset(true,'Восстановлены параметры из решения Week 3');};
+$('solver').onchange=()=>{if(isChallenge())return;model.solver=$('solver').value;sliders.mixing.input.disabled=model.solver==='rc';sliders.radius.input.disabled=model.solver==='rc';$('solverHelp').textContent=model.solver==='rc'?'Точная структура из задания: 4 воздушных и 12 конструкционных узлов. Температура внутри комнаты одинакова.':'Воздух разбит на ячейки. Стены, пол и крыша сохраняют узлы исходной RC-схемы.';$('sceneTitle').textContent=model.solver==='rc'?'Разрез дома / температуры RC-узлов':'Разрез дома / температурное поле';reset(true,'Способ расчёта изменён, эксперимент начат заново');};
+$('initialMode').onchange=()=>{if(isChallenge())return;model.initialMode=$('initialMode').value;sliders.initial.input.disabled=model.initialMode==='fitted';toast('Начальные состояния выбраны. Нажмите «Сначала» для применения.');};
+$('defaults').onclick=()=>{if(isChallenge())return;model.p={...defaults};model.C=defaultC.slice();model.R=defaultR.slice();model.initialMode='uniform';$('initialMode').value='uniform';sliders.initial.input.disabled=false;for(const [k,v]of Object.entries(model.p))if(sliders[k])sliders[k].set(v);for(let i=0;i<16;i++)sliders['C'+i].set(model.C[i]);for(let i=0;i<20;i++)sliders['R'+i].set(model.R[i]);$('speed').value=3;$('speed').oninput();updateWeather();reset(true,'Восстановлены параметры из решения Week 3');};
 $('aboutOpen').onclick=()=>$('about').showModal();$('aboutClose').onclick=()=>$('about').close();$('about').onclick=e=>{if(e.target===$('about')){const r=$('about').getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)$('about').close();}};
 for(const id of ['showLabels','showGrid','autoScale'])$(id).onchange=draw;
 function download(name,data,type){const url=URL.createObjectURL(new Blob([data],{type})),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),10000);}
-$('exportCsv').onclick=()=>{const rows=history.slice();if(!rows.length||rows.at(-1).t!==model.time){const s=model.stats();rows.push({t:model.time,z:s.zones,a:s.outside});}download('thermal-house-history.csv','\uFEFFtime_hours,T1_C,T2_C,T3_C,T4_C,outside_C,mode,solver\n'+rows.map(r=>[r.t/3600,...r.z,r.a,model.mode,model.solver].join(',')).join('\n'),'text/csv;charset=utf-8');};
+$('exportCsv').onclick=()=>{
+ const rows=history.slice();if(!rows.length||rows.at(-1).t!==model.time){const s=model.stats();rows.push({t:model.time,z:s.zones,a:s.outside,q:isChallenge()?challenge.powers.slice():null,solar:isChallenge()?challenge.solarAt(model.time).total:0});}
+ const game=isChallenge(),header='time_hours,T1_C,T2_C,T3_C,T4_C,outside_C,mode,solver'+(game?',Q1_W,Q2_W,Q3_W,Q4_W,solar_W,controller':'');
+ download('thermal-house-history.csv','\uFEFF'+header+'\n'+rows.map(r=>[r.t/3600,...r.z,r.a,model.mode,model.solver,...(game?[...(r.q||[0,0,0,0]),r.solar,challenge.control]:[])].join(',')).join('\n'),'text/csv;charset=utf-8');
+};
 $('snapshot').onclick=()=>{draw();house.toBlob(blob=>{if(blob){const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='thermal-house.png';a.click();setTimeout(()=>URL.revokeObjectURL(url),10000);}});};
-$('saveSettings').onclick=()=>download('thermal-house-settings.json',JSON.stringify({version:1,parameters:model.p,C:model.C,R:model.R,source:model.source,mode:model.mode,solver:model.solver,initialMode:model.initialMode},null,2),'application/json');
+$('saveSettings').onclick=()=>{if(isChallenge())return;download('thermal-house-settings.json',JSON.stringify({version:1,parameters:model.p,C:model.C,R:model.R,source:model.source,mode:model.mode,solver:model.solver,initialMode:model.initialMode},null,2),'application/json');};
 $('loadSettings').onclick=()=>$('settingsFile').click();
-$('settingsFile').onchange=async()=>{try{
+$('settingsFile').onchange=async()=>{if(isChallenge())return;try{
  const file=$('settingsFile').files[0];if(!file)return;const data=JSON.parse(await file.text());
  if(data.version!==1||!['heater','day'].includes(data.mode)||!['spatial','rc'].includes(data.solver)||!['uniform','fitted'].includes(data.initialMode)||!Array.isArray(data.C)||data.C.length!==16||!Array.isArray(data.R)||data.R.length!==20)throw Error('format');
  for(const[k]of Object.entries(defaults)){const v=data.parameters?.[k];if(typeof v!=='number'||!Number.isFinite(v))throw Error('value');if(k==='speed'){if(!speeds.includes(v))throw Error('speed');}else {const input=sliders[k].input;if(v<+input.min||v>+input.max)throw Error('range');}}
@@ -217,10 +417,24 @@ function drawHouse(){
  const X=x=>left+x*bw,Y=y=>base-y*bw;geometry={left,base,bw,X,Y,rooms:[]};
  const sky=ctx.createLinearGradient(0,0,0,h);sky.addColorStop(0,'#152130');sky.addColorStop(1,'#101923');ctx.fillStyle=sky;ctx.fillRect(0,0,w,h);
  ctx.fillStyle='#2b435244';for(let y=22;y<h;y+=25)for(let x=20;x<w;x+=25)ctx.fillRect(x,y,1,1);
- // Day/night cue, driven by the same model clock.
- if(model.mode==='day'){const angle=2*Math.PI*((model.time/3600)%24-6)/24,daylight=Math.max(0,Math.sin(angle));ctx.fillStyle=`rgba(255,188,91,${.025+.06*daylight})`;ctx.fillRect(0,0,w,h);ctx.beginPath();ctx.arc(w-48,39,12,0,2*Math.PI);ctx.fillStyle=daylight>.1?'#f3c581':'#bbd6e5';ctx.fill();if(daylight<=.1){ctx.beginPath();ctx.arc(w-43,35,11,0,2*Math.PI);ctx.fillStyle='#162333';ctx.fill();}}
+ // Shared continuous orbit: the sun crosses the full scene, then passes behind ground.
+ if(model.mode==='day'||isChallenge()){
+  const track=Thermal.sunTrackAt(model.time,w,base+9),sun=isChallenge()?challenge.solarAt(model.time):null;
+  const daylight=Math.max(0,track.elevation);
+  ctx.fillStyle=`rgba(255,188,91,${.01+.05*daylight})`;ctx.fillRect(0,0,w,h);
+  if(track.visible){
+   const sx=track.x,sy=track.y,warmth=Math.max(0,1-Math.abs(track.elevation)*3);
+   ctx.save();ctx.beginPath();ctx.rect(0,0,w,track.horizon);ctx.clip();
+   const glow=ctx.createRadialGradient(sx,sy,3,sx,sy,52);glow.addColorStop(0,`rgba(255,${Math.round(207-warmth*40)},100,.6)`);glow.addColorStop(1,'#ffbd5400');ctx.fillStyle=glow;ctx.fillRect(sx-55,sy-55,110,110);
+   if(sun)for(let z=0;z<4;z++){const fraction=sun.air[z]/420;if(fraction<.03)continue;const wx=X(z%2?1:0),wy=Y(Math.floor(z/2)*.3+.15);ctx.fillStyle=`rgba(255,194,91,${fraction*.09})`;ctx.beginPath();ctx.moveTo(sx,sy);ctx.lineTo(wx,wy-24);ctx.lineTo(wx,wy+24);ctx.closePath();ctx.fill();ctx.strokeStyle=`rgba(255,205,120,${fraction*.55})`;ctx.lineWidth=.8;ctx.setLineDash([4,6]);ctx.beginPath();ctx.moveTo(sx,sy);ctx.lineTo(wx,wy);ctx.stroke();ctx.setLineDash([]);}
+   ctx.strokeStyle=warmth>.5?'#ffa964':'#ffd688';ctx.lineWidth=1.4;for(let k=0;k<8;k++){const a=k*Math.PI/4;ctx.beginPath();ctx.moveTo(sx+Math.cos(a)*17,sy+Math.sin(a)*17);ctx.lineTo(sx+Math.cos(a)*22,sy+Math.sin(a)*22);ctx.stroke();}
+   ctx.fillStyle=warmth>.5?'#ffac62':'#ffcc71';ctx.beginPath();ctx.arc(sx,sy,track.radius,0,2*Math.PI);ctx.fill();ctx.restore();
+  }
+  // The moon fades in only as the sun descends below the horizon.
+  if(track.night>0){ctx.save();ctx.globalAlpha=track.night;ctx.fillStyle='#b9d2e0';ctx.beginPath();ctx.arc(w-35,28,9,0,2*Math.PI);ctx.fill();ctx.fillStyle='#152130';ctx.beginPath();ctx.arc(w-31,24,9,0,2*Math.PI);ctx.fill();ctx.restore();}
+ }
  // Ground.
- ctx.fillStyle='#23282a';ctx.fillRect(0,base+9,w,h-base);ctx.strokeStyle='#59625a';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(20,base+9);ctx.lineTo(w-20,base+9);ctx.stroke();ctx.strokeStyle='#76816b20';for(let x=0;x<w;x+=17){ctx.beginPath();ctx.moveTo(x,base+25);ctx.lineTo(x+9,base+16);ctx.stroke();}
+ ctx.fillStyle='#23282a';ctx.fillRect(0,base+9,w,h-base);ctx.strokeStyle='#59625a';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(0,base+9);ctx.lineTo(w,base+9);ctx.stroke();ctx.strokeStyle='#76816b20';for(let x=0;x<w;x+=17){ctx.beginPath();ctx.moveTo(x,base+25);ctx.lineTo(x+9,base+16);ctx.stroke();}
  // Roof drawn with its two fitted RC temperatures, P3 and P4.
  ctx.shadowColor='#0005';ctx.shadowBlur=20;ctx.fillStyle='#13242d';ctx.beginPath();ctx.moveTo(X(-.015),top);ctx.lineTo(X(.5),ridge-9);ctx.lineTo(X(1.015),top);ctx.closePath();ctx.fill();ctx.shadowBlur=0;
  for(let k=0;k<2;k++){ctx.fillStyle=color(model.structure(14+k));ctx.beginPath();ctx.moveTo(X(k*.5),top-3);ctx.lineTo(X(.5),ridge);ctx.lineTo(X((k+1)*.5),top-3);ctx.closePath();ctx.fill();}
@@ -260,10 +474,16 @@ function drawChart(){
  for(let k=0;k<5;k++){const val=lo+(hi-lo)*k/4,y=Y(val);gc.strokeStyle='#283846';gc.lineWidth=.6;gc.beginPath();gc.moveTo(pad.l,y);gc.lineTo(w-pad.r,y);gc.stroke();gc.fillStyle='#748a9d';gc.textAlign='right';gc.fillText(fmt(val,0)+'°',pad.l-8,y);}
  for(let k=0;k<5;k++){const t=minT+span*k/4;gc.textAlign=k===0?'left':k===4?'right':'center';gc.fillStyle='#748a9d';gc.fillText(fmt(t/3600,t/3600%1?1:0)+' ч',X(t),h-10);}
  gc.save();gc.beginPath();gc.rect(pad.l,pad.t,cw,ch);gc.clip();
+ if(isChallenge()){gc.strokeStyle='#64decba0';gc.setLineDash([2,4]);gc.lineWidth=1;gc.beginPath();gc.moveTo(pad.l,Y(20));gc.lineTo(w-pad.r,Y(20));gc.stroke();gc.fillStyle='#8cdac6';gc.font='9px sans-serif';gc.textAlign='right';gc.fillText('Цель 20 °C',w-pad.r-4,Y(20)-7);}
  for(let z=0;z<5;z++){gc.strokeStyle=colors[z];gc.lineWidth=z===4?1.2:1.6;gc.setLineDash(z===4?[4,4]:[]);gc.beginPath();let started=false;for(const row of history){if(row.t<minT-300)continue;const y=z===4?row.a:row.z[z];if(!started){gc.moveTo(X(row.t),Y(y));started=true;}else gc.lineTo(X(row.t),Y(y));}gc.stroke();if(history.length===1){const r=history[0];gc.fillStyle=colors[z];gc.beginPath();gc.arc(X(r.t),Y(z===4?r.a:r.z[z]),2,0,2*Math.PI);gc.fill();}}
  gc.restore();gc.setLineDash([]);
 }
-function updateMetrics(){const s=model.stats();$('outdoor').innerHTML=`${fmt(s.outside)}<small>°C</small>`;$('average').innerHTML=`${fmt(s.zones.reduce((a,b)=>a+b,0)/4)}<small>°C</small>`;const power=model.mode==='heater'&&model.source?model.p.power/1000:0;$('powerMetric').innerHTML=`${fmt(power,2)}<small>кВт</small>`;const minutes=Math.floor(model.time/60),hours=Math.floor(minutes/60)%24;$('clock').innerHTML=`${String(hours).padStart(2,'0')}:${String(minutes%60).padStart(2,'0')}<small>день ${1+Math.floor(model.time/86400)}</small>`;}
+function updateMetrics(){
+ const s=model.stats(),game=isChallenge();$('outdoor').innerHTML=`${fmt(s.outside)}<small>°C</small>`;$('average').innerHTML=`${fmt(s.zones.reduce((a,b)=>a+b,0)/4)}<small>°C</small>`;
+ const power=game?challenge.powers.reduce((a,b)=>a+b,0)/1000:model.mode==='heater'&&model.source?model.p.power/1000:0;$('powerMetric').innerHTML=`${fmt(power,2)}<small>кВт</small>`;
+ const minutes=Math.floor((model.time+1e-6)/60),hours=game?Math.floor(minutes/60):Math.floor(minutes/60)%24;
+ $('clock').innerHTML=`${String(hours).padStart(2,'0')}:${String(minutes%60).padStart(2,'0')}<small>${game?'из 72 ч':'день '+(1+Math.floor(model.time/86400))}</small>`;updateChallengeUI(s);
+}
 function screenPoint(p){const z=model.zoneAt(p.x,p.y),r=geometry.rooms[z];return{x:r.x+(p.x-z%2*.5)/.5*r.w,y:r.y+r.h-(p.y-Math.floor(z/2)*.3)/.3*r.h};}
 function point(e){const r=house.getBoundingClientRect(),px=e.clientX-r.left,py=e.clientY-r.top;let p={x:(px-geometry.left)/geometry.bw,y:(geometry.base-py)/geometry.bw,px,py,air:false};for(let z=0;z<4;z++){const b=geometry.rooms[z];if(px>=b.x&&px<=b.x+b.w&&py>=b.y&&py<=b.y+b.h){p.x=z%2*.5+(px-b.x)/b.w*.5;p.y=Math.floor(z/2)*.3+(1-(py-b.y)/b.h)*.3;p.air=true;break;}}return p;}
 function sampleView(p){if(p.air){const s=model.sample(p.x,p.y);return s?{...s,name:'T'+'₁₂₃₄'[s.zone]}:null;}const x=(p.px-geometry.left)/geometry.bw,y=(geometry.base-p.py)/geometry.bw;let id=null;if(x>=0&&x<=1){if(y>=.59&&y<=.82-.44*Math.abs(x-.5))id=14+(x>=.5?1:0);else if(y>=-.01&&y<=.01)id=12+(x>=.5?1:0);else if(y>0&&y<.6){const z=(y>=.3?2:0)+(x>=.5?1:0);if(x<.025||x>.975)id=4+z;else if(Math.abs(y-.3)<.02)id=9+(x>=.5?1:0);else if(Math.abs(x-.5)<.025)id=y>=.3?11:8;}}return id===null?null:{temperature:model.structure(id),name:Thermal.fitted.state_names[id]};} 
@@ -271,16 +491,17 @@ house.addEventListener('pointerdown',e=>{const p=point(e);if(model.mode==='heate
 house.addEventListener('pointermove',e=>{const p=point(e);hover=p;if(dragging&&p.air)placeSource(p.x,p.y);const sample=sampleView(p);$('probe').hidden=!sample;if(sample){$('probe').textContent=`${sample.name} · ${fmt(sample.temperature)} °C`;$('probe').style.left=Math.max(7,Math.min(p.px+15,house.clientWidth-170))+'px';$('probe').style.top=Math.max(4,p.py-36)+'px';}if(!playing)drawHouse();});
 for(const event of ['pointerup','pointercancel'])house.addEventListener(event,()=>{dragging=false;});
 house.addEventListener('pointerleave',()=>{if(!dragging){hover=null;$('probe').hidden=true;drawHouse();}});
-house.addEventListener('keydown',e=>{if(['1','2','3','4'].includes(e.key)){const z=+e.key-1;placeSource(z%2*.5+.25,Math.floor(z/2)*.3+.15);}else if(e.code==='Space'){e.preventDefault();startStop(!playing);}});
+house.addEventListener('keydown',e=>{if(['1','2','3','4'].includes(e.key)){const z=+e.key-1;placeSource(z%2*.5+.25,Math.floor(z/2)*.3+.15);}else if(e.code==='Space'){e.preventDefault();togglePlayback();}});
 function draw(){drawHouse();drawChart();}
 new ResizeObserver(draw).observe($('house').parentElement);new ResizeObserver(drawChart).observe($('chart').parentElement);
-function animate(now){const elapsed=Math.min(.1,last?(now-last)/1000:0);last=now;
+function animate(now){
+ const elapsed=Math.min(.1,last?(now-last)/1000:0);last=now;
  if(playing||fastTarget!==null){
-  const target=fastTarget??(model.time+elapsed*model.p.speed),startTime=model.time,budgetStart=performance.now();let steps=0;
-  while(model.time<target-1e-7&&steps<1200&&performance.now()-budgetStart<12){const nextSample=(Math.floor((model.time+1e-6)/300)+1)*300,dt=Math.min(model.maxDt,target-model.time,nextSample-model.time);model.step(dt);record();steps++;}
+  const game=isChallenge(),target=Math.min(game?Thermal.DURATION:Infinity,fastTarget??(model.time+elapsed*(game?Thermal.SPEED:model.p.speed))),startTime=model.time,budgetStart=performance.now();let steps=0;
+  while(model.time<target-1e-7&&steps<1200&&performance.now()-budgetStart<12){const nextSample=(Math.floor((model.time+1e-6)/300)+1)*300,dt=Math.min(model.maxDt,target-model.time,nextSample-model.time);if(game)challenge.step(dt);else model.step(dt);record();steps++;}
   realSpeed=(model.time-startTime)/Math.max(.001,elapsed);
-  if(fastTarget!==null&&model.time>=fastTarget-1e-7){fastTarget=null;record(true);startStop(false);toast('Следующие 24 часа рассчитаны');}
-  updateMetrics();draw();
+  if(game&&challenge.state==='finished'){fastTarget=null;record(true);startStop(false);updateMetrics();draw();if(!resultShown)showResult();}
+  else {if(fastTarget!==null&&model.time>=fastTarget-1e-7){fastTarget=null;record(true);startStop(false);toast('Следующие 24 часа рассчитаны');}updateMetrics();draw();}
  }
  requestAnimationFrame(animate);
 }
