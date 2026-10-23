@@ -1,176 +1,176 @@
-# Тепло дома
+# Home Heat
 
-Интерактивное офлайн-приложение по тепловой модели двухэтажного четырёхзонного здания из Maths for Eng / Week 3.
+An interactive offline application based on the thermal model of the two-storey, four-zone building in Maths for Eng / Week 3. The interface, help, results, accessibility labels, and documentation are in English. Numbers use English formatting.
 
-## Запуск
+## Running the application
 
-Откройте `index.html` в современном браузере. Установка, сборка, интернет и сервер не нужны. Рядом с исходниками также поставляется полностью автономный `thermal-house.html`: его можно переносить и открывать отдельно.
+Open `index.html` in a modern browser. No installation, build, internet connection, or server is required. The fully self-contained `thermal-house.html` is also included: it can be copied and opened on its own.
 
-## Управление
+## Controls
 
-- **Точечный нагрев:** нажмите в комнате или выберите T₁–T₄. Перетаскивайте источник; мощность и радиус регулируются слайдерами. В каждый момент действует один непрерывный нагреватель. Клик в другой точке перемещает его.
-- **В течение дня:** нагреватель отключается, наружная температура меняется по синусоиде с периодом 24 часа. Минимум, максимум и час максимума настраиваются. Грунт остаётся постоянным.
-- **Запустить / Пауза**, **Сначала**, **+24 ч**, скорость модельного времени. Ускорение меняет темп проигрывания, не физические коэффициенты и не предел устойчивого шага. На медленном устройстве фактическая скорость может быть ниже выбранной.
-- Наведите указатель на комнату, стену, перекрытие, пол или крышу: подсказка покажет локальную температуру либо температуру узла конструкции.
-- Слайдеры всех **16 теплоёмкостей C** и **20 независимых сопротивлений R** находятся в раскрывающихся группах. Их диапазон — от четверти до четырёх исходных значений, шкала логарифмическая. Изменение сети перезапускает расчёт.
-- Начальные температуры: одинаковые по всему дому либо 16 начальных состояний из решения. Выбор применяется кнопкой «Сначала».
-- Кнопка ↺ в заголовке параметров восстанавливает исходные коэффициенты и настройки; текущий способ расчёта и режим эксперимента сохраняются.
-- Автошкала учитывает температуры внутри дома, включая конструкции. Она выделяет небольшие изменения; её границы отображаются под домом. Для сравнения кадров отключите автошкалу и задайте фиксированные границы в «Отображение».
-- Экспорт истории в CSV, изображения дома в PNG, настроек в JSON; импорт JSON проверяет структуру и диапазоны. История и настройки не отправляются в сеть. История сохраняется в памяти до сброса или закрытия вкладки.
-- Клавиатура: Tab к элементам управления; когда дом в фокусе, 1–4 ставят нагреватель в соответствующую комнату, пробел включает/останавливает расчёт.
+- **Point heating:** click inside a room or choose T₁–T₄. Drag the heater to move it. Power and heat distribution radius are adjustable. One continuous point heater operates at a time; clicking elsewhere moves it.
+- **Daily cycle:** the heater is disabled and outdoor temperature follows a 24-hour sinusoid. Adjust its minimum, maximum, and warmest hour. Ground temperature remains constant.
+- Use **Start / Pause**, **Reset**, **+24 h**, and the simulation speed slider. Speed changes playback only, not physical coefficients or the stable integration step. Actual speed may be lower on slower devices.
+- Hover over a room, wall, slab, ground floor, or roof to see the local air temperature or construction-node temperature.
+- All **16 heat capacities C** and **20 independent resistances R** are available in expandable groups. Their logarithmic slider ranges extend from one quarter to four times their fitted values. Changing the network restarts the simulation.
+- Initial temperatures can be uniform throughout the house or taken from the 16 initial states in the solution. Press **Reset** to apply the selection.
+- The ↺ button beside **Model parameters** restores the fitted coefficients and default settings while keeping the current model and experiment mode.
+- Auto scale includes all temperatures inside the house, including construction nodes. Its limits are shown below the map. To compare frames on a fixed scale, disable it and set the limits under **Display**.
+- Export temperature history to CSV, the house image to PNG, and settings to JSON. Imported settings are checked for structure and allowed ranges. History and settings are not sent over the network. History stays in memory until reset or the tab is closed.
+- Keyboard: Tab moves between controls. With the house canvas focused, keys 1–4 place the heater in the corresponding room; Space starts or pauses the simulation.
 
-## Испытание «Удержи 20 °C»
+## Keep 20 °C challenge
 
-Третий режим — **«Удержи 20 °C»**. Заезд длится ровно **72 модельных часа**; без пауз это примерно **90 реальных секунд**. В каждом из трёх дней наружная температура меняется, а солнце проходит справа налево. Ползунки свойств дома, погоды, начальных температур и скорости в этом режиме недоступны. Косметические настройки тепловой карты на физику и оценку не влияют.
+The third mode, **Keep 20 °C**, lasts exactly **72 simulated hours**, or approximately **90 real seconds** without pauses. Outdoor temperature changes throughout each day and the sun moves from right to left. Building, weather, initial-state, and speed controls are locked. Display settings do not affect the physics or score.
 
-1. Выберите «Удержи 20 °C» → «Я управляю».
-2. До старта можно установить мощности. Стартовые значения компенсируют теплопотери первого момента.
-3. Нажмите «Начать 3 дня». Меняйте **четыре независимых слайдера общего отопления**, от 0 до 2,5 кВт каждый. Это равномерный приток тепла в воздушные ячейки соответствующей комнаты, а не переносимый точечный источник.
-4. У каждой комнаты видна её средняя температура и отклонение от 20 °C. Можно пользоваться паузой и регулировать мощности во время паузы; модельное время и оценка в паузе не идут.
-5. После 72 часов расчёт останавливается автоматически и открывается результат. Можно повторить заезд или посмотреть автоматическое прохождение.
+1. Select **Keep 20 °C → Manual**.
+2. You may set heating powers before starting. The initial powers approximately offset heat losses at the first instant.
+3. Press **Start 3-day run**. Adjust the **four independent whole-room heating sliders**, each from 0 to 2.5 kW. Each heater adds heat uniformly to its room's air cells; it is separate from the movable point heater.
+4. Each room shows its average temperature and deviation from 20 °C. You may pause and adjust powers while paused. Simulated time and scoring stop during pauses.
+5. After 72 hours, the simulation stops and displays the result. You can try again or watch automatic control.
 
-**Автопилот** начинает новый заезд того же сценария, показывает движение ползунков и не даёт менять их вручную. Переключение на автопилот сбрасывает ручной заезд, поэтому автоматикой нельзя поправить накопленную ручную оценку. «Ускоренно показать все 3 дня» доступно только в демонстрации: все физические шаги и оценка рассчитываются, меняется лишь темп просмотра.
+**Autopilot** starts a new run of the same scenario, visibly moves the sliders, and disables manual changes. Switching to autopilot resets the manual run, so it cannot erase previously accumulated manual errors. **Fast-forward all 3 days** is available only in the demonstration: every physical step and score contribution is still computed; only playback is accelerated.
 
-При выходе в прежние режимы восстанавливаются их R, C, начальные настройки, выбранный способ расчёта, параметры среды, источник и цветовая шкала. История предыдущего лабораторного эксперимента, как и при обычном переключении режимов, начинается заново.
+Returning to either laboratory mode restores its R, C, initial settings, selected simulation model, environment parameters, point heater, and colour scale. As with ordinary mode switching, experiment history starts again.
 
-### Фиксированный игровой сценарий
+### Fixed challenge scenario
 
-- Сетка комнат: 20 × 14, как в пространственном режиме.
-- Все сопротивления и 12 конструкционных теплоёмкостей — исходные найденные значения.
-- Четыре эффективные воздушные теплоёмкости увеличены **в 8 раз** для удобства ручного управления при ускорении времени. Перемешивание зафиксировано на **60 Вт/К**. Это учебный игровой профиль; он не является исходной идентифицированной моделью.
-- Грунт: 5 °C. Стартовые средние температуры комнат: 20 °C. Общие конструкции начинают с 20 °C; наружные стены, полы и крыша инициализируются балансными температурами между исходными границами. Исходные настройки лабораторных режимов не меняют сценарий.
-- Погода, при h = t / 3600:
+- Room grid: 20 × 14 cells, as in the spatial model.
+- All resistances and the 12 construction heat capacities retain their fitted values.
+- The four effective air heat capacities are **eight times** their original values to make manual control practical during accelerated playback. Mixing conductance is fixed at **60 W/K**. This is a teaching profile, distinct from the original identified model.
+- Ground temperature: 5 °C. Initial room averages: 20 °C. Shared constructions start at 20 °C. Exterior walls, ground floors, and the roof are initialised at balance temperatures between the initial boundaries. Laboratory settings do not change the challenge scenario.
+- With h = t / 3600, outdoor temperature is:
 
   `Ta = -14 + 7 cos(2π(h - 15)/24) - 4 exp(-((h - 39)/11)²)`.
 
-  Это суточный цикл с дополнительным похолоданием на второй день. Внешняя среда остаётся холоднее цели, поэтому отопление может компенсировать теплопотери без отрицательной мощности/кондиционера.
+  This is a daily cycle with an additional cold spell on day two. The environment stays colder than the target, allowing heating to offset losses without negative power or air conditioning.
 
-### Солнце и реальные солнечные притоки
+### Sun and actual solar heat gains
 
-Солнце восходит в 06:00 у правой границы сцены и заходит в 18:00 у левой. Его центр движется по непрерывной дуге через всю ширину сцены; ночью траектория продолжается под землёй. При пересечении горизонта диск и свечение обрезаются линией земли, поэтому солнце постепенно скрывается, а не исчезает по переключателю дня/ночи. Фаза дневного движения p растёт от 0 до 1, интенсивность солнечного тепла пропорциональна `sin(πp)`.
+The sun rises at the right edge of the scene at 06:00 and sets at the left edge at 18:00. Its centre follows a continuous arc across the entire scene. At night, the trajectory continues below ground. The ground clips the disc and glow as they cross the horizon, so the sun gradually disappears behind it rather than being switched off at sunset. The daytime phase p increases from 0 to 1; solar heat intensity is proportional to `sin(πp)`.
 
-Утренний вес правой стороны: `(1 + cos(πp))/2`, левой — дополнение до 1. Вечером распределение зеркально меняется. Доли прямого солнечного притока заданы демонстрационными коэффициентами: до 300 Вт на нижнюю и до 420 Вт на верхнюю комнату при полном освещении стороны. В её наружную стену дополнительно поступает до 85 Вт; в каждую из двух частей крыши — до 140 Вт. Множители солнечности дней: 1, 0.7, 1.1. Ночью все солнечные притоки равны нулю.
+The right-hand morning exposure is `(1 + cos(πp))/2`; the left-hand exposure is its complement. The distribution reverses in the evening. Demonstration coefficients allow up to 300 W of direct solar gain in each downstairs room and 420 W in each upstairs room at full exposure. Each exterior wall can receive an additional 85 W, and each roof section 140 W. Daily sunlight multipliers are 1, 0.7, and 1.1. All solar heat inputs are zero at night.
 
-В комнате прямой приток распределён по ячейкам с нормированными весами `exp(-distance_in_cells/4)` от наружного окна. Далее тепло распространяется через ту же тепловую сеть. Положение солнца и солнечные притоки используют одни модельные часы. Лучи и подпись солнечной мощности берутся из функции, которая добавляет тепло в уравнения; солнечный нагрев остаётся частью физического расчёта. Значения демонстрационные: реальная инсоляция, материалы и географическая ориентация здания в задании не определены.
+Within each room, direct gain is distributed from the exterior window using normalised weights `exp(-distance_in_cells/4)`, then propagates through the same thermal network. Sun position and heat gains use the same simulation clock. The rays and displayed solar power use the heat-input function. These are demonstration values: the coursework does not specify actual irradiance, materials, or the building's geographical orientation.
 
-### Оценка от 0 до 100
+### Score from 0 to 100
 
-Оценивается **средняя температура отдельно каждой комнаты**, а не средняя по всему дому и не температура каждой отдельной ячейки. Нельзя компенсировать холод одной комнаты перегревом другой.
+The score evaluates the **average temperature of each room separately**, not the whole-house average or every individual cell. Overheating one room cannot offset another room being cold.
 
-Для комнаты z в момент t:
+For room z at time t:
 
 `instant_score_z = 100 × (1 - min(abs(Tz - 20) / 4, 1))`.
 
-Итог — среднее этой величины по четырём комнатам и всем 72 часам. 20 °C даёт 100 баллов за момент, 19 или 21 °C — 75, 18 или 22 °C — 50, отклонение от 4 °C — 0. Штраф считается на каждом физическом шаге методом трапеций по ошибкам до и после шага; пропусков времени при ускорении демонстрации нет.
+The final score averages this value across four rooms and all 72 hours. A room at 20 °C earns 100 points for that moment; 19 or 21 °C earns 75; 18 or 22 °C earns 50; an error of 4 °C or more earns 0. Penalties are integrated at every physical step using the trapezoidal average of errors before and after the step. Fast-forwarding does not skip any scoring interval.
 
-Отдельно выводятся MAE (среднее абсолютное отклонение), доля времени в диапазоне 19,5–20,5 °C и затраченная на отопление энергия. Энергия на оценку не влияет. В CSV игры добавлены Q1…Q4 в Вт, общий солнечный приток в Вт и тип управления.
+Results also show mean absolute error (MAE), the share of time within 19.5–20.5 °C, and heating energy. Energy use does not affect the score. Challenge CSV exports include Q1…Q4 in W, total solar gain in W, and controller type.
 
-### Почему автоматическое прохождение идеально
+### Why automatic control is ideal
 
-Перед каждым численным шагом для каждой комнаты суммируются все пассивные тепловые потоки `q_passive` — включая наружную температуру, конструкции и солнце. Затем вычисляется:
+Before each numerical step, the controller sums each room's passive heat flows `q_passive`, including weather, constructions, and sunlight. It then calculates:
 
 `Q = clamp(-sum(q_passive) + C_zone × (20 - T_mean)/600 s, 0, 2500 W)`.
 
-Эта мощность равномерно подаётся в ячейки комнаты. При начальном среднем 20 °C баланс сохраняет это среднее, пока ограничение мощности не активно. В проверенном фиксированном сценарии ограничение не срабатывает: мощности остаются примерно в диапазоне 0.384–1.872 кВт, все четыре средние температуры удерживаются на 20 °C с точностью арифметики.
+Power is distributed uniformly over the room's air cells. Starting from a 20 °C average, this balance preserves that average while power limits remain inactive. In the verified fixed scenario, powers stay approximately within 0.384–1.872 kW, the limits never activate, and all four means stay at 20 °C to floating-point precision.
 
-В процессе игры температуры не присваиваются принудительно, а оценка не выставляется константой. Показания следуют из того же шага уравнений, что и при ручном управлении. Контроллер имеет полный доступ к состоянию и тепловым потокам учебной модели; это эталон для демонстрации, не заявленная точность реального термостата.
+Temperatures are not forcibly assigned during play and the score is not a constant. They follow the same numerical equations used for manual control. The controller has full access to the teaching model's state and heat flows; it is a demonstration reference, not a claim about real thermostat accuracy.
 
-### Дополнительные проверки
+### Challenge verification
 
-`node test-challenge.cjs` проверяет фиксированный сценарий, движение солнца и соответствующие притоки, независимость нагревателей, трёхсуточный автопилот, глобальный баланс с солнечным теплом, точную остановку на 72 часах, ручную оценку по фактической интегральной ошибке, воспроизводимость и сброс заезда. Все 9 проверок исходной модели в `test-model.cjs` также сохранены.
+Run `node test-challenge.cjs` to check the fixed scenario, sun movement and solar gains, the 90-second duration, continuous sunrise and sunset at scene edges, independent heaters, 72-hour automatic control, global energy balance including sunlight, exact stopping at 72 hours, manual scoring from integrated actual errors, reproducibility, and resetting. The nine original checks in `test-model.cjs` are also retained.
 
-Полный автоматический заезд дополнительно пройден через интерфейс браузера: результат 100/100, 100% времени в диапазоне комфорта. Проверены ручной слайдер, блокировка физических настроек и восстановление лабораторных параметров при выходе.
+A complete automatic run has also been checked through the browser interface: 100/100 and 100% of time within the comfort band. Manual slider operation, locked physical controls, and restoring laboratory parameters on exit have been verified.
 
-## Что изучено перед реализацией
+## Source materials reviewed
 
-Использованы материалы из `/Users/owner/Desktop/Sk/Maths for Eng/week3/`:
+Materials in `/Users/owner/Desktop/Sk/Maths for Eng/week3/`:
 
-- `materials/R_Week3.pdf`: исходная схема, зоны 3–4 сверху и 1–2 снизу, Tg = 5 °C.
-- `Week3_Solution.ipynb`: построение RC-сети, уравнения, идентификация, физические допущения, численная реализация, диагностика и ограничения; дополнительная ARX-модель в приложение не переносилась.
-- `Week3_Report_EN.pdf` и исходник отчёта: полный разбор модели и результаты проверки.
-- `Week3_identified_model.npz`: точные параметры, начальные состояния, матрицы и имена узлов. Числа встроены в `engine.js`; исходный NPZ для запуска не нужен.
+- `materials/R_Week3.pdf`: original diagram, zones 3–4 upstairs and 1–2 downstairs, Tg = 5 °C.
+- `Week3_Solution.ipynb`: RC topology, equations, identification, physical assumptions, numerical implementation, diagnostics, and limitations. The supplementary ARX model is not used by this application.
+- `Week3_Report_EN.pdf` and its source: full model discussion and validation results.
+- `Week3_identified_model.npz`: exact parameters, initial states, matrices, and node names. Values are embedded in `engine.js`; the original NPZ is not required at runtime.
 
-В решении 44 641 наблюдение за 744 часа с минутным шагом. Входы — четыре сигнала отопления и наружная температура, выходы — четыре температуры комнат. Мощность из исходного датасета: 5000 кДж/ч = 1.388889 кВт при включённом Control. Параметры определены на первых 60% записи; далее 20% validation и 20% test. В отчёте RMSE на test: 0.130, 0.203, 0.310, 0.356 °C. Эти значения относятся к исходной модели на заданных измеренных входах, **не к новому пространственному полю**. Подбор параметров и загрузка датасета во время работы приложения не выполняются.
+The solution contains 44,641 observations over 744 hours at one-minute intervals. Inputs are four heating signals and outdoor temperature; outputs are four room temperatures. In the original dataset, an enabled Control supplies 5000 kJ/h = 1.388889 kW. Parameters were fitted on the first 60% of the record, followed by 20% validation and 20% test. Reported test RMSE values are 0.130, 0.203, 0.310, and 0.356 °C. These refer to the original model driven by measured inputs, **not to the new spatial field**. The application does not refit parameters or load the dataset while running.
 
-## Исходная RC-модель
+## Original RC model
 
-Порядок состояний:
+State order:
 
 `T1 T2 T3 T4 O1 O2 O3 O4 V12 V13 V24 V34 F1 F2 P3 P4`.
 
-- T — воздух/быстрая эффективная теплоёмкость комнат.
-- O — наружные стены, каждая между комнатой и наружным воздухом через две независимые половины сопротивления.
-- V — общая перегородка или перекрытие, единственный узел на общую конструкцию.
-- F — полы первого этажа к грунту.
-- P — крыша для каждой комнаты верхнего этажа.
-- Окна — прямые сопротивления от Tᵢ к Tₐ.
+- T: room air / fast effective room heat capacity.
+- O: exterior walls, each between a room and outdoor air through two independently estimated resistance halves.
+- V: shared partition or slab, with one node per shared construction.
+- F: ground floors connected to the ground.
+- P: roof branches of the upstairs rooms.
+- Windows: direct resistance branches from Tᵢ to Tₐ.
 
-Соседства: 1–2, 1–3, 2–4, 3–4. Прямых диагональных связей нет. Для общих конструкций, пола и крыши значение слайдера R относится к **одной половине** ветви; полное статическое сопротивление равно 2R.
+Adjacencies are 1–2, 1–3, 2–4, and 3–4. There are no direct diagonal links. For shared constructions, ground floors, and the roof, each R slider represents **one half** of a branch; total static resistance is 2R.
 
-Для каждого узла:
+Each node satisfies:
 
 `C_i dT_i/dt = Σ_j G_ij (T_j − T_i) + Σ_b G_ib (T_b − T_i) + Q_i`.
 
-В режиме «Исходная RC-модель» используется ровно эта 16-узловая структура и исходные численные коэффициенты. Комнаты окрашиваются однородно. Точка нагрева выбирает соответствующий воздушный узел.
+**Original RC model** mode uses exactly this 16-node topology and the fitted coefficients. Each room is coloured uniformly. Placing the point heater selects that room's air node.
 
-## Пространственное расширение
+## Spatial extension
 
-Каждая комната заменена сеткой 20 × 14 воздушных ячеек, суммарно 1120 воздушных и 12 конструкционных состояний. Ёмкость каждой ячейки равна исходной Cᵢ / 280. Конструкционные состояния и их ёмкости сохранены.
+Each room is replaced by 20 × 14 air cells: 1120 air states plus 12 construction states in total. Each cell has capacity Cᵢ / 280. Construction states and capacities are retained.
 
-- Проводимость между комнатой и каждым узлом конструкции распределена поровну между ячейками соответствующей границы; её сумма равна исходной G. Так же распределены оконные ветви на внешней боковой границе.
-- Внешняя стена комнаты — агрегат всех её наружных стен в исходной модели; размещение этого агрегата на боковой границе является выбором пространственной визуализации.
-- Внутри комнаты горизонтальная проводимость между соседними ячейками равна слайдеру `mixing` в Вт/К, вертикальная — `mixing × (14/20)²`. Это демонстрационный параметр эффективного перемешивания, не определённый по датасету и не моделирующий CFD-конвекцию.
-- Источник распределён внутри выбранной комнаты нормированными гауссовыми весами. Их сумма равна 1, поэтому суммарное поступление тепла точно равно выбранной мощности. Радиус — стандартное отклонение распределения, в процентах ширины комнаты; расстояние по вертикали пересчитывается в те же схематические координаты.
-- Стены и крыша имеют температуры агрегированных RC-узлов, а не непрерывное поле внутри материала. Скатная крыша — отображение P₃ и P₄. Дополнительного чердачного узла нет.
-- Суммы C и G сохранены, но динамика пространственного расширения отличается от модели с мгновенно перемешанными комнатами. Качество её локальных температур на измерениях не подтверждено. Размеры и материалы реального здания в задании не приведены; геометрия схематична.
+- Conductance between a room and each construction node is divided equally across cells on the corresponding boundary; the sum equals the original G. Window branches are similarly distributed along the exterior side boundary.
+- A room's exterior-wall node aggregates all its exterior walls in the original model. Locating this aggregate on the side boundary is a spatial-visualisation choice.
+- Within a room, horizontal adjacent-cell conductance equals the `mixing` slider in W/K; vertical conductance is `mixing × (14/20)²`. This is an effective mixing parameter for demonstration, not one identified from the dataset or a CFD convection model.
+- The point source uses normalised Gaussian weights within the selected room. Their sum is 1, so total heat input equals the selected power. Radius means the standard deviation, expressed as a percentage of room width; vertical distances are converted to the same schematic coordinates.
+- Walls and the roof show aggregate RC-node temperatures, not a continuous field inside their materials. The pitched roof displays P₃ and P₄. There is no additional attic node.
+- Total C and G values are preserved, but spatial-model dynamics differ from those of instantly mixed rooms. Local temperatures have not been validated against spatial measurements. The coursework does not provide real dimensions or materials; geometry is schematic.
 
-## Суточный режим
+## Daily cycle
 
 `T_a(t) = (T_min + T_max)/2 + (T_max − T_min)/2 × cos(2π (t/3600 − peakHour)/24)`.
 
-Отсчёт начинается с 00:00. Полный период — 24 часа; минимум на 12 часов раньше/позже максимума. Qᵢ = 0 для всех комнат. R, C, начальные состояния и температура грунта сами по времени не меняются. Начальные значения параметров погоды: −25…+30 °C, максимум в 15:00.
+The clock starts at 00:00. The period is 24 hours; the minimum occurs 12 hours before/after the maximum. Qᵢ = 0 in every room. R, C, initial settings, and ground temperature do not change by themselves. Default weather ranges from −25 to +30 °C, with the maximum at 15:00.
 
-## Численный метод и единицы
+## Numerical method and units
 
-Внутренние единицы: Дж, Вт, секунды, разности температур в К. Слайдеры C — кДж/К, R — К/кВт. Поэтому `C_SI = 1000 C_UI`, `G_SI = 1000 / R_UI`. Параметры проводимости из ноутбука в кДж/(ч·К) переведены в R_UI как `3600/G_notebook`.
+Internal units are J, W, seconds, and temperature differences in K. C sliders use kJ/K and R sliders K/kW, so `C_SI = 1000 C_UI` and `G_SI = 1000 / R_UI`. Notebook conductances in kJ/(h·K) are converted to displayed resistance using `R_UI = 3600/G_notebook`.
 
-В приложении явный Эйлер. Предел шага пересчитывается из сети:
+The application uses explicit Euler integration. Its stable step limit is recalculated from the network:
 
 `dt_max = min(30 s, 0.88 × min_i(C_i / Σ_j G_ij))`.
 
-Сумма включает все выходящие проводимости, в том числе к заданным температурам. Без источника новый шаг — выпуклая комбинация старых температур и границ, что обеспечивает дискретный принцип максимума. Каждая внутренняя ветвь добавляет потоки +q и −q: энергия не создаётся внутренним обменом. Никакого скрытого ограничения/обрезания температур в расчёте нет; обрезается только цвет при фиксированной шкале. При постоянном нагреве без термостата температуры могут стать высокими.
+The sum includes every outgoing conductance, including those connected to prescribed boundary temperatures. Without heating, each updated value is a convex combination of previous temperatures and boundaries, ensuring the discrete maximum principle. Every internal branch contributes +q and −q, so internal exchange cannot create energy. Temperatures are never secretly clipped; only colours may saturate on a fixed display scale. Continuous heating without a thermostat can produce high temperatures.
 
-В исходном ноутбуке применяется неявный метод трапеций, поэтому временная дискретизация приложения отличается. История для графика и CSV записывается каждые пять модельных минут. По достижении 10 000 записей история прореживается для ограничения памяти.
+The original notebook uses implicit trapezoidal integration, so the application's time discretisation differs. Chart and CSV history are recorded every five simulated minutes. At 10,000 records the history is thinned to limit memory use.
 
-## Проверки
+## Verification
 
-`node test-model.cjs` — без внешних пакетов:
+Run `node test-model.cjs`; no external packages are required. It checks:
 
-1. Производная RC-модели совпадает с сохранёнными K, F с учётом единиц.
-2. Все 36 параметров перенесены; суммарные C и матрица межузловых G пространственной модели совпадают с исходной после агрегации воздушных ячеек по комнатам.
-3. Глобальный баланс энергии в обоих режимах расчёта.
-4. Сохранение однородного равновесия.
-5. Локальное начало нагрева и дальнейшее распространение; сумма весов источника 1.
-6. Суточная периодичность и нулевая энергия нагревателя в режиме дня.
-7. Устойчивость и принцип максимума при крайних положительных R,C и перемешивании.
-8. Сходимость при уменьшении шага RC-модели. В выполненной проверке за сутки максимум разницы между шагами 30 и 0.5 с — около 0.000396 °C.
+1. Agreement between RC derivatives and the saved K, F matrices after unit conversion.
+2. All 36 fitted parameters, total C values, and aggregated spatial conductances.
+3. Global energy balance in both simulation models.
+4. Preservation of a uniform equilibrium.
+5. Local heating followed by propagation; source weights summing to 1.
+6. Daily periodicity and zero heater energy in Daily cycle mode.
+7. Stability and the maximum principle at extreme positive R, C, and mixing settings.
+8. Convergence when reducing the RC step. The verified maximum difference over one day between 30-second and 0.5-second steps is approximately 0.000396 °C.
 
-Проверены интерфейс, нагрев и суточная прокрутка в браузере, переключение исходной модели и начальных состояний, изменение C, узкий и широкий экраны. Результаты проверок — вычислительная верификация, не подтверждение физической точности пространственного расширения.
+Browser checks cover the interface, heating, daily fast-forward, switching the original model and initial states, changing C, and narrow/wide layouts. These are computational checks, not proof of the spatial extension's physical accuracy.
 
-## Файлы
+## Files and rebuilding
 
-- `index.html` — интерфейс, работает через file://.
-- `style.css` — адаптивное оформление.
-- `engine.js` — независимый расчёт, исходные коэффициенты и матрицы.
-- `challenge.js` — фиксированный сценарий, солнце, четыре нагревателя, автопилот и оценка.
-- `app.js` — визуализация, управление, экспорт и импорт.
-- `test-model.cjs` — численные проверки исходной модели.
-- `test-challenge.cjs` — проверки трёхсуточного испытания.
-- `build.py` — пересборка автономного HTML и ZIP: `python3 build.py` в папке приложения.
-- `identified.json` — копия численных параметров и матриц из NPZ для аудита.
+- `index.html`: interface; works through file://.
+- `style.css`: responsive layout and visual styling.
+- `engine.js`: independent thermal solver, fitted coefficients, and reference matrices.
+- `challenge.js`: fixed scenario, sun trajectory, four room heaters, autopilot, and scoring.
+- `app.js`: visualisation, controls, export, and import.
+- `test-model.cjs`: original model checks.
+- `test-challenge.cjs`: three-day challenge checks.
+- `build.py`: rebuild the standalone HTML and source ZIP with `python3 build.py` from the application folder.
+- `identified.json`: exported NPZ parameters and matrices for auditing.
 
-Внешних зависимостей и сетевых запросов нет. Развёртывание, сетевой доступ и серверная часть в эту работу не входят.
+There are no external dependencies or network requests. Deployment, network access, and server-side functionality are outside this application.
 
-## Скорость и закат
+## Speed and sunset
 
-Испытание ускорено в 4 раза относительно первой версии: 2880 модельных секунд на реальную секунду, то есть 72 часа за 90 секунд без пауз. Физический шаг, солнечные притоки, параметры сценария и формула оценки сохранены. Визуальная траектория солнца общая для суточного режима и испытания; `sunTrackAt` задаёт непрерывные координаты в течение всех 24 часов и учитывает размеры текущей сцены. Закат не привязан к центру дома: солнце достигает левого края сцены и уходит за линию горизонта.
+The challenge runs four times faster than its first version: 2880 simulated seconds per real second, or 72 hours in approximately 90 seconds without pauses. Physical integration steps, solar inputs, scenario parameters, and scoring are preserved. Daily cycle and challenge modes share the continuous `sunTrackAt` visual trajectory, which spans all 24 hours and adapts to the scene's dimensions. The sun reaches the left edge of the scene and passes behind the ground horizon.
